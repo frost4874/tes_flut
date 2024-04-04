@@ -51,8 +51,32 @@ class _LoginPageState extends State<LoginPage> {
           },
         );
       }
-    } else {
-      throw Exception('Failed to load data');
+    } 
+    else {
+      // Jika gagal login, tampilkan pesan kesalahan
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login Gagal', 
+              style: TextStyle(color: Color(0xFF057438),
+              fontFamily: 'Interbold',),),
+            content: Text('NIK atau Password Salah', 
+              style: TextStyle(color: Color(0xFF057438),
+              fontFamily: 'Interbold',),),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK', 
+                  style: TextStyle(color: Color(0xFF057438),
+                  fontFamily: 'Interbold',),),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -65,9 +89,9 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Image.asset(
               'images/jj.png',
-              width: double.infinity,
+              width: 600,
               fit: BoxFit.cover,
-              height: 350,
+              height: 300,
             ),
 
             Align(

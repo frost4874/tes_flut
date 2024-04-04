@@ -154,12 +154,18 @@ class _RegisterPageState extends State<RegisterPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Registrasi Berhasil'),
+          title: Text('Registrasi Berhasil', 
+              style: TextStyle(color: Color(0xFF057438),
+              fontFamily: 'Interbold',),),
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('Registrasi Anda berhasil.'),
-                Text('Klik Ok untuk melanjutkan ke Login.'),
+                Text('Registrasi Anda berhasil.', 
+                  style: TextStyle(color: Color(0xFF057438),
+                  fontFamily: 'Interbold',),),
+                Text('Klik Ok untuk melanjutkan ke Login.', 
+                  style: TextStyle(color: Color(0xFF057438),
+                  fontFamily: 'Interbold',),),
               ],
             ),
           ),
@@ -250,606 +256,680 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
-          children: [
-            Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    Container(
-      width: 70,
-      height: 65,
-      decoration: BoxDecoration(
-        color: Color(0xFF057438),
-        shape: BoxShape.circle,
-      ),
-      child: Icon(
-        Icons.email,
-        color: Colors.white,
-        size: 40,
-      ),
-    ),
-    SizedBox(width: 30),
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Registrasi',
-          style: TextStyle(
-            color: Color(0xFF057438),
-            fontSize: 30,
-            fontFamily: 'Interbold',
-          ),
-        ),
-        Text(
-          'Masyarakat Desa Jember',
-          style: TextStyle(
-            color: Color(0xFF057438),
-            fontSize: 16,
-            fontFamily: 'Interbold',
-          ),
-        ),
-      ],
-    ),
-  ],
-),
-            
-            SizedBox(height: 20),
-            Card(
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40.0), // Adjust the value as needed
-               ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40.0), // Same value as the Card's borderRadius
-                color: Color(0xFF057438), // Background color set to #057438
-              ),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(height: 20),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: TextFormField(
-                  keyboardType: TextInputType.phone,
-                  autofocus: true,
-                  controller: nikController,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: "NIK",
-                    labelStyle: TextStyle(color: Colors.white),
-                    hintText: "Masukkan NIK",
-                    hintStyle: TextStyle(color: Colors.white),
-                    prefixIcon: Icon(Icons.person, color: Colors.white,),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 70,
+                    height: 65,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF057438),
+                      shape: BoxShape.circle,
                     ),
-                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    focusedBorder: OutlineInputBorder( // To change border color when focused
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    child: Icon(
+                      Icons.email,
+                      color: Colors.white,
+                      size: 40,
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Harap isi bidang ini';
-                    } else if (value.length != 16 ||
-                        int.tryParse(value) == null) {
-                      return 'NIK harus terdiri dari 16 angka';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: TextFormField(
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  keyboardType: TextInputType.name,
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    labelText: "Nama",
-                    labelStyle: TextStyle(color: Colors.white),
-                    hintText: "Masukkan Nama Anda",
-                    hintStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    prefixIcon: Icon(Icons.person_2_sharp,color: Colors.white,),
-                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    focusedBorder: OutlineInputBorder( // To change border color when focused
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Harap isi bidang ini';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: TextFormField(
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  keyboardType: TextInputType.phone,
-                  autofocus: true,
-                  controller: tlpController,
-                  decoration: InputDecoration(
-                    labelText: "No Telepon",
-                    labelStyle: TextStyle(color: Colors.white),
-                    hintText: "Masukkan No Telepon Anda",
-                    hintStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    prefixIcon: Icon(Icons.call,color: Colors.white,),
-                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    focusedBorder: OutlineInputBorder( // To change border color when focused
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Harap isi bidang ini';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: TextFormField(
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: TextStyle(color: Colors.white),
-                    hintText: "Masukkan Email Anda",
-                    hintStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    prefixIcon: Icon(Icons.email_rounded,color: Colors.white,),
-                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    focusedBorder: OutlineInputBorder( // To change border color when focused
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Harap isi bidang ini';
-                    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(value)) {
-                      return 'Masukkan email dengan format yang valid';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: TextFormField(
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  keyboardType: TextInputType.multiline,
-                  controller: passwordController,
-                  obscureText: visibility,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: visibility
-                          ? Icon(Icons.visibility, color: Colors.white,)
-                          : Icon(Icons.visibility_off, color: Colors.white,),
-                      onPressed: () {
-                        setState(() {
-                          visibility = !visibility;
-                        });
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    labelText: "Password",
-                    labelStyle: TextStyle(color: Colors.white),
-                    hintText: "Masukkan Password Anda",
-                    hintStyle: TextStyle(color: Colors.white),
-                    prefixIcon: Icon(Icons.lock_rounded,color: Colors.white,),
-                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    focusedBorder: OutlineInputBorder( // To change border color when focused
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    errorMaxLines: 3,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Harap isi bidang ini';
-                    } else if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$')
-                        .hasMatch(value)) {
-                      return 'Password harus terdiri dari minimal satu huruf besar, satu angka, dan memiliki panjang minimal 8 karakter';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: TextFormField(
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  keyboardType: TextInputType.multiline,
-                  controller: confirmpasswordController,
-                  obscureText: visibility1,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: visibility1
-                          ? Icon(Icons.visibility, color: Colors.white,)
-                          : Icon(Icons.visibility_off, color: Colors.white,),
-                      onPressed: () {
-                        setState(() {
-                          visibility1 = !visibility1;
-                        });
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    labelText: "Konfirmasi Password",
-                    labelStyle: TextStyle(color: Colors.white),
-                    hintText: "Masukkan Password Anda",
-                    hintStyle: TextStyle(color: Colors.white),
-                    prefixIcon: Icon(Icons.lock_rounded,color: Colors.white,),
-                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    focusedBorder: OutlineInputBorder( // To change border color when focused
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    errorMaxLines: 3,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Harap isi bidang ini';
-                    } else if (value != passwordController.text) {
-                      return 'Password tidak cocok';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: DropdownButtonFormField<String>(
-                  value: genderValue,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      genderValue = newValue!;
-                    });
-                  },
-                  items: <String>['Laki-Laki', 'Perempuan']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value,
+                  SizedBox(width: 30),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Registrasi',
                         style: TextStyle(
-                        color: Colors.white,
+                          color: Color(0xFF057438),
+                          fontSize: 30,
+                          fontFamily: 'Interbold',
                         ),
                       ),
-                    );
-                  }).toList(),
-                  dropdownColor: Color(0xFF057438),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    labelText: "Gender",
-                    labelStyle: TextStyle(color: Colors.white),
-                    prefixIcon: genderValue == 'Laki-Laki'
-                        ? Icon(Icons.male_rounded, color: Colors.white,)
-                        : Icon(Icons.female_rounded, color: Colors.white,),
-                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    focusedBorder: OutlineInputBorder( // To change border color when focused
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () => _selectDate(context),
-                child: AbsorbPointer(
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                    child: TextFormField(
-                      style: TextStyle(
-                        color: Colors.white,
-                        ),
-                      controller:
-                          dateController, // Menggunakan TextEditingController
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        labelText: "Tanggal Lahir",
-                        labelStyle: TextStyle(color: Colors.white),
-                        prefixIcon: Icon(Icons.calendar_today, color: Colors.white,),
-                        enabledBorder: OutlineInputBorder( // To change border color when enabled
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                        ),
-                        focusedBorder: OutlineInputBorder( // To change border color when focused
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                      Text(
+                        'Masyarakat Desa Jember',
+                        style: TextStyle(
+                          color: Color(0xFF057438),
+                          fontSize: 16,
+                          fontFamily: 'Interbold',
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Harap isi bidang ini';
-                        }
-                        return null;
-                      },
-                    ),
+                    ],
                   ),
-                ),
+                ],
               ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: FutureBuilder<List<String>>(
-                  future: kecamatanListFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return DropdownButtonFormField<String>(
-                        value: selectedKecamatan,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedKecamatan = newValue!;
-                            _fetchDesaByKecamatanId(selectedKecamatanId!);
-                            fetchKecamatanId(selectedKecamatan!)
-                                .then((kecamatanId) {
-                              setState(() {
-                                selectedKecamatanId = kecamatanId;
-                              });
-                              // Panggil fungsi untuk memperbarui daftar desa
-                              _fetchDesaByKecamatanId(selectedKecamatanId!);
-                            }).catchError((error) {
-                              print('Error fetching kecamatan id: $error');
-                            });
-                          });
-                        },
-                        items: snapshot.data!
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value,
-                              style: TextStyle(
-                              color: Colors.white,
+              SizedBox(height: 20),
+              Card(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0), // Adjust the value as needed
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40.0), // Same value as the Card's borderRadius
+                    color: Color(0xFF057438), // Background color set to #057438
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 20),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            keyboardType: TextInputType.phone,
+                            autofocus: true,
+                            controller: nikController,
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              labelText: "NIK",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan NIK",
+                              hintStyle: TextStyle(color: Colors.white),
+                              prefixIcon: Icon(Icons.person, color: Colors.white,),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
                               ),
-                          ),
-                          );
-                        }).toList(),
-                        dropdownColor: Color(0xFF057438),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          labelText: "Kecamatan",
-                          labelStyle: TextStyle(color: Colors.white),
-                          prefixIcon: Icon(Icons.location_on, color: Colors.white,),
-                          enabledBorder: OutlineInputBorder( // To change border color when enabled
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                          ),
-                          focusedBorder: OutlineInputBorder( // To change border color when focused
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: FutureBuilder<List<String>>(
-                  future: fetchDesaFromDatabase(selectedKecamatanId ??
-                      ''), // Gunakan id kecamatan yang dipilih
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return DropdownButtonFormField<String>(
-                        value: selectedDesa,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedDesa = newValue!;
-                          });
-                        },
-                        items: snapshot.data!
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value,
-                              style: TextStyle(
-                              color: Colors.white,
+                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder( // To change border color when error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                              ),
+                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
                               ),
                             ),
-                          );
-                        }).toList(),
-                        dropdownColor: Color(0xFF057438),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          labelText: "Desa",
-                          labelStyle: TextStyle(color: Colors.white),
-                          prefixIcon: Icon(Icons.location_city,color: Colors.white,),
-                          enabledBorder: OutlineInputBorder( // To change border color when enabled
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                          ),
-                          focusedBorder: OutlineInputBorder( // To change border color when focused
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              } else if (value.length != 16 ||
+                                  int.tryParse(value) == null) {
+                                return 'NIK harus terdiri dari 16 angka';
+                              }
+                              return null;
+                            },
                           ),
                         ),
-                      );
-                    }
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: TextFormField(
-                  style: TextStyle(color: Colors.white,),
-                  keyboardType: TextInputType.emailAddress,
-                  controller: addressController,
-                  maxLines: 3,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    labelText: "Alamat Lengkap",
-                    labelStyle: TextStyle(color: Colors.white),
-                    hintText: "Masukkan Alamat Lengkap Anda",
-                    hintStyle: TextStyle(color: Colors.white),
-                    prefixIcon: Icon(Icons.maps_home_work, color: Colors.white,),
-                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    focusedBorder: OutlineInputBorder( // To change border color when focused
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Harap isi bidang ini';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text("Sudah punya akun? ",
-                      style: TextStyle(
-                      color: Colors.white,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
-                      },
-                      child: Text(
-                        'Login disini',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.yellow,
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(color: Colors.white,),
+                            keyboardType: TextInputType.name,
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              labelText: "Nama",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan Nama Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              prefixIcon: Icon(Icons.person_2_sharp,color: Colors.white,),
+                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder( // To change border color when error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                              ),
+                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 15),
-              Container(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _saveRegistrationData();
-                    }
-                  },
-                  child: Text(
-                    'Register',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF057438),
-                      fontWeight: FontWeight.bold,
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(color: Colors.white,),
+                            keyboardType: TextInputType.phone,
+                            autofocus: true,
+                            controller: tlpController,
+                            decoration: InputDecoration(
+                              labelText: "No Telepon",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan No Telepon Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              prefixIcon: Icon(Icons.call,color: Colors.white,),
+                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder( // To change border color when error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                              ),
+                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(color: Colors.white,),
+                            keyboardType: TextInputType.emailAddress,
+                            controller: emailController,
+                            decoration: InputDecoration(
+                              labelText: "Email",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan Email Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              prefixIcon: Icon(Icons.email_rounded,color: Colors.white,),
+                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder( // To change border color when error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                              ),
+                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                  .hasMatch(value)) {
+                                return 'Masukkan email dengan format yang valid';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            keyboardType: TextInputType.multiline,
+                            controller: passwordController,
+                            obscureText: visibility,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: visibility
+                                    ? Icon(Icons.visibility, color: Colors.white,)
+                                    : Icon(Icons.visibility_off, color: Colors.white,),
+                                onPressed: () {
+                                  setState(() {
+                                    visibility = !visibility;
+                                  });
+                                },
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              labelText: "Password",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan Password Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              prefixIcon: Icon(Icons.lock_rounded,color: Colors.white,),
+                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder( // To change border color when error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                              ),
+                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                              ),
+                              errorMaxLines: 3,
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              } else if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$')
+                                  .hasMatch(value)) {
+                                return 'Password harus terdiri dari minimal satu huruf besar, satu angka, dan memiliki panjang minimal 8 karakter';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            keyboardType: TextInputType.multiline,
+                            controller: confirmpasswordController,
+                            obscureText: visibility1,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: visibility1
+                                    ? Icon(Icons.visibility, color: Colors.white,)
+                                    : Icon(Icons.visibility_off, color: Colors.white,),
+                                onPressed: () {
+                                  setState(() {
+                                    visibility1 = !visibility1;
+                                  });
+                                },
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              labelText: "Konfirmasi Password",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan Password Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              prefixIcon: Icon(Icons.lock_rounded,color: Colors.white,),
+                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder( // To change border color when error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                              ),
+                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                              ),
+                              errorMaxLines: 3,
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              } else if (value != passwordController.text) {
+                                return 'Password tidak cocok';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: DropdownButtonFormField<String>(
+                            value: genderValue,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                genderValue = newValue!;
+                              });
+                            },
+                            items: <String>['Laki-Laki', 'Perempuan']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            dropdownColor: Color(0xFF057438),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              labelText: "Gender",
+                              labelStyle: TextStyle(color: Colors.white),
+                              prefixIcon: genderValue == 'Laki-Laki'
+                                  ? Icon(Icons.male_rounded, color: Colors.white,)
+                                  : Icon(Icons.female_rounded, color: Colors.white,),
+                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder( // To change border color when error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                              ),
+                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => _selectDate(context),
+                          child: AbsorbPointer(
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                              child: TextFormField(
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                controller:
+                                    dateController, // Menggunakan TextEditingController
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  labelText: "Tanggal Lahir",
+                                  labelStyle: TextStyle(color: Colors.white),
+                                  prefixIcon: Icon(Icons.calendar_today, color: Colors.white,),
+                                  enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder( // To change border color when focused
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                  ),
+                                  errorStyle: TextStyle(color: Colors.orange),
+                                  errorBorder: OutlineInputBorder( // To change border color when error
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Harap isi bidang ini';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: FutureBuilder<List<String>>(
+                            future: kecamatanListFuture,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return DropdownButtonFormField<String>(
+                                  value: selectedKecamatan,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedKecamatan = newValue!;
+                                      _fetchDesaByKecamatanId(selectedKecamatanId!);
+                                      fetchKecamatanId(selectedKecamatan!)
+                                          .then((kecamatanId) {
+                                        setState(() {
+                                          selectedKecamatanId = kecamatanId;
+                                        });
+                                        // Panggil fungsi untuk memperbarui daftar desa
+                                        _fetchDesaByKecamatanId(selectedKecamatanId!);
+                                      }).catchError((error) {
+                                        print('Error fetching kecamatan id: $error');
+                                      });
+                                    });
+                                  },
+                                  items: snapshot.data!
+                                      .map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value,
+                                        style: TextStyle(
+                                        color: Colors.white,
+                                        ),
+                                    ),
+                                    );
+                                  }).toList(),
+                                  dropdownColor: Color(0xFF057438),
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                    labelText: "Kecamatan",
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    prefixIcon: Icon(Icons.location_on, color: Colors.white,),
+                                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: FutureBuilder<List<String>>(
+                            future: fetchDesaFromDatabase(selectedKecamatanId ??
+                                ''), // Gunakan id kecamatan yang dipilih
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                return DropdownButtonFormField<String>(
+                                  value: selectedDesa,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedDesa = newValue!;
+                                    });
+                                  },
+                                  items: snapshot.data!
+                                      .map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value,
+                                        style: TextStyle(
+                                        color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  dropdownColor: Color(0xFF057438),
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                    labelText: "Desa",
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    prefixIcon: Icon(Icons.location_city,color: Colors.white,),
+                                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(color: Colors.white,),
+                            keyboardType: TextInputType.emailAddress,
+                            controller: addressController,
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              labelText: "Alamat Lengkap",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan Alamat Lengkap Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              prefixIcon: Icon(Icons.maps_home_work, color: Colors.white,),
+                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder( // To change border color when error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                              ),
+                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("Sudah punya akun? ",
+                                style: TextStyle(
+                                color: Colors.white,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                                },
+                                child: Text(
+                                  'Login disini',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.yellow,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Container(
+                          alignment: Alignment.center,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _saveRegistrationData();
+                              }
+                            },
+                            child: Text(
+                              'Register',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0xFF057438),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.white),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                              ),
+                              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                EdgeInsets.symmetric(vertical: 20.0, horizontal: 160.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                      ],
                     ),
                   ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                    ),
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 160.0),
-                    ),
-                  ),
                 ),
               ),
-              SizedBox(height: 20),
             ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
