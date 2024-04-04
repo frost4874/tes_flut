@@ -81,9 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                       'WELCOME',
                       style: TextStyle(
                         color: Color(0xFF057438),
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Inter',
+                        fontSize: 32, 
+                        fontFamily: 'Interbold',
                       ),
                     ),
                     Text(
@@ -91,8 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         color: Color(0xFF057438),
                         fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Inter',
+                        fontFamily: 'Interbold',
                       ),
                     ),
                   ],

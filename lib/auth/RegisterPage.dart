@@ -276,7 +276,7 @@ class _RegisterPageState extends State<RegisterPage> {
           style: TextStyle(
             color: Color(0xFF057438),
             fontSize: 30,
-            fontWeight: FontWeight.bold,
+            fontFamily: 'Interbold',
           ),
         ),
         Text(
@@ -284,6 +284,7 @@ class _RegisterPageState extends State<RegisterPage> {
           style: TextStyle(
             color: Color(0xFF057438),
             fontSize: 16,
+            fontFamily: 'Interbold',
           ),
         ),
       ],
@@ -801,7 +802,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                          color: Colors.yellow,
                         ),
                       ),
                     ),
