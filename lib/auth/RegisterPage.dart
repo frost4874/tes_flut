@@ -24,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
   DateTime? selectedDate;
   TextEditingController addressController = TextEditingController();
   bool visibility = true;
+  bool visibility1 = true;
   final _formKey = GlobalKey<FormState>();
 
   late Future<List<String>> kecamatanListFuture;
@@ -245,21 +246,68 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Register Page", style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.blueAccent,
-      ),
       body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+          children: [
+            Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Container(
+      width: 70,
+      height: 65,
+      decoration: BoxDecoration(
+        color: Color(0xFF057438),
+        shape: BoxShape.circle,
+      ),
+      child: Icon(
+        Icons.email,
+        color: Colors.white,
+        size: 40,
+      ),
+    ),
+    SizedBox(width: 30),
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Registrasi',
+          style: TextStyle(
+            color: Color(0xFF057438),
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          'Masyarakat Desa Jember',
+          style: TextStyle(
+            color: Color(0xFF057438),
+            fontSize: 16,
+          ),
+        ),
+      ],
+    ),
+  ],
+),
+            
+            SizedBox(height: 20),
+            Card(
+              elevation: 5.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40.0), // Adjust the value as needed
+               ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(40.0), // Same value as the Card's borderRadius
+                color: Color(0xFF057438), // Background color set to #057438
+              ),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                child: Icon(Icons.person, size: 50),
-              ),
+              SizedBox(height: 20),
               Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
@@ -267,13 +315,24 @@ class _RegisterPageState extends State<RegisterPage> {
                   keyboardType: TextInputType.phone,
                   autofocus: true,
                   controller: nikController,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
+                    labelText: "NIK",
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintText: "Masukkan NIK",
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.person, color: Colors.white,),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
-                    labelText: "NIK",
-                    hintText: "Masukkan NIK",
-                    prefixIcon: Icon(Icons.person),
+                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
+                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -290,15 +349,28 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                 child: TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                   keyboardType: TextInputType.name,
                   controller: nameController,
                   decoration: InputDecoration(
+                    labelText: "Nama",
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintText: "Masukkan Nama Anda",
+                    hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
-                    labelText: "Nama",
-                    hintText: "Masukkan Nama Anda",
-                    prefixIcon: Icon(Icons.person_2_sharp),
+                    prefixIcon: Icon(Icons.person_2_sharp,color: Colors.white,),
+                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
+                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -312,16 +384,29 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                 child: TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                   keyboardType: TextInputType.phone,
                   autofocus: true,
                   controller: tlpController,
                   decoration: InputDecoration(
+                    labelText: "No Telepon",
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintText: "Masukkan No Telepon Anda",
+                    hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
-                    labelText: "No Telepon",
-                    hintText: "Masukkan No Telepon Anda",
-                    prefixIcon: Icon(Icons.call),
+                    prefixIcon: Icon(Icons.call,color: Colors.white,),
+                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
+                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -335,15 +420,28 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                 child: TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   decoration: InputDecoration(
+                    labelText: "Email",
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintText: "Masukkan Email Anda",
+                    hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
-                    labelText: "Email",
-                    hintText: "Masukkan Email Anda",
-                    prefixIcon: Icon(Icons.email_rounded),
+                    prefixIcon: Icon(Icons.email_rounded,color: Colors.white,),
+                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
+                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -360,14 +458,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                 child: TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                   keyboardType: TextInputType.multiline,
                   controller: passwordController,
                   obscureText: visibility,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                       icon: visibility
-                          ? Icon(Icons.visibility)
-                          : Icon(Icons.visibility_off),
+                          ? Icon(Icons.visibility, color: Colors.white,)
+                          : Icon(Icons.visibility_off, color: Colors.white,),
                       onPressed: () {
                         setState(() {
                           visibility = !visibility;
@@ -378,8 +479,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     labelText: "Password",
+                    labelStyle: TextStyle(color: Colors.white),
                     hintText: "Masukkan Password Anda",
-                    prefixIcon: Icon(Icons.lock_rounded),
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.lock_rounded,color: Colors.white,),
+                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
+                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
                     errorMaxLines: 3,
                   ),
                   validator: (value) {
@@ -397,17 +508,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                 child: TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                   keyboardType: TextInputType.multiline,
                   controller: confirmpasswordController,
-                  obscureText: visibility,
+                  obscureText: visibility1,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
-                      icon: visibility
-                          ? Icon(Icons.visibility)
-                          : Icon(Icons.visibility_off),
+                      icon: visibility1
+                          ? Icon(Icons.visibility, color: Colors.white,)
+                          : Icon(Icons.visibility_off, color: Colors.white,),
                       onPressed: () {
                         setState(() {
-                          visibility = !visibility;
+                          visibility1 = !visibility1;
                         });
                       },
                     ),
@@ -415,8 +529,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     labelText: "Konfirmasi Password",
+                    labelStyle: TextStyle(color: Colors.white),
                     hintText: "Masukkan Password Anda",
-                    prefixIcon: Icon(Icons.lock_rounded),
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.lock_rounded,color: Colors.white,),
+                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
+                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
                     errorMaxLines: 3,
                   ),
                   validator: (value) {
@@ -443,17 +567,31 @@ class _RegisterPageState extends State<RegisterPage> {
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text(value,
+                        style: TextStyle(
+                        color: Colors.white,
+                        ),
+                      ),
                     );
                   }).toList(),
+                  dropdownColor: Color(0xFF057438),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     labelText: "Gender",
+                    labelStyle: TextStyle(color: Colors.white),
                     prefixIcon: genderValue == 'Laki-Laki'
-                        ? Icon(Icons.male_rounded)
-                        : Icon(Icons.female_rounded),
+                        ? Icon(Icons.male_rounded, color: Colors.white,)
+                        : Icon(Icons.female_rounded, color: Colors.white,),
+                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
+                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
                   ),
                 ),
               ),
@@ -464,6 +602,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     alignment: Alignment.center,
                     padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                     child: TextFormField(
+                      style: TextStyle(
+                        color: Colors.white,
+                        ),
                       controller:
                           dateController, // Menggunakan TextEditingController
                       decoration: InputDecoration(
@@ -471,7 +612,16 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.circular(25.0),
                         ),
                         labelText: "Tanggal Lahir",
-                        prefixIcon: Icon(Icons.calendar_today),
+                        labelStyle: TextStyle(color: Colors.white),
+                        prefixIcon: Icon(Icons.calendar_today, color: Colors.white,),
+                        enabledBorder: OutlineInputBorder( // To change border color when enabled
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                        ),
+                        focusedBorder: OutlineInputBorder( // To change border color when focused
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                        ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -516,15 +666,29 @@ class _RegisterPageState extends State<RegisterPage> {
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Text(value),
+                            child: Text(value,
+                              style: TextStyle(
+                              color: Colors.white,
+                              ),
+                          ),
                           );
                         }).toList(),
+                        dropdownColor: Color(0xFF057438),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25.0),
                           ),
                           labelText: "Kecamatan",
-                          prefixIcon: Icon(Icons.location_on),
+                          labelStyle: TextStyle(color: Colors.white),
+                          prefixIcon: Icon(Icons.location_on, color: Colors.white,),
+                          enabledBorder: OutlineInputBorder( // To change border color when enabled
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                          ),
+                          focusedBorder: OutlineInputBorder( // To change border color when focused
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                          ),
                         ),
                       );
                     }
@@ -554,15 +718,29 @@ class _RegisterPageState extends State<RegisterPage> {
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Text(value),
+                            child: Text(value,
+                              style: TextStyle(
+                              color: Colors.white,
+                              ),
+                            ),
                           );
                         }).toList(),
+                        dropdownColor: Color(0xFF057438),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25.0),
                           ),
                           labelText: "Desa",
-                          prefixIcon: Icon(Icons.location_city),
+                          labelStyle: TextStyle(color: Colors.white),
+                          prefixIcon: Icon(Icons.location_city,color: Colors.white,),
+                          enabledBorder: OutlineInputBorder( // To change border color when enabled
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                          ),
+                          focusedBorder: OutlineInputBorder( // To change border color when focused
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                          ),
                         ),
                       );
                     }
@@ -573,6 +751,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                 child: TextFormField(
+                  style: TextStyle(color: Colors.white,),
                   keyboardType: TextInputType.emailAddress,
                   controller: addressController,
                   maxLines: 3,
@@ -581,8 +760,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     labelText: "Alamat Lengkap",
+                    labelStyle: TextStyle(color: Colors.white),
                     hintText: "Masukkan Alamat Lengkap Anda",
-                    prefixIcon: Icon(Icons.maps_home_work),
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.maps_home_work, color: Colors.white,),
+                    enabledBorder: OutlineInputBorder( // To change border color when enabled
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
+                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -594,14 +783,18 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text("Sudah punya akun? "),
+                    Text("Sudah punya akun? ",
+                      style: TextStyle(
+                      color: Colors.white,
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, '/login');
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
                       },
                       child: Text(
                         'Login disini',
@@ -627,26 +820,35 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Text(
                     'Register',
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                      fontSize: 20,
+                      color: Color(0xFF057438),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blueAccent),
+                        MaterialStateProperty.all<Color>(Colors.white),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 200.0),
+                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 160.0),
                     ),
                   ),
                 ),
               ),
+              SizedBox(height: 20),
             ],
-          ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

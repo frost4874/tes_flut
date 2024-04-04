@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:tes_flut/auth/ProfilePage.dart';
-// Import RegisterPage jika Anda sudah membuatnya
+import 'package:tes_flut/auth/DashboardPage.dart';
+import 'package:tes_flut/auth/RegisterPage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,15 +10,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nikController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool visibility = true;
 
-  Future<void> _login() async {
-    if (!_formKey.currentState!.validate()) {
-      return; // Jika form tidak valid, tidak melakukan apa-apa
-    }
-
+  Future<void> _login(BuildContext context) async {
     final response = await http.post(
       Uri.parse('http://localhost:8000/api/login_flutter'),
       body: {
@@ -33,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProfilePage(nik: _nikController.text),
+            builder: (context) => DashboardPage(nik: _nikController.text),
           ),
         );
       } else {
@@ -63,72 +59,151 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Card(
-            elevation: 4.0, // Adds shadow beneath the card
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'images/jj.png',
+              width: double.infinity,
+              fit: BoxFit.cover,
+              height: 350,
+            ),
+
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min, // Use the minimum space
-                  children: <Widget>[
-                    TextFormField(
-                      controller: _nikController,
-                      decoration: InputDecoration(labelText: 'NIK'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your NIK';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(labelText: 'Password'),
-                      obscureText: true,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _login,
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          color: Colors.white, // Set the text color to white
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context)
-                            .colorScheme
-                            .secondary, // Button color
-                        // You can also set the text color for all states using `foregroundColor`
-                        foregroundColor:
-                            Colors.white, // This sets the text and icon color
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'WELCOME',
+                      style: TextStyle(
+                        color: Color(0xFF057438),
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Inter',
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        // Navigasi ke RegisterPage
-                        Navigator.pushNamed(context, '/register');
-                      },
-                      child: Text('Don\'t have an account? Register'),
+                    Text(
+                      ' Masyarakat Desa Jember',
+                      style: TextStyle(
+                        color: Color(0xFF057438),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Inter',
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-          ),
+              
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
+              child: TextFormField(
+                style: TextStyle(color: Color(0xFF057438),),
+                keyboardType: TextInputType.name,
+                controller: _nikController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  labelText: "NIK",
+                  labelStyle: TextStyle(color: Color(0xFF057438),),
+                  hintText: "Masukkan NIK Anda",
+                  hintStyle: TextStyle(color: Color(0xFF057438),),
+                  prefixIcon: Icon(Icons.email_rounded, color: Color(0xFF057438),),
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.fromLTRB(40, 10, 40, 0),
+              child: TextFormField(
+                style: TextStyle(color: Color(0xFF057438),),
+                keyboardType: TextInputType.multiline,
+                controller: _passwordController,
+                obscureText: visibility,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: visibility
+                        ? Icon(Icons.visibility, color: Color(0xFF057438),)
+                        : Icon(Icons.visibility_off, color: Color(0xFF057438),),
+                    onPressed: () {
+                      setState(() {
+                        visibility = !visibility;
+                      });
+                    },
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  labelText: "Password",
+                  labelStyle: TextStyle(color: Color(0xFF057438),),
+                  hintText: "Masukkan Password",
+                  hintStyle: TextStyle(color: Color(0xFF057438),),
+                  prefixIcon: Icon(Icons.lock_rounded, color: Color(0xFF057438),),
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Belum punya akun? "),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                      );
+                    },
+                    child: Text(
+                      'Daftar disini',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Inter',
+                        color: Color(0xFF057438),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(30, 20, 30, 10),
+              child: ElevatedButton(
+                onPressed: () async {
+                  await _login(context);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF057438)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 190.0),
+                  ),
+                ),
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

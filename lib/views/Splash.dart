@@ -10,60 +10,55 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  AnimationController? _animationController;
-  Animation<double>? _animation;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
     _animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 2));
-    _animation =
-        CurvedAnimation(parent: _animationController!, curve: Curves.easeOut);
+    _animation = CurvedAnimation(parent: _animationController, curve: Curves.easeOut);
 
-    _animationController!.forward();
+    _animationController.forward();
 
-    Timer(Duration(seconds: 3), () {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => LandingPage()));
+    Timer(Duration(seconds: 2), () {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => LandingPage()));
     });
   }
 
   @override
   void dispose() {
-    _animationController!.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     // Membuat efek visual lebih lambat, opsional, hanya untuk demo
-    timeDilation = 2.0;
+    timeDilation = 1.5;
 
     return Scaffold(
-      backgroundColor:
-          Colors.blueGrey[900], // Warna latar belakang yang lebih elegan
+      backgroundColor: Colors.white,
       body: FadeTransition(
-        opacity: _animation!,
+        opacity: _animation,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Tampilkan logo dengan animasi fade-in
               Image.asset(
-                'images/kabjember1.png', // Sesuaikan dengan path gambar Anda
-                width: 160, // Lebar gambar
-                height: 160, // Tinggi gambar
+                'images/kabjember1.png',
+                width: 95,
+                height: 110,
               ),
-              SizedBox(height: 24),
-              // Tampilkan teks aplikasi dengan animasi
+              SizedBox(height: 10),
               Text(
-                'NICE TRY APP', // Nama aplikasi Anda
+                'SURAT DESA JEMBER',
                 style: TextStyle(
-                  fontSize: 28,
-                  color: Colors.white
-                      .withOpacity(_animation!.value), // Efek fade-in pada teks
+                  color: Color(0xFF057438),
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Inter',
                 ),
               ),
             ],
