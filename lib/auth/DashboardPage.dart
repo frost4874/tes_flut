@@ -5,9 +5,9 @@ import 'package:tes_flut/views/StatusPage.dart';
 import 'package:tes_flut/views/ProfilPage.dart';
 
 class DashboardPage extends StatefulWidget {
-  final String nik;
+  final String Biodata;
 
-  DashboardPage({required this.nik});
+  DashboardPage({required this.Biodata});
 
   @override
   _DashboardPageState createState() => _DashboardPageState();
@@ -29,7 +29,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> _fetchProfile() async {
     final response = await http.get(
-      Uri.parse('http://localhost:8000/api/profile/${widget.nik}'),
+      Uri.parse('http://localhost:8000/api/profile/${widget.Biodata}'),
     );
 
     if (response.statusCode == 200) {
@@ -53,33 +53,47 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: _onPageChanged,
+      body: Stack(
         children: [
-          _buildBiodataList(),
-          StatusPage(nik: _name),
-          ProfilPage(nik: _name),
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xFF057438),
+            ),
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: _onPageChanged,
+              children: [
+                _buildBiodataList(),
+                StatusPage(Biodata: _name),
+                ProfilPage(Biodata: _name),
+              ],
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.dashboard),
+                  label: 'Dashboard',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.insert_chart),
+                  label: 'Status',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Profil',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Color(0xFF057438),
+              onTap: _onBottomNavigationBarItemTapped,
+            ),
+          ),
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.insert_chart),
-            label: 'Status',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.greenAccent,
-        onTap: _onBottomNavigationBarItemTapped,
       ),
     );
   }
@@ -87,30 +101,88 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget _buildBiodataList() {
     return CustomScrollView(
       slivers: <Widget>[
-        SliverAppBar(
-          title: Text('Dashboard Page'),
-          automaticallyImplyLeading: false,
-          floating: true,
-          pinned: true,
-          snap: false,
-        ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return Card(
                 elevation: 4,
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                margin: EdgeInsets.symmetric(vertical: 30, horizontal: 0),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('Name: $_name'),
-                      Text('Kecamatan: $_kecamatan'),
-                      Text('Desa: $_desa'),
+                      Text('Hallo !!',
+                        style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF057438),
+                        ),
+                      ),
+                      Text('$_name'.toUpperCase(),
+                        style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF057438),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Text('PENGAJUAN SURAT',
+                        style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF057438),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child:Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Icon(
+                                    Icons.email,
+                                    color: Colors.white,
+                                    size: 60,
+                                  ),
+                                ),
+                                SizedBox(height: 10), 
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Surat Pengantar',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF057438),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),   
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DashboardPage(nik: _nikController.text),
+            builder: (context) => DashboardPage(Biodata: _nikController.text),
           ),
         );
       } else {
@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'WELCOME',
+                      'Welcome',
                       style: TextStyle(
                         color: Color(0xFF057438),
                         fontSize: 32, 

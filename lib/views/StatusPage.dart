@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class StatusPage extends StatefulWidget {
-  final String nik;
+  final String Biodata;
 
-  StatusPage({required this.nik});
+  StatusPage({required this.Biodata});
 
   @override
   _StatusPageState createState() => _StatusPageState();
