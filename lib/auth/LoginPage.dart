@@ -26,10 +26,11 @@ class _LoginPageState extends State<LoginPage> {
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = json.decode(response.body);
       if (responseData['success']) {
+        print('login berhasil');
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DashboardPage(nik: _nikController.text),
+            builder: (context) => DashboardPage(Biodata: _nikController.text),
           ),
         );
       } else {
@@ -221,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                // Tambahkan fungsi untuk melakukan login
+                await _login(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF057438),

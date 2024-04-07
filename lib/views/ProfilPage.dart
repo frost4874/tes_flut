@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
   class ProfilPage extends StatefulWidget {
-  final String nik; 
+  final String Biodata; 
 
-  ProfilPage({required this.nik});
+  ProfilPage({required this.Biodata});
 
   @override
   _ProfilPageState createState() => _ProfilPageState();
