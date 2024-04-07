@@ -51,27 +51,38 @@ class _LoginPageState extends State<LoginPage> {
           },
         );
       }
-    } 
-    else {
+    } else {
       // Jika gagal login, tampilkan pesan kesalahan
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Login Gagal', 
-              style: TextStyle(color: Color(0xFF057438),
-              fontFamily: 'Interbold',),),
-            content: Text('NIK atau Password Salah', 
-              style: TextStyle(color: Color(0xFF057438),
-              fontFamily: 'Interbold',),),
+            title: Text(
+              'Login Gagal',
+              style: TextStyle(
+                color: Color(0xFF057438),
+                fontFamily: 'Interbold',
+              ),
+            ),
+            content: Text(
+              'NIK atau Password Salah',
+              style: TextStyle(
+                color: Color(0xFF057438),
+                fontFamily: 'Interbold',
+              ),
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', 
-                  style: TextStyle(color: Color(0xFF057438),
-                  fontFamily: 'Interbold',),),
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    color: Color(0xFF057438),
+                    fontFamily: 'Interbold',
+                  ),
+                ),
               ),
             ],
           );
@@ -87,46 +98,52 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              'images/jj.png',
-              width: 600,
-              fit: BoxFit.cover,
-              height: 300,
-            ),
-
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'WELCOME',
-                      style: TextStyle(
-                        color: Color(0xFF057438),
-                        fontSize: 32, 
-                        fontFamily: 'Interbold',
-                      ),
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 300,
+                    child: Image.asset(
+                      'images/jj.png',
+                      fit: BoxFit.cover,
                     ),
-                    Text(
-                      ' Masyarakat Desa Jember',
-                      style: TextStyle(
-                        color: Color(0xFF057438),
-                        fontSize: 15,
-                        fontFamily: 'Interbold',
-                      ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 300,
+                    color: Color(0xFF057438).withOpacity(0.6),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'WELCOME',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontFamily: 'Interbold',
+                          ),
+                        ),
+                        Text(
+                          'Masyarakat Desa Jember',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontFamily: 'Interbold',
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-              
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
               child: TextFormField(
-                style: TextStyle(color: Color(0xFF057438),),
+                style: TextStyle(color: Color(0xFF057438)),
                 keyboardType: TextInputType.name,
                 controller: _nikController,
                 decoration: InputDecoration(
@@ -134,26 +151,35 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   labelText: "NIK",
-                  labelStyle: TextStyle(color: Color(0xFF057438),),
+                  labelStyle: TextStyle(color: Color(0xFF057438)),
                   hintText: "Masukkan NIK Anda",
-                  hintStyle: TextStyle(color: Color(0xFF057438),),
-                  prefixIcon: Icon(Icons.email_rounded, color: Color(0xFF057438),),
+                  hintStyle: TextStyle(color: Color(0xFF057438)),
+                  prefixIcon: Icon(
+                    Icons.email_rounded,
+                    color: Color(0xFF057438),
+                  ),
                 ),
               ),
             ),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(40, 10, 40, 0),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
               child: TextFormField(
-                style: TextStyle(color: Color(0xFF057438),),
+                style: TextStyle(color: Color(0xFF057438)),
                 keyboardType: TextInputType.multiline,
                 controller: _passwordController,
                 obscureText: visibility,
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                     icon: visibility
-                        ? Icon(Icons.visibility, color: Color(0xFF057438),)
-                        : Icon(Icons.visibility_off, color: Color(0xFF057438),),
+                        ? Icon(
+                            Icons.visibility,
+                            color: Color(0xFF057438),
+                          )
+                        : Icon(
+                            Icons.visibility_off,
+                            color: Color(0xFF057438),
+                          ),
                     onPressed: () {
                       setState(() {
                         visibility = !visibility;
@@ -164,64 +190,53 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   labelText: "Password",
-                  labelStyle: TextStyle(color: Color(0xFF057438),),
+                  labelStyle: TextStyle(color: Color(0xFF057438)),
                   hintText: "Masukkan Password",
-                  hintStyle: TextStyle(color: Color(0xFF057438),),
-                  prefixIcon: Icon(Icons.lock_rounded, color: Color(0xFF057438),),
+                  hintStyle: TextStyle(color: Color(0xFF057438)),
+                  prefixIcon: Icon(
+                    Icons.lock_rounded,
+                    color: Color(0xFF057438),
+                  ),
                 ),
               ),
             ),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text("Belum punya akun? "),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
-                      );
-                    },
-                    child: Text(
-                      'Daftar disini',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Inter',
-                        color: Color(0xFF057438),
-                      ),
-                    ),
-                  ),
-                ],
+            SizedBox(height: 20),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+              child: Text(
+                'Belum punya akun? Daftar disini',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Inter',
+                  color: Color(0xFF057438),
+                ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(30, 20, 30, 10),
-              child: ElevatedButton(
-                onPressed: () async {
-                  await _login(context);
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF057438)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                // Tambahkan fungsi untuk melakukan login
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF057438),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                padding:
                     EdgeInsets.symmetric(vertical: 20.0, horizontal: 190.0),
-                  ),
-                ),
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+              child: Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -229,5 +244,33 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+}
+
+class WaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0, size.height * 0.8);
+    path.quadraticBezierTo(
+      size.width / 4,
+      size.height,
+      size.width / 2,
+      size.height * 0.8,
+    );
+    path.quadraticBezierTo(
+      size.width * 3 / 4,
+      size.height * 0.6,
+      size.width,
+      size.height * 0.8,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }
