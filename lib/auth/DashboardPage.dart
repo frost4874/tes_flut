@@ -1,5 +1,4 @@
-// ignore_for_file: unused_field
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -21,12 +20,14 @@ class _DashboardPageState extends State<DashboardPage> {
   late String _desa = ''; // Initialize with empty string
   late int _selectedIndex = 0; // Initialize selectedIndex
   late PageController _pageController;
+  late List<String> _judulBerkas = [];
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _selectedIndex);
     _fetchProfile();
+    _fetchBerkas();
   }
 
   Future<void> _fetchProfile() async {
@@ -40,6 +41,22 @@ class _DashboardPageState extends State<DashboardPage> {
         _name = responseData['name'];
         _kecamatan = responseData['kecamatan'];
         _desa = responseData['desa'];
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Future<void> _fetchBerkas() async {
+    final response = await http.get(
+      Uri.parse('http://localhost:8000/api/berkas'),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = json.decode(response.body);
+      List<String> judulBerkas = responseData['judul_berkas'].cast<String>();
+      setState(() {
+        _judulBerkas = judulBerkas;
       });
     } else {
       throw Exception('Failed to load data');
@@ -143,50 +160,37 @@ class _DashboardPageState extends State<DashboardPage> {
                           color: Color(0xFF057438),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Icon(
+                      SizedBox(
+                        height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _judulBerkas.length,
+                          itemBuilder: (context, index) {
+                            Color randomColor =
+                                _getRandomColor(); // Dapatkan warna acak
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Column(
+                                children: [
+                                  Icon(
                                     Icons.email,
-                                    color: Colors.white,
-                                    size: 60,
+                                    color: randomColor, // Gunakan warna acak
+                                    size: 30, // Sesuaikan ukuran ikon
                                   ),
-                                ),
-                                SizedBox(height: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Surat Pengantar',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFF057438),
-                                      ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    _judulBerkas[index],
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF057438),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -216,4 +220,18 @@ class _DashboardPageState extends State<DashboardPage> {
       );
     });
   }
+}
+
+final List<Color> _randomColors = [
+  Colors.red,
+  Colors.blue,
+  Colors.green,
+  Colors.orange,
+  Colors.purple,
+  // Tambahkan warna lain sesuai kebutuhan
+];
+
+Color _getRandomColor() {
+  Random random = Random();
+  return _randomColors[random.nextInt(_randomColors.length)];
 }
