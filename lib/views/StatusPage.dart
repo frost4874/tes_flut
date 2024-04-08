@@ -10,12 +10,11 @@ class StatusPage extends StatefulWidget {
 }
 
 class _StatusPageState extends State<StatusPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Status Page'),
+        title: Text('Status Permohonan'),
         automaticallyImplyLeading: false,
       ),
       body: Center(
