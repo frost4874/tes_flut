@@ -97,14 +97,14 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipPath(
               clipper: WaveClipper(),
               child: Stack(
                 children: [
                   Container(
-                    width: double.infinity,
+                    width: 600,
                     height: 300,
                     child: Image.asset(
                       'images/jj.png',
@@ -112,29 +112,32 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Container(
-                    width: double.infinity,
+                    width: 600,
                     height: 300,
-                    color: Color(0xFF057438).withOpacity(0.6),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'WELCOME',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontFamily: 'Interbold',
-                          ),
-                        ),
-                        Text(
-                          'Masyarakat Desa Jember',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontFamily: 'Interbold',
-                          ),
-                        ),
-                      ],
+                    color: Color(0xFF057438).withOpacity(0.5),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome',
+                    style: TextStyle(
+                      color: Color(0xFF057438),
+                      fontSize: 30,
+                      fontFamily: 'Interbold',
+                    ),
+                  ),
+                  Text(
+                    'Masyarakat Desa Jember',
+                    style: TextStyle(
+                      color: Color(0xFF057438),
+                      fontSize: 16,
+                      fontFamily: 'Interbold',
                     ),
                   ),
                 ],
@@ -201,43 +204,57 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
-                );
-              },
-              child: Text(
-                'Belum punya akun? Daftar disini',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Inter',
-                  color: Color(0xFF057438),
-                ),
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Sudah punya akun? ",
+                    style: TextStyle(
+                      
+                      color: Colors.black,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                    },
+                    child: Text(
+                      'Login disini',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF057438),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                await _login(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF057438),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+            Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                onPressed: () async {
+                  await _login(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF057438),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 190.0),
                 ),
-                padding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 190.0),
-              ),
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
