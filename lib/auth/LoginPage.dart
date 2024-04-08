@@ -96,153 +96,172 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ClipPath(
-              clipper: WaveClipper(),
-              child: Stack(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 300,
-                    child: Image.asset(
-                      'images/jj.png',
-                      fit: BoxFit.cover,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          ClipPath(
+            clipper: WaveClipper(),
+            child: Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 300,
+                  child: Image.asset(
+                    'images/jj1.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 300,
+                  color: Color(0xFF057438).withOpacity(0.6),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment
+                .start, // Akan menjadikan anak-anak Column berjajar di sebelah kiri
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'WELCOME',
+                      style: TextStyle(
+                        color: Color(0xFF057438),
+                        fontSize: 32,
+                        fontFamily: 'Interbold',
+                      ),
+                    ),
+                    Text(
+                      'Masyarakat Desa Jember',
+                      style: TextStyle(
+                        color: Color(0xFF057438),
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                child: TextFormField(
+                  style: TextStyle(color: Color(0xFF057438)),
+                  keyboardType: TextInputType.name,
+                  controller: _nikController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    labelText: "NIK",
+                    labelStyle: TextStyle(color: Color(0xFF057438)),
+                    hintText: "Masukkan NIK Anda",
+                    hintStyle: TextStyle(color: Color(0xFF057438)),
+                    prefixIcon: Icon(
+                      Icons.email_rounded,
+                      color: Color(0xFF057438),
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: 300,
-                    color: Color(0xFF057438).withOpacity(0.6),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'WELCOME',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontFamily: 'Interbold',
-                          ),
-                        ),
-                        Text(
-                          'Masyarakat Desa Jember',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontFamily: 'Interbold',
-                          ),
-                        ),
-                      ],
+                ),
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                child: TextFormField(
+                  style: TextStyle(color: Color(0xFF057438)),
+                  keyboardType: TextInputType.multiline,
+                  controller: _passwordController,
+                  obscureText: visibility,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: visibility
+                          ? Icon(
+                              Icons.visibility,
+                              color: Color(0xFF057438),
+                            )
+                          : Icon(
+                              Icons.visibility_off,
+                              color: Color(0xFF057438),
+                            ),
+                      onPressed: () {
+                        setState(() {
+                          visibility = !visibility;
+                        });
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    labelText: "Password",
+                    labelStyle: TextStyle(color: Color(0xFF057438)),
+                    hintText: "Masukkan Password",
+                    hintStyle: TextStyle(color: Color(0xFF057438)),
+                    prefixIcon: Icon(
+                      Icons.lock_rounded,
+                      color: Color(0xFF057438),
                     ),
                   ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: TextFormField(
-                style: TextStyle(color: Color(0xFF057438)),
-                keyboardType: TextInputType.name,
-                controller: _nikController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  labelText: "NIK",
-                  labelStyle: TextStyle(color: Color(0xFF057438)),
-                  hintText: "Masukkan NIK Anda",
-                  hintStyle: TextStyle(color: Color(0xFF057438)),
-                  prefixIcon: Icon(
-                    Icons.email_rounded,
-                    color: Color(0xFF057438),
-                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: TextFormField(
-                style: TextStyle(color: Color(0xFF057438)),
-                keyboardType: TextInputType.multiline,
-                controller: _passwordController,
-                obscureText: visibility,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    icon: visibility
-                        ? Icon(
-                            Icons.visibility,
-                            color: Color(0xFF057438),
-                          )
-                        : Icon(
-                            Icons.visibility_off,
-                            color: Color(0xFF057438),
-                          ),
-                    onPressed: () {
-                      setState(() {
-                        visibility = !visibility;
-                      });
-                    },
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  labelText: "Password",
-                  labelStyle: TextStyle(color: Color(0xFF057438)),
-                  hintText: "Masukkan Password",
-                  hintStyle: TextStyle(color: Color(0xFF057438)),
-                  prefixIcon: Icon(
-                    Icons.lock_rounded,
-                    color: Color(0xFF057438),
+              SizedBox(height: 20),
+              Center(
+                // Menambahkan ini untuk teks "Belum punya akun? Daftar disini"
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                    );
+                  },
+                  child: Text(
+                    'Belum punya akun? Daftar disini',
+                    textAlign: TextAlign
+                        .center, // Ini mungkin tidak perlu tetapi berguna jika teks menjadi dua baris
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Inter',
+                      color: Color(0xFF057438),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
-                );
-              },
-              child: Text(
-                'Belum punya akun? Daftar disini',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Inter',
-                  color: Color(0xFF057438),
+              SizedBox(height: 20),
+// Menggunakan Center untuk membungkus ElevatedButton
+              Center(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await _login(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF057438),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 40.0,
+                        vertical: 20.0), // Menyesuaikan padding
+                  ),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                await _login(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF057438),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                padding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 190.0),
-              ),
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ]),
       ),
     );
   }
