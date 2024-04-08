@@ -124,7 +124,7 @@ class _DashboardPageState extends State<DashboardPage> {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return Card(
-              elevation: 100,
+              elevation: 4,
               margin: EdgeInsets.symmetric(vertical: 30, horizontal: 0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
