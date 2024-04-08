@@ -78,13 +78,39 @@ class _DashboardPageState extends State<DashboardPage> {
             decoration: BoxDecoration(
               color: Color(0xFF057438),
             ),
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: _onPageChanged,
+            child: Column(
               children: [
-                _buildBiodataList(),
-                StatusPage(Biodata: _name),
-                ProfilPage(Biodata: _name),
+                SizedBox(height: 30,),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 40), 
+                  child: TextField(
+                    decoration: InputDecoration(
+                      filled: true, // tambahkan ini
+                      fillColor: Colors.white, // ubah warna latar belakang sesuai kebutuhan Anda
+                      hintText: 'Cari...',
+                      hintStyle: TextStyle(color: Color(0xFF057438)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                    onChanged: (String query) {
+                      // Tambahkan logika pencarian di sini
+                      // Anda dapat memfilter data sesuai dengan query yang dimasukkan oleh pengguna
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged: _onPageChanged,
+                    children: [
+                      _buildBiodataList(),
+                      StatusPage(Biodata: _name),
+                      ProfilPage(Biodata: _name),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -125,7 +151,7 @@ class _DashboardPageState extends State<DashboardPage> {
           (BuildContext context, int index) {
             return Card(
               elevation: 4,
-              margin: EdgeInsets.symmetric(vertical: 30, horizontal: 0),
+              margin: EdgeInsets.symmetric(vertical: 20, horizontal: 0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
