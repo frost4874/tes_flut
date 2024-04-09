@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: 600,
                     height: 300,
                     child: Image.asset(
-                      'images/jj.png',
+                      'images/jj1.png',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -137,7 +137,6 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       color: Color(0xFF057438),
                       fontSize: 16,
-                      fontFamily: 'Interbold',
                     ),
                   ),
                 ],
@@ -211,21 +210,23 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Sudah punya akun? ",
+                    "Belum punya akun? ",
                     style: TextStyle(
-                      
                       color: Colors.black,
+                      fontSize: 16,
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()));
                     },
                     child: Text(
-                      'Login disini',
+                      'Daftar disini',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
                         color: Color(0xFF057438),
                       ),
                     ),
