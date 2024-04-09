@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -18,6 +17,7 @@ class _DashboardPageState extends State<DashboardPage> {
   late String _name = ''; // Initialize with empty string
   late String _kecamatan = ''; // Initialize with empty string
   late String _desa = ''; // Initialize with empty string
+  late String _email = ''; // Initialize with empty string
   late int _selectedIndex = 0; // Initialize selectedIndex
   late PageController _pageController;
   late List<String> _judulBerkas = [];
@@ -43,6 +43,7 @@ class _DashboardPageState extends State<DashboardPage> {
         _name = responseData['name'];
         _kecamatan = responseData['kecamatan'];
         _desa = responseData['desa'];
+        _email = responseData ['email'];
       });
     } else {
       throw Exception('Failed to load data');
@@ -102,7 +103,7 @@ class _DashboardPageState extends State<DashboardPage> {
               color: Color(0xFF057438),
             ),
             child: Column(
-              children: [
+              children: <Widget>[
                 if (_selectedIndex == 0)
                   Container(
                     padding: EdgeInsets.fromLTRB(40, 30, 40, 0), //kanan=3, ats=2, kiri=1, 

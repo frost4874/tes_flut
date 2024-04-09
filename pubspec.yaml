@@ -81,6 +81,9 @@ flutter:
     - family: Interbold
       fonts:
         - asset: assets/fonts/Inter-Bold.ttf
+    - family: jotione
+      fonts:
+        - asset: assets/fonts/JotiOne.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
