@@ -103,13 +103,9 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
             child: Column(
               children: [
-                SizedBox(
-                  height: 30,
-                ),
-                // Tambahkan kondisi untuk menampilkan TextField hanya pada halaman Dashboard
                 if (_selectedIndex == 0)
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 40),
+                    padding: EdgeInsets.fromLTRB(40, 30, 40, 0), //kanan=3, ats=2, kiri=1, 
                     child: TextField(
                       decoration: InputDecoration(
                         filled: true,
@@ -290,45 +286,86 @@ class _DashboardPageState extends State<DashboardPage> {
                                           _showAllFiles = true;
                                         });
                                       },
-                                      child: Icon(Icons.more_horiz),
+                                      child: Container(
+                                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0), //kanan=3, ats=2, kiri=1, 
+                                        decoration: BoxDecoration(
+                                          color: Colors.white, // Ubah warna latar belakang Container menjadi merah
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 45,
+                                              height: 45,
+                                              decoration: BoxDecoration(
+                                                color: Colors.black,
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: Icon(
+                                                Icons.window,
+                                                color: Colors.white,
+                                                size: 35,
+                                              ),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Text(
+                                              'Lainnya',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 8,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFF057438),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     );
                                   }
                                   Color randomColor = _getRandomColor(
                                       index); // Dapatkan warna acak berdasarkan indeks
                                   return Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20), // Tambahkan radius di sini
+                                    ),
                                     child: InkWell(
                                       onTap: () {
                                         // Tambahkan logika untuk menangani ketika card diklik di sini
                                         print(
                                             'Berkas ${_searchResults[index]} diklik!');
                                       },
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              color: randomColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                      child : Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white, // Ubah warna latar belakang Container menjadi merah
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 45,
+                                              height: 45,
+                                              decoration: BoxDecoration(
+                                                color: randomColor,
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: Icon(
+                                                Icons.email,
+                                                color: Colors.white,
+                                                size: 35,
+                                              ),
                                             ),
-                                            child: Icon(
-                                              Icons.email,
-                                              color: Colors.white,
-                                              size: 35,
+                                            SizedBox(height: 5),
+                                            Text(
+                                              _searchResults[index],
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 8,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFF057438),
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            _searchResults[index],
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 8,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xFF057438),
-                                            ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   );
