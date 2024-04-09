@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:tes_flut/auth/LoginPage.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -13,6 +11,14 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
+  TextEditingController _nameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Mengatur nilai awal controller dengan nama dari login
+    _nameController.text = widget.Biodata;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +66,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'ngambil data nama',
+                            widget.Biodata, // Menggunakan nama dari login
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -83,7 +89,9 @@ class _ProfilPageState extends State<ProfilPage> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20), // Atur padding sesuai kebutuhan Anda
+              padding: EdgeInsets.symmetric(
+                  vertical: 40,
+                  horizontal: 20), // Atur padding sesuai kebutuhan Anda
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Color(0xFF057438), width: 2.0),
@@ -125,7 +133,8 @@ class _ProfilPageState extends State<ProfilPage> {
                         },
                       ),
                     ),
-                    Divider( // Garis pembatas di sini
+                    Divider(
+                      // Garis pembatas di sini
                       color: Color(0xFF057438),
                       height: 0,
                       thickness: 1,
@@ -160,7 +169,7 @@ class _ProfilPageState extends State<ProfilPage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 0, horizontal: 80), // Atur padding sesuai kebutuhan Anda
+              padding: EdgeInsets.symmetric(vertical: 0, horizontal: 80),
               child: Align(
                 alignment: Alignment.center,
                 child: InkWell(
@@ -169,23 +178,26 @@ class _ProfilPageState extends State<ProfilPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Konfirmasi Logout",
+                          title: Text(
+                            "Konfirmasi Logout",
                             style: TextStyle(
                               color: Color(0xFF057438),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          content: Text("Apakah Anda yakin ingin logout?",
+                          content: Text(
+                            "Apakah Anda yakin ingin logout?",
                             style: TextStyle(
-                            color: Color(0xFF057438),
-                          ),
+                              color: Color(0xFF057438),
+                            ),
                           ),
                           actions: [
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop(); // Tutup dialog
                               },
-                              child: Text("Batal",
+                              child: Text(
+                                "Batal",
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                 ),
@@ -196,12 +208,42 @@ class _ProfilPageState extends State<ProfilPage> {
                                 // Tambahkan logika logout di sini
                                 Navigator.pushReplacement(
                                   context,
-                                  MaterialPageRoute(builder: (context) => LoginPage()),
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
                                 );
                               },
-                              child: Text("Logout",
-                                style: TextStyle(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Color(0xFF057438), width: 2.0),
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey
+                                            .withOpacity(0.5), // Warna shadow
+                                        spreadRadius:
+                                            2, // Seberapa jauh shadow tersebar
+                                        blurRadius: 5, // Seberapa blur shadow
+                                        offset: Offset(
+                                            0, 3), // Perubahan posisi shadow
+                                      ),
+                                    ],
                                     color: Colors.red,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    child: Text(
+                                      'LOGOUT',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -225,12 +267,12 @@ class _ProfilPageState extends State<ProfilPage> {
                       color: Colors.red,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 130),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 80),
                       child: Text(
                         'LOGOUT',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

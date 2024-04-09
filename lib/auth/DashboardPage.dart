@@ -20,7 +20,7 @@ class _DashboardPageState extends State<DashboardPage> {
   late String _email = ''; // Initialize with empty string
   late int _selectedIndex = 0; // Initialize selectedIndex
   late PageController _pageController;
-  late List<String> _judulBerkas = [];
+  late List<String>? _judulBerkas = []; // Initialize with nullable list
   List<String> _searchResults = [];
   bool _showAllFiles = false;
 
@@ -40,10 +40,10 @@ class _DashboardPageState extends State<DashboardPage> {
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = json.decode(response.body);
       setState(() {
-        _name = responseData['name'];
-        _kecamatan = responseData['kecamatan'];
-        _desa = responseData['desa'];
-        _email = responseData ['email'];
+        _name = responseData['name'] ?? '';
+        _kecamatan = responseData['kecamatan'] ?? '';
+        _desa = responseData['desa'] ?? '';
+        _email = responseData['email'] ?? '';
       });
     } else {
       throw Exception('Failed to load data');
@@ -57,11 +57,11 @@ class _DashboardPageState extends State<DashboardPage> {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = json.decode(response.body);
-      List<String> judulBerkas = responseData['judul_berkas'].cast<String>();
+      List<String>? judulBerkas = responseData['judul_berkas']?.cast<String>();
       setState(() {
-        _judulBerkas = judulBerkas;
+        _judulBerkas = judulBerkas ?? [];
         _searchResults =
-            judulBerkas; // Set _searchResults dengan semua judul berkas saat pertama kali
+            _judulBerkas!; // Set _searchResults dengan semua judul berkas saat pertama kali
       });
     } else {
       throw Exception('Failed to load data');
@@ -78,7 +78,7 @@ class _DashboardPageState extends State<DashboardPage> {
   void _searchBerkas(String query) {
     if (query.isNotEmpty) {
       List<String> results = [];
-      for (String berkas in _judulBerkas) {
+      for (String berkas in _judulBerkas ?? []) {
         if (berkas.toLowerCase().contains(query.toLowerCase())) {
           results.add(berkas);
         }
@@ -88,7 +88,7 @@ class _DashboardPageState extends State<DashboardPage> {
       });
     } else {
       setState(() {
-        _searchResults = _judulBerkas;
+        _searchResults = _judulBerkas ?? [];
       });
     }
   }
@@ -106,7 +106,8 @@ class _DashboardPageState extends State<DashboardPage> {
               children: <Widget>[
                 if (_selectedIndex == 0)
                   Container(
-                    padding: EdgeInsets.fromLTRB(40, 30, 40, 0), //kanan=3, ats=2, kiri=1, 
+                    padding: EdgeInsets.fromLTRB(
+                        40, 30, 40, 0), //kanan=3, ats=2, kiri=1,
                     child: TextField(
                       decoration: InputDecoration(
                         filled: true,
@@ -202,8 +203,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons
-                            .more_horiz_rounded), // Tombol untuk kembali ke tampilan semula
+                        Icon(Icons.more_horiz_rounded),
                         Text('Tampilkan Kurang')
                       ],
                     ),
@@ -273,9 +273,9 @@ class _DashboardPageState extends State<DashboardPage> {
                                   mainAxisSpacing: 10,
                                 ),
                                 itemCount: _showAllFiles
-                                    ? _searchResults.length
-                                    : (_searchResults.length < 10
-                                        ? _searchResults.length
+                                    ? (_judulBerkas?.length ?? 0)
+                                    : ((_judulBerkas?.length ?? 0) < 10
+                                        ? (_judulBerkas?.length ?? 0)
                                         : 10),
                                 itemBuilder: (context, index) {
                                   if (!_showAllFiles &&
@@ -288,10 +288,12 @@ class _DashboardPageState extends State<DashboardPage> {
                                         });
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0), //kanan=3, ats=2, kiri=1, 
+                                        padding:
+                                            EdgeInsets.fromLTRB(0, 5, 0, 0),
                                         decoration: BoxDecoration(
-                                          color: Colors.white, // Ubah warna latar belakang Container menjadi merah
-                                          borderRadius: BorderRadius.circular(20),
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                         child: Column(
                                           children: [
@@ -300,7 +302,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                               height: 45,
                                               decoration: BoxDecoration(
                                                 color: Colors.black,
-                                                borderRadius: BorderRadius.circular(10),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                               ),
                                               child: Icon(
                                                 Icons.window,
@@ -313,7 +316,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                               'Lainnya',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                fontSize: 8,
+                                                fontSize:
+                                                    8, // Samakan ukuran teks dengan ikon "Lainnya"
                                                 fontWeight: FontWeight.bold,
                                                 color: Color(0xFF057438),
                                               ),
@@ -323,52 +327,42 @@ class _DashboardPageState extends State<DashboardPage> {
                                       ),
                                     );
                                   }
-                                  Color randomColor = _getRandomColor(
-                                      index); // Dapatkan warna acak berdasarkan indeks
-                                  return Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20), // Tambahkan radius di sini
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {
-                                        // Tambahkan logika untuk menangani ketika card diklik di sini
-                                        print(
-                                            'Berkas ${_searchResults[index]} diklik!');
-                                      },
-                                      child : Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white, // Ubah warna latar belakang Container menjadi merah
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              width: 45,
-                                              height: 45,
-                                              decoration: BoxDecoration(
-                                                color: randomColor,
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              child: Icon(
-                                                Icons.email,
-                                                color: Colors.white,
-                                                size: 35,
-                                              ),
-                                            ),
-                                            SizedBox(height: 5),
-                                            Text(
-                                              _searchResults[index],
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 8,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color(0xFF057438),
-                                              ),
-                                            ),
-                                          ],
+                                  Color randomColor = _getRandomColor(index);
+                                  return Column(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          print(
+                                              'Berkas ${_searchResults[index]} diklik!');
+                                        },
+                                        icon: Container(
+                                          width: 35,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: randomColor,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Icon(
+                                            Icons.email,
+                                            color: Colors.white,
+                                            size: 25,
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                      Expanded(
+                                        child: Text(
+                                          _searchResults[index],
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize:
+                                                8, // Samakan ukuran teks dengan ikon "Lainnya"
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF057438),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   );
                                 },
                               ),

@@ -247,7 +247,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   padding:
-                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 190.0),
+                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
                 ),
                 child: Text(
                   'Login',
