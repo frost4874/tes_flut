@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tes_flut/views/StatusPage.dart';
 import 'package:tes_flut/views/ProfilPage.dart';
+import 'package:tes_flut/views/DetailBerkasPage.dart';
 
 class DashboardPage extends StatefulWidget {
   final String Biodata;
@@ -14,13 +15,16 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  late String _name = ''; // Initialize with empty string
-  late String _kecamatan = ''; // Initialize with empty string
-  late String _desa = ''; // Initialize with empty string
-  late String _email = ''; // Initialize with empty string
-  late int _selectedIndex = 0; // Initialize selectedIndex
+  late String _nik = '';
+  late String _name = '';
+  late String _kecamatan = '';
+  late String _desa = '';
+  late String _email = '';
+  late int _selectedIndex = 0;
   late PageController _pageController;
   late List<String>? _judulBerkas = []; // Initialize with nullable list
+  late List<String>? _idBerkas = []; // Initialize with nullable list
+  late List<String>? _formTambahan = []; // Initialize with nullable list
   List<String> _searchResults = [];
   bool _showAllFiles = false;
 
@@ -40,6 +44,7 @@ class _DashboardPageState extends State<DashboardPage> {
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = json.decode(response.body);
       setState(() {
+        _nik = responseData['nik'] ?? '';
         _name = responseData['name'] ?? '';
         _kecamatan = responseData['kecamatan'] ?? '';
         _desa = responseData['desa'] ?? '';
@@ -57,12 +62,25 @@ class _DashboardPageState extends State<DashboardPage> {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = json.decode(response.body);
-      List<String>? judulBerkas = responseData['judul_berkas']?.cast<String>();
-      setState(() {
-        _judulBerkas = judulBerkas ?? [];
-        _searchResults =
-            _judulBerkas!; // Set _searchResults dengan semua judul berkas saat pertama kali
-      });
+      List<Map<String, dynamic>>? berkasList =
+          responseData['berkas']?.cast<Map<String, dynamic>>();
+
+      if (berkasList != null) {
+        List<String> judulBerkas = [];
+        List<String> idBerkas = [];
+        List<String> formTambahan = [];
+        for (var berkas in berkasList) {
+          judulBerkas.add(berkas['judul_berkas']);
+          idBerkas.add(berkas['id_berkas'].toString());
+          formTambahan.add(berkas['form_tambahan']);
+        }
+        setState(() {
+          _judulBerkas = judulBerkas;
+          _idBerkas = idBerkas;
+          _formTambahan = formTambahan;
+          _searchResults = _judulBerkas!;
+        });
+      }
     } else {
       throw Exception('Failed to load data');
     }
@@ -72,6 +90,28 @@ class _DashboardPageState extends State<DashboardPage> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _showBerkasDetail(String judulBerkas, String idBerkas,
+      String formTambahanText, String nik, String kecamatan, String desa) {
+    List<String> formTambahanList = formTambahanText.split(',');
+    try {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailBerkasPage(
+            nik: widget.Biodata,
+            desa: _desa,
+            kecamatan: _kecamatan,
+            judul: judulBerkas,
+            formTambahan: formTambahanList,
+            idBerkas: idBerkas,
+          ),
+        ),
+      );
+    } catch (e) {
+      print('Error decoding JSON: $e');
+    }
   }
 
   // Fungsi untuk melakukan pencarian
@@ -210,11 +250,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                 );
               } else if (_showAllFiles && index == _searchResults.length - 1) {
-                return SizedBox(
-                    height:
-                        60); // Spacer untuk memastikan tombol berada di bawah
+                return SizedBox(height: 60);
               }
-              // Tambahkan fungsi onTap ke setiap berkas di sini
               return Card(
                 elevation: 4,
                 margin: EdgeInsets.symmetric(vertical: 20, horizontal: 0),
@@ -316,8 +353,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                               'Lainnya',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                fontSize:
-                                                    8, // Samakan ukuran teks dengan ikon "Lainnya"
+                                                fontSize: 8,
                                                 fontWeight: FontWeight.bold,
                                                 color: Color(0xFF057438),
                                               ),
@@ -328,12 +364,22 @@ class _DashboardPageState extends State<DashboardPage> {
                                     );
                                   }
                                   Color randomColor = _getRandomColor(index);
+                                  String judulBerkas = _searchResults[index];
+                                  String idBerkas = _idBerkas![index];
+                                  String formTambahan = _formTambahan![index];
                                   return Column(
                                     children: [
                                       IconButton(
                                         onPressed: () {
                                           print(
-                                              'Berkas ${_searchResults[index]} diklik!');
+                                              'Berkas $judulBerkas dengan ID $idBerkas diklik! dengan form tambahan $formTambahan');
+                                          _showBerkasDetail(
+                                              judulBerkas,
+                                              idBerkas,
+                                              formTambahan,
+                                              widget.Biodata,
+                                              _kecamatan,
+                                              _desa);
                                         },
                                         icon: Container(
                                           width: 35,
@@ -352,11 +398,10 @@ class _DashboardPageState extends State<DashboardPage> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          _searchResults[index],
+                                          judulBerkas,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontSize:
-                                                8, // Samakan ukuran teks dengan ikon "Lainnya"
+                                            fontSize: 8,
                                             fontWeight: FontWeight.bold,
                                             color: Color(0xFF057438),
                                           ),
