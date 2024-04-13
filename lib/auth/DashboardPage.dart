@@ -170,7 +170,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     onPageChanged: _onPageChanged,
                     children: [
                       _buildBiodataList(),
-                      StatusPage(Biodata: _name),
+                      StatusPage(Biodata: widget.Biodata),
                       ProfilPage(Biodata: _name),
                     ],
                   ),

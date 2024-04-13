@@ -10,13 +10,14 @@ class DetailBerkasPage extends StatefulWidget {
   final String idBerkas;
   final List<String> formTambahan;
 
-  DetailBerkasPage(
-      {required this.judul,
-      required this.formTambahan,
-      required this.nik,
-      required this.kecamatan,
-      required this.desa,
-      required this.idBerkas});
+  DetailBerkasPage({
+    required this.judul,
+    required this.formTambahan,
+    required this.nik,
+    required this.kecamatan,
+    required this.desa,
+    required this.idBerkas,
+  });
 
   @override
   _DetailBerkasPageState createState() => _DetailBerkasPageState();
@@ -30,7 +31,9 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
   void initState() {
     super.initState();
     tambahanControllers = List.generate(
-        widget.formTambahan.length, (_) => TextEditingController());
+      widget.formTambahan.length,
+      (_) => TextEditingController(),
+    );
   }
 
   @override
@@ -40,8 +43,13 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
     super.dispose();
   }
 
-  void submitDataToServer(String idBerkas, String nik, String kecamatan,
-      String desa, List<String> formTambahan) async {
+  void submitDataToServer(
+    String idBerkas,
+    String nik,
+    String kecamatan,
+    String desa,
+    List<String> formTambahan,
+  ) async {
     try {
       var url = Uri.parse('http://localhost:8000/api/send_request');
       String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -61,6 +69,12 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
 
       if (response.statusCode == 200) {
         print('Data berhasil dikirim ke server');
+        // Show Snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Data berhasil dikirim ke server'),
+          ),
+        );
       } else {
         print(
             'Gagal mengirim data ke server. Status code: ${response.statusCode}');
@@ -100,7 +114,7 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
               'Judul: ${widget.judul}',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             TextField(
               controller: keteranganController,
               decoration: InputDecoration(
@@ -119,7 +133,13 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 15),
+                      SizedBox(height: 20),
+                      Text(
+                        widget.formTambahan[index],
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10),
                       TextField(
                         controller: tambahanControllers[index],
                         decoration: InputDecoration(
@@ -127,18 +147,21 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                           border: OutlineInputBorder(),
                         ),
                       ),
-                      SizedBox(height: 20),
                     ],
                   );
                 },
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                submitDataToServer(widget.idBerkas, widget.nik,
-                    widget.kecamatan, widget.desa, widget.formTambahan);
-              },
-              child: Text('Submit'),
+            SizedBox(height: 20),
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                onPressed: () {
+                  submitDataToServer(widget.idBerkas, widget.nik,
+                      widget.kecamatan, widget.desa, widget.formTambahan);
+                },
+                child: Text('Submit'),
+              ),
             ),
           ],
         ),
