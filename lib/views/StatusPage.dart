@@ -60,6 +60,20 @@ class _StatusPageState extends State<StatusPage> {
         return 'Status tidak diketahui';
     }
   }
+  Color getStatusTextColor(int statusCode) {
+  switch (statusCode) {
+    case 0:
+      return Colors.yellow; 
+    case 1:
+      return Colors.green; 
+    case 2:
+      return Colors.green; 
+    case 3:
+      return Color(0xFF057438);
+    default:
+      return Colors.red;
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +137,7 @@ class _StatusPageState extends State<StatusPage> {
                                 Text(
                                   getStatusText(status),
                                   style: TextStyle(
-                                    color: Colors.green,
+                                    color: getStatusTextColor(status),
                                   ),
                                 ),
                               ],

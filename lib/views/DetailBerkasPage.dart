@@ -102,19 +102,62 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Detail Berkas'),
-      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Judul: ${widget.judul}',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 70,
+                    height: 65,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF057438),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.edit_document,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                  SizedBox(width: 30),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Pengajuan Surat',
+                        style: TextStyle(
+                          color: Color(0xFF057438),
+                          fontSize: 30,
+                          fontFamily: 'Interbold',
+                        ),
+                      ),
+                      Text(
+                        'Masyarakat Desa Jember',
+                        style: TextStyle(
+                          color: Color(0xFF057438),
+                          fontSize: 16,
+                          fontFamily: 'Interbold',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             SizedBox(height: 20),
+            Text(
+              '${widget.judul}'.toString()
+              .split(' ').map((String word) {
+                return word[0].toUpperCase() + word.substring(1);
+              }).join(' '),
+              style: TextStyle(
+                fontSize: 20, 
+                fontFamily: "jomolhari",
+                fontWeight: FontWeight.bold),
+            ),
             TextField(
               controller: keteranganController,
               decoration: InputDecoration(
@@ -124,7 +167,6 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -133,17 +175,13 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20),
-                      Text(
-                        widget.formTambahan[index],
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
                       SizedBox(height: 10),
                       TextField(
                         controller: tambahanControllers[index],
                         decoration: InputDecoration(
-                          labelText: 'Masukkan ${widget.formTambahan[index]}',
+                          labelText: '${widget.formTambahan[index]}',
+                          hintText: 'Masukkan ${widget.formTambahan[index]}',
+                          hintStyle: TextStyle(color: Colors.black),
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -152,7 +190,6 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                 },
               ),
             ),
-            SizedBox(height: 20),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
