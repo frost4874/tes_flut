@@ -84,6 +84,9 @@ flutter:
     - family: jotione
       fonts:
         - asset: assets/fonts/JotiOne.ttf
+    - family: jomolhari
+      fonts:
+        - asset: assets/fonts/Jomolhari-Regular.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

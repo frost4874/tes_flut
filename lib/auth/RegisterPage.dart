@@ -155,17 +155,20 @@ class _RegisterPageState extends State<RegisterPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Registrasi Berhasil', 
-              style: TextStyle(color: Color(0xFF057438),
-              fontFamily: 'Interbold',),),
+            style: TextStyle(
+              color: Color(0xFF057438),
+              fontFamily: 'Interbold',
+            ),
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
                 Text('Registrasi Anda berhasil.', 
                   style: TextStyle(color: Color(0xFF057438),
-                  fontFamily: 'Interbold',),),
+                  ),),
                 Text('Klik Ok untuk melanjutkan ke Login.', 
                   style: TextStyle(color: Color(0xFF057438),
-                  fontFamily: 'Interbold',),),
+                  ),),
               ],
             ),
           ),
