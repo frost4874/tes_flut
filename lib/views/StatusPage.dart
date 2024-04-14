@@ -47,13 +47,16 @@ class _StatusPageState extends State<StatusPage> {
     }
   }
 
-  void updateData(String content, String idRequest) async {
+  void updateData(String content, String keterangan, String idRequest) async {
     // Send HTTP PUT request
     try {
       var url = Uri.parse('http://localhost:8000/api/update-data/$idRequest');
       var response = await http.put(
         url,
-        body: json.encode({'form_tambahan': content}),
+        body: json.encode({
+          'form_tambahan': content,
+          'keterangan': keterangan, // Menyertakan keterangan dalam request
+        }),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -69,7 +72,7 @@ class _StatusPageState extends State<StatusPage> {
     }
   }
 
-  void showEditContent(String content, String idRequest) {
+  void showEditContent(String content, String idRequest, String keterangan) {
     List<String> formData = content.split(',');
     List<TextEditingController> controllers = [];
     List<String> formTitles = [];
@@ -78,6 +81,9 @@ class _StatusPageState extends State<StatusPage> {
       formTitles.add(parts[0]);
       controllers.add(TextEditingController(text: parts[1]));
     }
+
+    TextEditingController keteranganController = TextEditingController(
+        text: keterangan); // Menggunakan nilai keterangan dari database
 
     showDialog(
       context: context,
@@ -94,6 +100,10 @@ class _StatusPageState extends State<StatusPage> {
                         controller: controllers[i],
                         decoration: InputDecoration(labelText: formTitles[i]),
                       ),
+                    TextField(
+                      controller: keteranganController,
+                      decoration: InputDecoration(labelText: 'Keterangan'),
+                    ),
                   ],
                 ),
               ),
@@ -116,7 +126,12 @@ class _StatusPageState extends State<StatusPage> {
                       }
                     }
                     // Call function to update data
-                    updateData(updatedContent, idRequest);
+                    updateData(
+                      updatedContent,
+                      keteranganController
+                          .text, // Mengambil nilai keterangan dari TextField
+                      idRequest,
+                    );
                     Navigator.of(context).pop(); // Close dialog
                   },
                   child: Text('Kirim'),
@@ -249,8 +264,10 @@ class _StatusPageState extends State<StatusPage> {
                                   // Hanya tampilkan dialog edit jika status adalah 0 (belum diproses)
                                   if (status == 0) {
                                     showEditContent(
-                                        dataRequests[index]['form_tambahan'],
-                                        idRequest.toString());
+                                      dataRequests[index]['form_tambahan'],
+                                      idRequest.toString(),
+                                      dataRequests[index]['keterangan'],
+                                    );
                                   }
                                 },
                                 child: Image.asset(
