@@ -108,65 +108,75 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 70,
-                    height: 65,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF057438),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.edit_document,
-                      color: Colors.white,
-                      size: 40,
-                    ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 70,
+                  height: 65,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF057438),
+                    shape: BoxShape.circle,
                   ),
-                  SizedBox(width: 30),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Pengajuan Surat',
-                        style: TextStyle(
-                          color: Color(0xFF057438),
-                          fontSize: 30,
-                          fontFamily: 'Interbold',
-                        ),
-                      ),
-                      Text(
-                        'Masyarakat Desa Jember',
-                        style: TextStyle(
-                          color: Color(0xFF057438),
-                          fontSize: 16,
-                          fontFamily: 'Interbold',
-                        ),
-                      ),
-                    ],
+                  child: Icon(
+                    Icons.edit_document,
+                    color: Colors.white,
+                    size: 40,
                   ),
-                ],
-              ),
+                ),
+                SizedBox(width: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Pengajuan Surat',
+                      style: TextStyle(
+                        color: Color(0xFF057438),
+                        fontSize: 30,
+                        fontFamily: 'Interbold',
+                      ),
+                    ),
+                    Text(
+                      'Masyarakat Desa Jember',
+                      style: TextStyle(
+                        color: Color(0xFF057438),
+                        fontSize: 16,
+                        fontFamily: 'Interbold',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
             SizedBox(height: 20),
             Text(
-              '${widget.judul}'.toString()
-              .split(' ').map((String word) {
+              '${widget.judul}'.toString().split(' ').map((String word) {
                 return word[0].toUpperCase() + word.substring(1);
               }).join(' '),
               style: TextStyle(
-                fontSize: 20, 
+                fontSize: 20,
                 fontFamily: "jomolhari",
-                fontWeight: FontWeight.bold),
-            ),
-            TextField(
-              controller: keteranganController,
-              decoration: InputDecoration(
-                labelText: 'Keterangan',
-                hintText:
-                    'Isi data berikut sesuai dengan form tambahan yang diterima',
-                border: OutlineInputBorder(),
+                fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: 20),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300]!),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: TextField(
+                controller: keteranganController,
+                decoration: InputDecoration(
+                  labelText: 'Keterangan',
+                  hintText:
+                      'Isi data berikut sesuai dengan form tambahan yang diterima',
+                  hintStyle: TextStyle(color: Colors.black),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -176,13 +186,21 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 10),
-                      TextField(
-                        controller: tambahanControllers[index],
-                        decoration: InputDecoration(
-                          labelText: '${widget.formTambahan[index]}',
-                          hintText: 'Masukkan ${widget.formTambahan[index]}',
-                          hintStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey[300]!),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextField(
+                          controller: tambahanControllers[index],
+                          decoration: InputDecoration(
+                            labelText: '${widget.formTambahan[index]}',
+                            hintText: 'Masukkan ${widget.formTambahan[index]}',
+                            hintStyle: TextStyle(color: Colors.black),
+                            border: InputBorder.none,
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 16),
+                          ),
                         ),
                       ),
                     ],
@@ -190,14 +208,26 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                 },
               ),
             ),
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: () {
-                  submitDataToServer(widget.idBerkas, widget.nik,
-                      widget.kecamatan, widget.desa, widget.formTambahan);
-                },
-                child: Text('Submit'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                submitDataToServer(widget.idBerkas, widget.nik,
+                    widget.kecamatan, widget.desa, widget.formTambahan);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF057438),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+              ),
+              child: Text(
+                'Submit',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Interbold',
+                  fontSize: 18,
+                ),
               ),
             ),
           ],

@@ -22,9 +22,9 @@ class _DashboardPageState extends State<DashboardPage> {
   late String _email = '';
   late int _selectedIndex = 0;
   late PageController _pageController;
-  late List<String>? _judulBerkas = []; // Initialize with nullable list
-  late List<String>? _idBerkas = []; // Initialize with nullable list
-  late List<String>? _formTambahan = []; // Initialize with nullable list
+  late List<String>? _judulBerkas = [];
+  late List<String>? _idBerkas = [];
+  late List<String>? _formTambahan = [];
   List<String> _searchResults = [];
   bool _showAllFiles = false;
 
@@ -114,7 +114,6 @@ class _DashboardPageState extends State<DashboardPage> {
     }
   }
 
-  // Fungsi untuk melakukan pencarian
   void _searchBerkas(String query) {
     if (query.isNotEmpty) {
       List<String> results = [];
@@ -140,14 +139,17 @@ class _DashboardPageState extends State<DashboardPage> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Color(0xFF057438),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFF057438), Color(0xFF0B8043)],
+              ),
             ),
             child: Column(
               children: <Widget>[
                 if (_selectedIndex == 0)
                   Container(
-                    padding: EdgeInsets.fromLTRB(
-                        40, 30, 40, 0), //kanan=3, ats=2, kiri=1,
+                    padding: EdgeInsets.fromLTRB(40, 30, 40, 0),
                     child: TextField(
                       decoration: InputDecoration(
                         filled: true,
@@ -156,8 +158,10 @@ class _DashboardPageState extends State<DashboardPage> {
                         hintStyle: TextStyle(color: Color(0xFF057438)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide.none,
                         ),
-                        prefixIcon: Icon(Icons.search),
+                        prefixIcon:
+                            Icon(Icons.search, color: Color(0xFF057438)),
                       ),
                       onChanged: (String query) {
                         _searchBerkas(query);
@@ -225,8 +229,9 @@ class _DashboardPageState extends State<DashboardPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.more_horiz),
-                        Text('Lihat Semua Berkas')
+                        Icon(Icons.more_horiz, color: Colors.white),
+                        Text('Lihat Semua Berkas',
+                            style: TextStyle(color: Colors.white)),
                       ],
                     ),
                   ),
@@ -243,8 +248,9 @@ class _DashboardPageState extends State<DashboardPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.more_horiz_rounded),
-                        Text('Tampilkan Kurang')
+                        Icon(Icons.more_horiz_rounded, color: Colors.white),
+                        Text('Tampilkan Kurang',
+                            style: TextStyle(color: Colors.white)),
                       ],
                     ),
                   ),
@@ -382,17 +388,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                               _desa);
                                         },
                                         icon: Container(
-                                          width: 35,
-                                          height: 35,
+                                          width: 43,
+                                          height: 43,
                                           decoration: BoxDecoration(
                                             color: randomColor,
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                                BorderRadius.circular(15),
                                           ),
-                                          child: Icon(
-                                            Icons.email,
-                                            color: Colors.white,
-                                            size: 25,
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.email,
+                                              color: Colors.white,
+                                              size: 35,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -455,10 +463,8 @@ class _DashboardPageState extends State<DashboardPage> {
     Colors.greenAccent,
     Colors.blueAccent,
     Colors.redAccent,
-    // Tambahkan warna lain sesuai kebutuhan
   ];
 
-  // Mengembalikan warna berdasarkan indeks yang diberikan
   Color _getRandomColor(int index) {
     return _randomColors[index % _randomColors.length];
   }
