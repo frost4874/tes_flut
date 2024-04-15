@@ -154,7 +154,8 @@ class _RegisterPageState extends State<RegisterPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Registrasi Berhasil', 
+          title: Text(
+            'Registrasi Berhasil',
             style: TextStyle(
               color: Color(0xFF057438),
               fontFamily: 'Interbold',
@@ -163,12 +164,18 @@ class _RegisterPageState extends State<RegisterPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('Registrasi Anda berhasil.', 
-                  style: TextStyle(color: Color(0xFF057438),
-                  ),),
-                Text('Klik Ok untuk melanjutkan ke Login.', 
-                  style: TextStyle(color: Color(0xFF057438),
-                  ),),
+                Text(
+                  'Registrasi Anda berhasil.',
+                  style: TextStyle(
+                    color: Color(0xFF057438),
+                  ),
+                ),
+                Text(
+                  'Klik Ok untuk melanjutkan ke Login.',
+                  style: TextStyle(
+                    color: Color(0xFF057438),
+                  ),
+                ),
               ],
             ),
           ),
@@ -197,11 +204,14 @@ class _RegisterPageState extends State<RegisterPage> {
       UserData userData = UserData(
         nik: nikController.text,
         nama: nameController.text,
+        email: emailController.text,
+        telepon: tlpController.text,
         jekel: genderValue,
         kecamatan: selectedKecamatan ?? '',
         desa: selectedDesa ?? '',
-        kota: 'Jember', // Ganti dengan nama kota yang sesuai
+        kota: 'Jember',
         tanggalLahir: formattedDate,
+        alamat: addressController.text,
         password: passwordController.text,
       );
 
@@ -218,8 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
       print('Role: ${userData.role}');
 
       final response = await http.post(
-        Uri.parse(
-            'http://localhost:8000/api/register_flutter'), // Ganti dengan URL endpoint API Anda
+        Uri.parse('http://localhost:8000/api/register_flutter'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -304,11 +313,13 @@ class _RegisterPageState extends State<RegisterPage> {
               Card(
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40.0), // Adjust the value as needed
+                  borderRadius:
+                      BorderRadius.circular(40.0), // Adjust the value as needed
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40.0), // Same value as the Card's borderRadius
+                    borderRadius: BorderRadius.circular(
+                        40.0), // Same value as the Card's borderRadius
                     color: Color(0xFF057438), // Background color set to #057438
                   ),
                   child: Form(
@@ -330,26 +341,39 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelStyle: TextStyle(color: Colors.white),
                               hintText: "Masukkan NIK",
                               hintStyle: TextStyle(color: Colors.white),
-                              prefixIcon: Icon(Icons.person, color: Colors.white,),
+                              prefixIcon: Icon(
+                                Icons.person,
+                                color: Colors.white,
+                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
-                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                              enabledBorder: OutlineInputBorder(
+                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
-                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                              focusedBorder: OutlineInputBorder(
+                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder( // To change border color when error
+                              errorBorder: OutlineInputBorder(
+                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), // Set the border color to yellow
                               ),
-                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                              focusedErrorBorder: OutlineInputBorder(
+                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), // Set the border color to yellow
                               ),
                             ),
                             validator: (value) {
@@ -367,7 +391,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: TextFormField(
-                            style: TextStyle(color: Colors.white,),
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                             keyboardType: TextInputType.name,
                             controller: nameController,
                             decoration: InputDecoration(
@@ -378,23 +404,36 @@ class _RegisterPageState extends State<RegisterPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
-                              prefixIcon: Icon(Icons.person_2_sharp,color: Colors.white,),
-                              enabledBorder: OutlineInputBorder( // To change border color when enabled
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              prefixIcon: Icon(
+                                Icons.person_2_sharp,
+                                color: Colors.white,
                               ),
-                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                              enabledBorder: OutlineInputBorder(
+                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder( // To change border color when error
+                              errorBorder: OutlineInputBorder(
+                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), // Set the border color to yellow
                               ),
-                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                              focusedErrorBorder: OutlineInputBorder(
+                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), // Set the border color to yellow
                               ),
                             ),
                             validator: (value) {
@@ -409,7 +448,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: TextFormField(
-                            style: TextStyle(color: Colors.white,),
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                             keyboardType: TextInputType.phone,
                             autofocus: true,
                             controller: tlpController,
@@ -421,23 +462,36 @@ class _RegisterPageState extends State<RegisterPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
-                              prefixIcon: Icon(Icons.call,color: Colors.white,),
-                              enabledBorder: OutlineInputBorder( // To change border color when enabled
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              prefixIcon: Icon(
+                                Icons.call,
+                                color: Colors.white,
                               ),
-                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                              enabledBorder: OutlineInputBorder(
+                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder( // To change border color when error
+                              errorBorder: OutlineInputBorder(
+                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), // Set the border color to yellow
                               ),
-                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                              focusedErrorBorder: OutlineInputBorder(
+                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), // Set the border color to yellow
                               ),
                             ),
                             validator: (value) {
@@ -452,7 +506,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: TextFormField(
-                            style: TextStyle(color: Colors.white,),
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                             keyboardType: TextInputType.emailAddress,
                             controller: emailController,
                             decoration: InputDecoration(
@@ -463,29 +519,43 @@ class _RegisterPageState extends State<RegisterPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
-                              prefixIcon: Icon(Icons.email_rounded,color: Colors.white,),
-                              enabledBorder: OutlineInputBorder( // To change border color when enabled
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              prefixIcon: Icon(
+                                Icons.email_rounded,
+                                color: Colors.white,
                               ),
-                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                              enabledBorder: OutlineInputBorder(
+                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder( // To change border color when error
+                              errorBorder: OutlineInputBorder(
+                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), // Set the border color to yellow
                               ),
-                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                              focusedErrorBorder: OutlineInputBorder(
+                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), // Set the border color to yellow
                               ),
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Harap isi bidang ini';
-                              } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              } else if (!RegExp(
+                                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                                   .hasMatch(value)) {
                                 return 'Masukkan email dengan format yang valid';
                               }
@@ -506,8 +576,14 @@ class _RegisterPageState extends State<RegisterPage> {
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
                                 icon: visibility
-                                    ? Icon(Icons.visibility, color: Colors.white,)
-                                    : Icon(Icons.visibility_off, color: Colors.white,),
+                                    ? Icon(
+                                        Icons.visibility,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.visibility_off,
+                                        color: Colors.white,
+                                      ),
                                 onPressed: () {
                                   setState(() {
                                     visibility = !visibility;
@@ -521,30 +597,44 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelStyle: TextStyle(color: Colors.white),
                               hintText: "Masukkan Password Anda",
                               hintStyle: TextStyle(color: Colors.white),
-                              prefixIcon: Icon(Icons.lock_rounded,color: Colors.white,),
-                              enabledBorder: OutlineInputBorder( // To change border color when enabled
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              prefixIcon: Icon(
+                                Icons.lock_rounded,
+                                color: Colors.white,
                               ),
-                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                              enabledBorder: OutlineInputBorder(
+                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder( // To change border color when error
+                              errorBorder: OutlineInputBorder(
+                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), // Set the border color to yellow
                               ),
-                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                              focusedErrorBorder: OutlineInputBorder(
+                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), // Set the border color to yellow
                               ),
                               errorMaxLines: 3,
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Harap isi bidang ini';
-                              } else if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$')
+                              } else if (!RegExp(
+                                      r'^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$')
                                   .hasMatch(value)) {
                                 return 'Password harus terdiri dari minimal satu huruf besar, satu angka, dan memiliki panjang minimal 8 karakter';
                               }
@@ -565,8 +655,14 @@ class _RegisterPageState extends State<RegisterPage> {
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
                                 icon: visibility1
-                                    ? Icon(Icons.visibility, color: Colors.white,)
-                                    : Icon(Icons.visibility_off, color: Colors.white,),
+                                    ? Icon(
+                                        Icons.visibility,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.visibility_off,
+                                        color: Colors.white,
+                                      ),
                                 onPressed: () {
                                   setState(() {
                                     visibility1 = !visibility1;
@@ -580,23 +676,36 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelStyle: TextStyle(color: Colors.white),
                               hintText: "Masukkan Password Anda",
                               hintStyle: TextStyle(color: Colors.white),
-                              prefixIcon: Icon(Icons.lock_rounded,color: Colors.white,),
-                              enabledBorder: OutlineInputBorder( // To change border color when enabled
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              prefixIcon: Icon(
+                                Icons.lock_rounded,
+                                color: Colors.white,
                               ),
-                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                              enabledBorder: OutlineInputBorder(
+                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder( // To change border color when error
+                              errorBorder: OutlineInputBorder(
+                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), // Set the border color to yellow
                               ),
-                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                              focusedErrorBorder: OutlineInputBorder(
+                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), // Set the border color to yellow
                               ),
                               errorMaxLines: 3,
                             ),
@@ -624,7 +733,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(value,
+                                child: Text(
+                                  value,
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -639,24 +749,40 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelText: "Gender",
                               labelStyle: TextStyle(color: Colors.white),
                               prefixIcon: genderValue == 'Laki-Laki'
-                                  ? Icon(Icons.male_rounded, color: Colors.white,)
-                                  : Icon(Icons.female_rounded, color: Colors.white,),
-                              enabledBorder: OutlineInputBorder( // To change border color when enabled
+                                  ? Icon(
+                                      Icons.male_rounded,
+                                      color: Colors.white,
+                                    )
+                                  : Icon(
+                                      Icons.female_rounded,
+                                      color: Colors.white,
+                                    ),
+                              enabledBorder: OutlineInputBorder(
+                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
-                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                              focusedBorder: OutlineInputBorder(
+                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder( // To change border color when error
+                              errorBorder: OutlineInputBorder(
+                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), // Set the border color to yellow
                               ),
-                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                              focusedErrorBorder: OutlineInputBorder(
+                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), // Set the border color to yellow
                               ),
                             ),
                           ),
@@ -679,23 +805,36 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                   labelText: "Tanggal Lahir",
                                   labelStyle: TextStyle(color: Colors.white),
-                                  prefixIcon: Icon(Icons.calendar_today, color: Colors.white,),
-                                  enabledBorder: OutlineInputBorder( // To change border color when enabled
-                                    borderRadius: BorderRadius.circular(25.0),
-                                    borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                  prefixIcon: Icon(
+                                    Icons.calendar_today,
+                                    color: Colors.white,
                                   ),
-                                  focusedBorder: OutlineInputBorder( // To change border color when focused
+                                  enabledBorder: OutlineInputBorder(
+                                    // To change border color when enabled
                                     borderRadius: BorderRadius.circular(25.0),
-                                    borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white.withOpacity(0.8)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    // To change border color when focused
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    borderSide: BorderSide(
+                                        color: Colors.white.withOpacity(0.8)),
                                   ),
                                   errorStyle: TextStyle(color: Colors.orange),
-                                  errorBorder: OutlineInputBorder( // To change border color when error
+                                  errorBorder: OutlineInputBorder(
+                                    // To change border color when error
                                     borderRadius: BorderRadius.circular(25.0),
-                                    borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                    borderSide: BorderSide(
+                                        color: Colors
+                                            .orange), // Set the border color to yellow
                                   ),
-                                  focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    // To change border color when focused with error
                                     borderRadius: BorderRadius.circular(25.0),
-                                    borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                    borderSide: BorderSide(
+                                        color: Colors
+                                            .white), // Set the border color to yellow
                                   ),
                                 ),
                                 validator: (value) {
@@ -714,7 +853,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: FutureBuilder<List<String>>(
                             future: kecamatanListFuture,
                             builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
                                 return CircularProgressIndicator();
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
@@ -724,28 +864,33 @@ class _RegisterPageState extends State<RegisterPage> {
                                   onChanged: (String? newValue) {
                                     setState(() {
                                       selectedKecamatan = newValue!;
-                                      _fetchDesaByKecamatanId(selectedKecamatanId!);
+                                      _fetchDesaByKecamatanId(
+                                          selectedKecamatanId!);
                                       fetchKecamatanId(selectedKecamatan!)
                                           .then((kecamatanId) {
                                         setState(() {
                                           selectedKecamatanId = kecamatanId;
                                         });
                                         // Panggil fungsi untuk memperbarui daftar desa
-                                        _fetchDesaByKecamatanId(selectedKecamatanId!);
+                                        _fetchDesaByKecamatanId(
+                                            selectedKecamatanId!);
                                       }).catchError((error) {
-                                        print('Error fetching kecamatan id: $error');
+                                        print(
+                                            'Error fetching kecamatan id: $error');
                                       });
                                     });
                                   },
                                   items: snapshot.data!
-                                      .map<DropdownMenuItem<String>>((String value) {
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
-                                      child: Text(value,
+                                      child: Text(
+                                        value,
                                         style: TextStyle(
-                                        color: Colors.white,
+                                          color: Colors.white,
                                         ),
-                                    ),
+                                      ),
                                     );
                                   }).toList(),
                                   dropdownColor: Color(0xFF057438),
@@ -755,14 +900,21 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                                     labelText: "Kecamatan",
                                     labelStyle: TextStyle(color: Colors.white),
-                                    prefixIcon: Icon(Icons.location_on, color: Colors.white,),
-                                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                    prefixIcon: Icon(
+                                      Icons.location_on,
+                                      color: Colors.white,
                                     ),
-                                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                                    enabledBorder: OutlineInputBorder(
+                                      // To change border color when enabled
                                       borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                      borderSide: BorderSide(
+                                          color: Colors.white.withOpacity(0.8)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      // To change border color when focused
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(
+                                          color: Colors.white.withOpacity(0.8)),
                                     ),
                                   ),
                                 );
@@ -777,7 +929,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             future: fetchDesaFromDatabase(selectedKecamatanId ??
                                 ''), // Gunakan id kecamatan yang dipilih
                             builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
                                 return CircularProgressIndicator();
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
@@ -790,12 +943,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                     });
                                   },
                                   items: snapshot.data!
-                                      .map<DropdownMenuItem<String>>((String value) {
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
-                                      child: Text(value,
+                                      child: Text(
+                                        value,
                                         style: TextStyle(
-                                        color: Colors.white,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     );
@@ -807,14 +962,21 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                                     labelText: "Desa",
                                     labelStyle: TextStyle(color: Colors.white),
-                                    prefixIcon: Icon(Icons.location_city,color: Colors.white,),
-                                    enabledBorder: OutlineInputBorder( // To change border color when enabled
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                    prefixIcon: Icon(
+                                      Icons.location_city,
+                                      color: Colors.white,
                                     ),
-                                    focusedBorder: OutlineInputBorder( // To change border color when focused
+                                    enabledBorder: OutlineInputBorder(
+                                      // To change border color when enabled
                                       borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                      borderSide: BorderSide(
+                                          color: Colors.white.withOpacity(0.8)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      // To change border color when focused
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(
+                                          color: Colors.white.withOpacity(0.8)),
                                     ),
                                   ),
                                 );
@@ -826,7 +988,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: TextFormField(
-                            style: TextStyle(color: Colors.white,),
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                             keyboardType: TextInputType.emailAddress,
                             controller: addressController,
                             maxLines: 3,
@@ -838,23 +1002,36 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelStyle: TextStyle(color: Colors.white),
                               hintText: "Masukkan Alamat Lengkap Anda",
                               hintStyle: TextStyle(color: Colors.white),
-                              prefixIcon: Icon(Icons.maps_home_work, color: Colors.white,),
-                              enabledBorder: OutlineInputBorder( // To change border color when enabled
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                              prefixIcon: Icon(
+                                Icons.maps_home_work,
+                                color: Colors.white,
                               ),
-                              focusedBorder: OutlineInputBorder( // To change border color when focused
+                              enabledBorder: OutlineInputBorder(
+                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white.withOpacity(0.8)),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                // To change border color when focused
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder( // To change border color when error
+                              errorBorder: OutlineInputBorder(
+                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), // Set the border color to yellow
                               ),
-                              focusedErrorBorder: OutlineInputBorder( // To change border color when focused with error
+                              focusedErrorBorder: OutlineInputBorder(
+                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white), // Set the border color to yellow
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), // Set the border color to yellow
                               ),
                             ),
                             validator: (value) {
@@ -871,14 +1048,18 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("Sudah punya akun? ",
+                              Text(
+                                "Sudah punya akun? ",
                                 style: TextStyle(
-                                color: Colors.white,
+                                  color: Colors.white,
                                 ),
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginPage()));
                                 },
                                 child: Text(
                                   'Login disini',
@@ -910,15 +1091,18 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                             style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.white),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                               ),
-                              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                EdgeInsets.symmetric(vertical: 20.0, horizontal: 160.0),
+                              padding:
+                                  MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                EdgeInsets.symmetric(
+                                    vertical: 20.0, horizontal: 160.0),
                               ),
                             ),
                           ),

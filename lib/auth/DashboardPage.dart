@@ -50,6 +50,7 @@ class _DashboardPageState extends State<DashboardPage> {
         _desa = responseData['desa'] ?? '';
         _email = responseData['email'] ?? '';
       });
+      print(response.body);
     } else {
       throw Exception('Failed to load data');
     }
@@ -175,7 +176,10 @@ class _DashboardPageState extends State<DashboardPage> {
                     children: [
                       _buildBiodataList(),
                       StatusPage(Biodata: widget.Biodata),
-                      ProfilPage(Biodata: _name),
+                      ProfilPage(
+                        Biodata: _name,
+                        email: _email,
+                      ),
                     ],
                   ),
                 ),

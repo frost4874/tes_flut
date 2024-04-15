@@ -3,8 +3,9 @@ import 'package:tes_flut/auth/LoginPage.dart';
 
 class ProfilPage extends StatefulWidget {
   final String Biodata;
+  final String email;
 
-  ProfilPage({required this.Biodata});
+  ProfilPage({required this.Biodata, required this.email});
 
   @override
   _ProfilPageState createState() => _ProfilPageState();
@@ -74,7 +75,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             ),
                           ),
                           Text(
-                            'ngambil data email',
+                            widget.email,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
