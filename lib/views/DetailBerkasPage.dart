@@ -106,7 +106,7 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -118,7 +118,7 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    Icons.edit_document,
+                    Icons.document_scanner,
                     color: Colors.white,
                     size: 40,
                   ),
@@ -148,35 +148,99 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
               ],
             ),
             SizedBox(height: 20),
-            Text(
-              '${widget.judul}'.toString().split(' ').map((String word) {
-                return word[0].toUpperCase() + word.substring(1);
-              }).join(' '),
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: "jomolhari",
-                fontWeight: FontWeight.bold,
+            Card(
+              elevation: 5.0,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.circular(40.0), 
               ),
-            ),
-            SizedBox(height: 20),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey[300]!),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: TextField(
-                controller: keteranganController,
-                decoration: InputDecoration(
-                  labelText: 'Keterangan',
-                  hintText:
-                      'Isi data berikut sesuai dengan form tambahan yang diterima',
-                  hintStyle: TextStyle(color: Colors.black),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40.0), 
+                  color: Color(0xFF057438), 
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 20),
+                    Center(
+                      child: Text(
+                        '${widget.judul}'.toString().split(' ').map((String word) {
+                          return word[0].toUpperCase() + word.substring(1);
+                        }).join(' '),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "jomolhari",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                      child: TextFormField(
+                        controller: keteranganController,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          labelText: 'Keterangan',
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintText:'Isi data berikut sesuai dengan form tambahan yang diterima',
+                          hintStyle: TextStyle(color: Colors.white),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(
+                              color: Colors.white.withOpacity(0.8)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(
+                              color: Colors.white.withOpacity(0.8)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          submitDataToServer(widget.idBerkas, widget.nik,
+                              widget.kecamatan, widget.desa, widget.formTambahan);
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Submit',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Color(0xFF057438),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
+                          padding:
+                          MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            EdgeInsets.symmetric(
+                              vertical: 20.0, horizontal: 170.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -206,28 +270,6 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                     ],
                   );
                 },
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                submitDataToServer(widget.idBerkas, widget.nik,
-                    widget.kecamatan, widget.desa, widget.formTambahan);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF057438),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-              ),
-              child: Text(
-                'Submit',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Interbold',
-                  fontSize: 18,
-                ),
               ),
             ),
           ],

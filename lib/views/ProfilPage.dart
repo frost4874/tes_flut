@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tes_flut/auth/LoginPage.dart';
+import 'package:tes_flut/views/EditbiodataPage.dart';
+import 'package:tes_flut/views/RiwayatPage.dart';
 
 class ProfilPage extends StatefulWidget {
   final String Biodata;
@@ -130,7 +132,10 @@ class _ProfilPageState extends State<ProfilPage> {
                           ),
                         ),
                         onTap: () {
-                          // Action when Edit is tapped
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => EditbiodataPage()),
+                          );
                         },
                       ),
                     ),
@@ -161,7 +166,10 @@ class _ProfilPageState extends State<ProfilPage> {
                           ),
                         ),
                         onTap: () {
-                          // Action when Riwayat is tapped
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => RiwayatPage()),
+                          );
                         },
                       ),
                     ),
