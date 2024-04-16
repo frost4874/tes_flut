@@ -92,7 +92,7 @@ class _StatusPageState extends State<StatusPage> {
           builder: (context, setState) {
             return AlertDialog(
               backgroundColor: Color(0xFF057438),
-              title: Text('Isi Form Tambahan',
+              title: Text('Edit Form Tambahan',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -322,6 +322,41 @@ class _StatusPageState extends State<StatusPage> {
                                       dataRequests[index]['form_tambahan'],
                                       idRequest.toString(),
                                       dataRequests[index]['keterangan'],
+                                    );
+                                  }
+                                  else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          backgroundColor: Color(0xFF057438),
+                                          title: Text(
+                                            'Peringatan',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          content: Text(
+                                            'Form tidak dapat diedit karena status telah diubah.',
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                'Tutup',
+                                                style: TextStyle(
+                                                  color: Colors.yellow,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
                                   }
                                 },
