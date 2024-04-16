@@ -12,19 +12,19 @@ class IconPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.edit_note_rounded,
+              Icons.house,
               size: 50,
               color: Colors.red,
             ),
             SizedBox(height: 20),
             Icon(
-              Icons.edit_note_outlined,
+              Icons.other_houses,
               size: 50,
               color: Colors.yellow,
             ),
             SizedBox(height: 20),
             Icon(
-              Icons.edit_note_sharp,
+              Icons.apartment,
               size: 50,
               color: Colors.blue,
             ),

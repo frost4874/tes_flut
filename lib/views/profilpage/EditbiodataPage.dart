@@ -43,7 +43,15 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  TextEditingController pekerjaanController = TextEditingController();
+  TextEditingController tempatlahirController = TextEditingController();
+  TextEditingController rtController = TextEditingController();
+  TextEditingController rwController = TextEditingController();
   String genderValue = '';
+  String? agamavalue = '';
+  String? statuspernikahanvalue = '';
+  String? warganegaraanvalue = '';
+  String? statuswargavalue = '';
   DateTime? selectedDate;
   bool visibility = true;
   bool visibility1 = true;
@@ -344,13 +352,13 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
                   borderRadius:
-                      BorderRadius.circular(40.0), // Adjust the value as needed
+                      BorderRadius.circular(40.0), 
                 ),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(
-                        40.0), // Same value as the Card's borderRadius
-                    color: Color(0xFF057438), // Background color set to #057438
+                        40.0), 
+                    color: Color(0xFF057438), 
                   ),
                   child: Form(
                     key: _formKey,
@@ -379,31 +387,26 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
-                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors
-                                        .orange), // Set the border color to yellow
+                                        .orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                    color: Colors
-                                        .white), // Set the border color to yellow
+                                    color: Colors.white),
                               ),
                             ),
                             validator: (value) {
@@ -427,9 +430,9 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                             keyboardType: TextInputType.name,
                             controller: nameController,
                             decoration: InputDecoration(
-                              labelText: "Nama",
+                              labelText: "Nama Lengkap",
                               labelStyle: TextStyle(color: Colors.white),
-                              hintText: "Masukkan Nama Anda",
+                              hintText: "Masukkan Nama Lengkap Anda",
                               hintStyle: TextStyle(color: Colors.white),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
@@ -439,31 +442,27 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                 color: Colors.white,
                               ),
                               enabledBorder: OutlineInputBorder(
-                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
-                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors
-                                        .orange), // Set the border color to yellow
+                                        .orange), 
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors
-                                        .white), // Set the border color to yellow
+                                        .white),
                               ),
                             ),
                             validator: (value) {
@@ -734,6 +733,116 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                         Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            controller: pekerjaanController,
+                            decoration: InputDecoration(
+                              labelText: "Pekerjaan",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan Pekerjaan Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.badge,
+                                color: Colors.white,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), 
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: DropdownButtonFormField<String>(
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                agamavalue = newValue!;
+                              });
+                            },
+                            items: <String>['Islam', 'Kristen', 'Katolik', 'Hindu', 'Budha']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            dropdownColor: Color(0xFF057438),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              labelText: "Agama",
+                              labelStyle: TextStyle(color: Colors.white),
+                              prefixIcon: Icon(
+                                Icons.menu_book,
+                                color: Colors.white,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), 
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), 
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: DropdownButtonFormField<String>(
                             value: genderValue,
                             onChanged: (String? newValue) {
@@ -770,33 +879,254 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                       color: Colors.white,
                                     ),
                               enabledBorder: OutlineInputBorder(
-                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
-                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors
-                                        .orange), // Set the border color to yellow
+                                        .orange), 
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors
-                                        .white), // Set the border color to yellow
+                                        .white), 
                               ),
                             ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: DropdownButtonFormField<String>(
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                statuspernikahanvalue = newValue!;
+                              });
+                            },
+                            items: <String>['Belum Kawin', 'Kawin', 'Cerai Mati']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            dropdownColor: Color(0xFF057438),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              labelText: "Status Pernikahan",
+                              labelStyle: TextStyle(color: Colors.white),
+                              prefixIcon: Icon(
+                                Icons.supervisor_account,
+                                color: Colors.white,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), 
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), 
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: DropdownButtonFormField<String>(
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                warganegaraanvalue = newValue!;
+                              });
+                            },
+                            items: <String>['WNI', 'WNA']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            dropdownColor: Color(0xFF057438),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              labelText: "Warganegaraan",
+                              labelStyle: TextStyle(color: Colors.white),
+                              prefixIcon: Icon(
+                                Icons.apartment,
+                                color: Colors.white,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), 
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), 
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: DropdownButtonFormField<String>(
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                statuswargavalue = newValue!;
+                              });
+                            },
+                            items: <String>['Sekolah', 'Bekerja', 'Menganggur']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            dropdownColor: Color(0xFF057438),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              labelText: "Status Warga",
+                              labelStyle: TextStyle(color: Colors.white),
+                              prefixIcon: Icon(
+                                Icons.check_circle,
+                                color: Colors.white,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), 
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white), 
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            controller: tempatlahirController,
+                            decoration: InputDecoration(
+                              labelText: "Tempat Lahir",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan Tempat Lahir Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.maps_home_work,
+                                color: Colors.white,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.orange), 
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         GestureDetector(
@@ -810,7 +1140,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                   color: Colors.white,
                                 ),
                                 controller:
-                                    dateController, // Menggunakan TextEditingController
+                                    dateController, 
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(25.0),
@@ -822,31 +1152,25 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                     color: Colors.white,
                                   ),
                                   enabledBorder: OutlineInputBorder(
-                                    // To change border color when enabled
                                     borderRadius: BorderRadius.circular(25.0),
                                     borderSide: BorderSide(
                                         color: Colors.white.withOpacity(0.8)),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    // To change border color when focused
                                     borderRadius: BorderRadius.circular(25.0),
                                     borderSide: BorderSide(
                                         color: Colors.white.withOpacity(0.8)),
                                   ),
                                   errorStyle: TextStyle(color: Colors.orange),
                                   errorBorder: OutlineInputBorder(
-                                    // To change border color when error
                                     borderRadius: BorderRadius.circular(25.0),
                                     borderSide: BorderSide(
-                                        color: Colors
-                                            .orange), // Set the border color to yellow
+                                        color: Colors.orange), 
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
-                                    // To change border color when focused with error
                                     borderRadius: BorderRadius.circular(25.0),
                                     borderSide: BorderSide(
-                                        color: Colors
-                                            .white), // Set the border color to yellow
+                                        color: Colors.white),
                                   ),
                                 ),
                                 validator: (value) {
@@ -993,6 +1317,110 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                   ),
                                 );
                               }
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            controller: rtController,
+                            decoration: InputDecoration(
+                              labelText: "RT",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan RT Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.house,
+                                color: Colors.white,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), 
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            controller: rwController,
+                            decoration: InputDecoration(
+                              labelText: "RW",
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText: "Masukkan RW Anda",
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.house,
+                                color: Colors.white,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
+                              errorStyle: TextStyle(color: Colors.orange),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .orange), 
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                    color: Colors
+                                        .white),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Harap isi bidang ini';
+                              }
+                              return null;
                             },
                           ),
                         ),

@@ -14,7 +14,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
         title: Text(
           'Riwayat',
           style: TextStyle(
-            color: Color(0xFF057438),
+            color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
