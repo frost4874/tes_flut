@@ -20,6 +20,11 @@ class _DashboardPageState extends State<DashboardPage> {
   late String _kecamatan = '';
   late String _desa = '';
   late String _email = '';
+  late String _alamat = '';
+  late String _jekel = '';
+  late String _tglLahir = '';
+  late String _kota = '';
+  late String _telepon = '';
   late int _selectedIndex = 0;
   late PageController _pageController;
   late List<String>? _judulBerkas = [];
@@ -49,6 +54,11 @@ class _DashboardPageState extends State<DashboardPage> {
         _kecamatan = responseData['kecamatan'] ?? '';
         _desa = responseData['desa'] ?? '';
         _email = responseData['email'] ?? '';
+        _alamat = responseData['alamat'] ?? '';
+        _jekel = responseData['jekel'] ?? '';
+        _tglLahir = responseData['tgl_lahir'] ?? '';
+        _kota = responseData['kota'] ?? '';
+        _telepon = responseData['telepon'] ?? '';
       });
       print(response.body);
     } else {
@@ -177,8 +187,16 @@ class _DashboardPageState extends State<DashboardPage> {
                       _buildBiodataList(),
                       StatusPage(Biodata: widget.Biodata),
                       ProfilPage(
-                        Biodata: _name,
+                        name: _name,
                         email: _email,
+                        nik: _nik,
+                        kecamatan: _kecamatan,
+                        desa: _desa,
+                        telepon: _telepon,
+                        tgl_lahir: _tglLahir,
+                        alamat: _alamat,
+                        kota: _kota,
+                        jekel: _jekel,
                       ),
                     ],
                   ),

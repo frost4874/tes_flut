@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:tes_flut/auth/LoginPage.dart';
-import 'package:tes_flut/views/EditbiodataPage.dart';
-import 'package:tes_flut/views/RiwayatPage.dart';
+import 'package:tes_flut/views/profilpage/EditbiodataPage.dart';
+import 'package:tes_flut/views/profilpage/RiwayatPage.dart';
 
 class ProfilPage extends StatefulWidget {
-  final String Biodata;
+  final String name;
   final String email;
+  final String nik;
+  final String kecamatan;
+  final String desa;
+  final String kota;
+  final String alamat;
+  final String tgl_lahir;
+  final String telepon;
+  final String jekel;
 
-  ProfilPage({required this.Biodata, required this.email});
+  ProfilPage(
+      {required this.name,
+      required this.email,
+      required this.nik,
+      required this.kecamatan,
+      required this.desa,
+      required this.kota,
+      required this.alamat,
+      required this.telepon,
+      required this.tgl_lahir,
+      required this.jekel});
 
   @override
   _ProfilPageState createState() => _ProfilPageState();
@@ -20,7 +38,7 @@ class _ProfilPageState extends State<ProfilPage> {
   void initState() {
     super.initState();
     // Mengatur nilai awal controller dengan nama dari login
-    _nameController.text = widget.Biodata;
+    _nameController.text = widget.name;
   }
 
   @override
@@ -69,7 +87,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            widget.Biodata, // Menggunakan nama dari login
+                            widget.name, // Menggunakan nama dari login
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -134,7 +152,19 @@ class _ProfilPageState extends State<ProfilPage> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => EditbiodataPage()),
+                            MaterialPageRoute(
+                                builder: (context) => EditbiodataPage(
+                                      nik: widget.nik,
+                                      name: widget.name,
+                                      email: widget.email,
+                                      kecamatan: widget.kecamatan,
+                                      desa: widget.desa,
+                                      kota: widget.kota,
+                                      alamat: widget.alamat,
+                                      tgl_lahir: widget.tgl_lahir,
+                                      telepon: widget.telepon,
+                                      jekel: widget.jekel,
+                                    )),
                           );
                         },
                       ),
@@ -168,7 +198,8 @@ class _ProfilPageState extends State<ProfilPage> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RiwayatPage()),
+                            MaterialPageRoute(
+                                builder: (context) => RiwayatPage()),
                           );
                         },
                       ),
