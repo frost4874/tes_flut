@@ -1,12 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:tes_flut/auth/LoginPage.dart';
+import 'package:tes_flut/auth/DashboardPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import 'package:tes_flut/views/UserData.dart';
 
 class EditbiodataPage extends StatefulWidget {
-  const EditbiodataPage({Key? key}) : super(key: key);
+  final String nik;
+  final String name;
+  final String email;
+  final String kecamatan;
+  final String desa;
+  final String kota;
+  final String alamat;
+  final String tgl_lahir;
+  final String telepon;
+  final String jekel;
+
+  const EditbiodataPage({
+    Key? key,
+    required this.nik,
+    required this.name,
+    required this.email,
+    required this.kecamatan,
+    required this.desa,
+    required this.kota,
+    required this.alamat,
+    required this.tgl_lahir,
+    required this.telepon,
+    required this.jekel,
+  }) : super(key: key);
 
   @override
   _EditbiodataPageState createState() => _EditbiodataPageState();
@@ -20,9 +42,9 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-  String genderValue = 'Laki-Laki';
-  DateTime? selectedDate;
   TextEditingController addressController = TextEditingController();
+  String genderValue = '';
+  DateTime? selectedDate;
   bool visibility = true;
   bool visibility1 = true;
   final _formKey = GlobalKey<FormState>();
@@ -104,10 +126,18 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
   @override
   void initState() {
     super.initState();
+    nikController.text = widget.nik;
+    emailController.text = widget.email;
+    nameController.text = widget.name;
+    tlpController.text = widget.telepon;
+    addressController.text = widget.alamat;
+    dateController.text = widget.tgl_lahir;
+    genderValue = widget.jekel;
+
     kecamatanListFuture = fetchKecamatanFromDatabase();
     kecamatanListFuture.then((kecamatanList) {
       setState(() {
-        selectedKecamatan = kecamatanList.first;
+        selectedKecamatan = widget.kecamatan;
       });
       fetchKecamatanId(selectedKecamatan!).then((kecamatanId) {
         setState(() {
@@ -116,6 +146,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
         fetchDesaFromDatabase(selectedKecamatanId ?? '').then((desaList) {
           setState(() {
             desaListFuture = Future.value(desaList);
+            selectedDesa = widget.desa;
           });
         }).catchError((error) {
           print('Error fetching desa data: $error');
@@ -187,7 +218,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                 Navigator.pushReplacement(
                   // Ganti halaman dan hapus halaman sebelumnya dari tumpukan
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(
+                    builder: (context) => DashboardPage(
+                      Biodata: widget.nik,
+                    ),
+                  ),
                 );
               },
             ),
@@ -199,53 +234,48 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
 
   void _saveRegistrationData() async {
     if (_formKey.currentState!.validate()) {
-      String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
+      String formattedDate;
+      if (selectedDate != null) {
+        formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
+      } else {
+        formattedDate = widget.tgl_lahir;
+      }
 
-      UserData userData = UserData(
-        nik: nikController.text,
-        nama: nameController.text,
-        email: emailController.text,
-        telepon: tlpController.text,
-        jekel: genderValue,
-        kecamatan: selectedKecamatan ?? '',
-        desa: selectedDesa ?? '',
-        kota: 'Jember',
-        tanggalLahir: formattedDate,
-        alamat: addressController.text,
-        password: passwordController.text,
-      );
+      Map<String, dynamic> userData = {
+        'nik': nikController.text,
+        'nama': nameController.text,
+        'email': emailController.text,
+        'telepon': tlpController.text,
+        'jekel': genderValue,
+        'kecamatan': selectedKecamatan ?? '',
+        'desa': selectedDesa ?? '',
+        'kota': 'Jember',
+        'tgl_lahir': formattedDate,
+        'alamat': addressController.text,
+      };
+      if (passwordController.text.isNotEmpty) {
+        userData['password'] = passwordController.text;
+      }
 
-      // Cetak data pengguna ke terminal
-      print('Data Registrasi:');
-      print('NIK: ${userData.nik}');
-      print('Nama: ${userData.nama}');
-      print('Gender: ${userData.jekel}');
-      print('Kecamatan: ${userData.kecamatan}');
-      print('Desa: ${userData.desa}');
-      print('Kota: ${userData.kota}');
-      print('Tanggal Lahir: ${userData.tanggalLahir}');
-      print('Password: ${userData.password}');
-      print('Role: ${userData.role}');
+      print('Data yang akan dikirim: $userData');
 
-      final response = await http.post(
-        Uri.parse('http://localhost:8000/api/register_flutter'),
+      final response = await http.put(
+        Uri.parse('http://localhost:8000/api/update_biodata'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(userData.toJson()),
+        body: jsonEncode(userData),
       );
-
+      print('Respons: ${response.body}');
       if (response.statusCode == 200) {
-        // Registrasi berhasil, tampilkan dialog sukses
         _showRegistrationSuccessDialog(context);
       } else {
-        // Registrasi gagal, tampilkan pesan kesalahan
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('Registrasi Gagal'),
-              content: Text('Regstrasi Gagal'),
+              content: Text('Registrasi Gagal'),
               actions: <Widget>[
                 TextButton(
                   child: Text('OK'),
@@ -630,16 +660,6 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               ),
                               errorMaxLines: 3,
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Harap isi bidang ini';
-                              } else if (!RegExp(
-                                      r'^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$')
-                                  .hasMatch(value)) {
-                                return 'Password harus terdiri dari minimal satu huruf besar, satu angka, dan memiliki panjang minimal 8 karakter';
-                              }
-                              return null;
-                            },
                           ),
                         ),
                         Container(
@@ -709,14 +729,6 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               ),
                               errorMaxLines: 3,
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Harap isi bidang ini';
-                              } else if (value != passwordController.text) {
-                                return 'Password tidak cocok';
-                              }
-                              return null;
-                            },
                           ),
                         ),
                         Container(
