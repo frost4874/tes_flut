@@ -91,18 +91,49 @@ class _StatusPageState extends State<StatusPage> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Isi Form Tambahan'),
+              backgroundColor: Color(0xFF057438),
+              title: Text('Isi Form Tambahan',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               content: SingleChildScrollView(
                 child: Column(
                   children: [
                     for (int i = 0; i < formData.length; i++)
                       TextField(
                         controller: controllers[i],
-                        decoration: InputDecoration(labelText: formTitles[i]),
+                        decoration: InputDecoration(labelText: formTitles[i],
+                          labelStyle: TextStyle(
+                            color: Colors.yellow,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.yellow), // Warna garis kuning
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.yellow), // Warna garis kuning saat fokus
+                          ),
+                        ),
+                        style: TextStyle(color: Colors.white,),
                       ),
                     TextField(
                       controller: keteranganController,
-                      decoration: InputDecoration(labelText: 'Keterangan'),
+                      decoration: InputDecoration(
+                        labelText: 'Keterangan',
+                        labelStyle: TextStyle(
+                          color: Colors.yellow,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.yellow), // Warna garis kuning
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.yellow), // Warna garis kuning saat fokus
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white,),
                     ),
                   ],
                 ),
@@ -112,11 +143,12 @@ class _StatusPageState extends State<StatusPage> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Tutup'),
+                  child: Text('Tutup',
+                    style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,),
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Update the content based on user input
                     String updatedContent = '';
                     for (int i = 0; i < formData.length; i++) {
                       updatedContent +=
@@ -125,16 +157,17 @@ class _StatusPageState extends State<StatusPage> {
                         updatedContent += ',';
                       }
                     }
-                    // Call function to update data
                     updateData(
                       updatedContent,
                       keteranganController
-                          .text, // Mengambil nilai keterangan dari TextField
+                          .text,
                       idRequest,
                     );
-                    Navigator.of(context).pop(); // Close dialog
+                    Navigator.of(context).pop();
                   },
-                  child: Text('Kirim'),
+                  child: Text('Kirim',
+                    style: TextStyle(color: Color(0xFF057438),fontWeight: FontWeight.bold,),
+                  ),
                 ),
               ],
             );
@@ -226,17 +259,35 @@ class _StatusPageState extends State<StatusPage> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: Text('Detail Permohonan'),
+                                        backgroundColor: Color(0xFF057438),
+                                        title: Text('Detail Permohonan',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                         content: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text('Judul Berkas: $judulBerkas'),
+                                            Text('Judul Berkas: $judulBerkas',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                             Text(
-                                                'Status: ${getStatusText(status)}'),
+                                              'Status: ${getStatusText(status)}',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                             if (keperluan != null)
-                                              Text('Catatan: $keperluan'),
+                                              Text('Catatan: $keperluan',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
                                           ],
                                         ),
                                         actions: [
@@ -244,7 +295,12 @@ class _StatusPageState extends State<StatusPage> {
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },
-                                            child: Text('Tutup'),
+                                            child: Text('Tutup',
+                                              style: TextStyle(
+                                                color: Colors.yellow,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       );
@@ -261,7 +317,6 @@ class _StatusPageState extends State<StatusPage> {
                               SizedBox(width: 20),
                               GestureDetector(
                                 onTap: () {
-                                  // Hanya tampilkan dialog edit jika status adalah 0 (belum diproses)
                                   if (status == 0) {
                                     showEditContent(
                                       dataRequests[index]['form_tambahan'],

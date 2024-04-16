@@ -58,17 +58,18 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Color(0xFF057438),
             title: Text(
               'Login Gagal',
               style: TextStyle(
-                color: Color(0xFF057438),
-                fontFamily: 'Interbold',
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             ),
             content: Text(
               'NIK atau Password Salah',
               style: TextStyle(
-                color: Color(0xFF057438),
+                color: Colors.white,
               ),
             ),
             actions: <Widget>[
@@ -79,8 +80,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(
                   'OK',
                   style: TextStyle(
-                    color: Color(0xFF057438),
-                    fontFamily: 'Interbold',
+                    color: Colors.yellow,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

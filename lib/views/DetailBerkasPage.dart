@@ -182,6 +182,7 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                       child: TextFormField(
                         controller: keteranganController,
                         autofocus: true,
+                        style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: 'Keterangan',
                           labelStyle: TextStyle(color: Colors.white),
@@ -203,6 +204,39 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                         ),
                       ),
                     ),
+                    Column(
+                      children: List.generate(
+                        widget.formTambahan.length,
+                        (index) => Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          child: TextFormField(
+                            controller: tambahanControllers[index],
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              labelText: '${widget.formTambahan[index]}',
+                              labelStyle: TextStyle(color: Colors.white),
+                              hintText:'Masukkan ${widget.formTambahan[index]}',
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.8)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.8)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+              
                     SizedBox(height: 20),
                     Container(
                       alignment: Alignment.center,
@@ -238,38 +272,6 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                     SizedBox(height: 20),
                   ],
                 ),
-              ),
-            ),
-            
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: widget.formTambahan.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 10),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey[300]!),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: TextField(
-                          controller: tambahanControllers[index],
-                          decoration: InputDecoration(
-                            labelText: '${widget.formTambahan[index]}',
-                            hintText: 'Masukkan ${widget.formTambahan[index]}',
-                            hintStyle: TextStyle(color: Colors.black),
-                            border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 16),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
               ),
             ),
           ],
