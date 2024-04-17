@@ -14,18 +14,33 @@ class ProfilPage extends StatefulWidget {
   final String tgl_lahir;
   final String telepon;
   final String jekel;
+  final String tempatlahir;
+  final String agama;
+  final String statusWarga;
+  final String warganegara;
+  final String statusNikah;
+  final String rt;
+  final String rw;
 
-  ProfilPage(
-      {required this.name,
-      required this.email,
-      required this.nik,
-      required this.kecamatan,
-      required this.desa,
-      required this.kota,
-      required this.alamat,
-      required this.telepon,
-      required this.tgl_lahir,
-      required this.jekel});
+  ProfilPage({
+    required this.name,
+    required this.email,
+    required this.nik,
+    required this.kecamatan,
+    required this.desa,
+    required this.kota,
+    required this.alamat,
+    required this.telepon,
+    required this.tgl_lahir,
+    required this.jekel,
+    required this.tempatlahir,
+    required this.agama,
+    required this.statusWarga,
+    required this.warganegara,
+    required this.statusNikah,
+    required this.rt,
+    required this.rw,
+  });
 
   @override
   _ProfilPageState createState() => _ProfilPageState();
@@ -87,7 +102,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            widget.name, // Menggunakan nama dari login
+                            widget.name,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -164,6 +179,13 @@ class _ProfilPageState extends State<ProfilPage> {
                                       tgl_lahir: widget.tgl_lahir,
                                       telepon: widget.telepon,
                                       jekel: widget.jekel,
+                                      tempatLahir: widget.tempatlahir,
+                                      agama: widget.agama,
+                                      statusWarga: widget.statusWarga,
+                                      warganegara: widget.warganegara,
+                                      statusNikah: widget.statusNikah,
+                                      rt: widget.rt,
+                                      rw: widget.rw,
                                     )),
                           );
                         },

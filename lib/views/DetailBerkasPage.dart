@@ -26,10 +26,12 @@ class DetailBerkasPage extends StatefulWidget {
 class _DetailBerkasPageState extends State<DetailBerkasPage> {
   final TextEditingController keteranganController = TextEditingController();
   List<TextEditingController> tambahanControllers = [];
+  bool _isMounted = false;
 
   @override
   void initState() {
     super.initState();
+    _isMounted = true;
     tambahanControllers = List.generate(
       widget.formTambahan.length,
       (_) => TextEditingController(),
@@ -40,6 +42,7 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
   void dispose() {
     keteranganController.dispose();
     tambahanControllers.forEach((controller) => controller.dispose());
+    _isMounted = false;
     super.dispose();
   }
 
@@ -67,17 +70,23 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
         },
       );
 
-      if (response.statusCode == 200) {
-        print('Data berhasil dikirim ke server');
-        // Show Snackbar
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Data berhasil dikirim ke server'),
-          ),
-        );
-      } else {
-        print(
-            'Gagal mengirim data ke server. Status code: ${response.statusCode}');
+      if (_isMounted) {
+        if (response.statusCode == 200) {
+          print('Data berhasil dikirim ke server');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Data berhasil dikirim ke server'),
+            ),
+          );
+
+          // Hanya panggil Navigator.pop jika widget masih terpasang
+          if (mounted) {
+            Navigator.pop(context);
+          }
+        } else {
+          print(
+              'Gagal mengirim data ke server. Status code: ${response.statusCode}');
+        }
       }
     } catch (e) {
       print('Terjadi kesalahan: $e');
@@ -294,7 +303,6 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                               widget.desa,
                               widget.formTambahan,
                             );
-                            Navigator.pop(context);
                           },
                           child: Text(
                             'Submit',

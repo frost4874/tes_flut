@@ -15,6 +15,13 @@ class EditbiodataPage extends StatefulWidget {
   final String tgl_lahir;
   final String telepon;
   final String jekel;
+  final String tempatLahir;
+  final String agama;
+  final String statusWarga;
+  final String warganegara;
+  final String statusNikah;
+  final String rt;
+  final String rw;
 
   const EditbiodataPage({
     Key? key,
@@ -28,6 +35,13 @@ class EditbiodataPage extends StatefulWidget {
     required this.tgl_lahir,
     required this.telepon,
     required this.jekel,
+    required this.tempatLahir,
+    required this.agama,
+    required this.statusWarga,
+    required this.warganegara,
+    required this.statusNikah,
+    required this.rt,
+    required this.rw,
   }) : super(key: key);
 
   @override
@@ -48,10 +62,10 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
   TextEditingController rtController = TextEditingController();
   TextEditingController rwController = TextEditingController();
   String genderValue = '';
-  String? agamavalue = '';
-  String? statuspernikahanvalue = '';
-  String? warganegaraanvalue = '';
-  String? statuswargavalue = '';
+  String agamavalue = '';
+  String statuspernikahanvalue = '';
+  String warganegaraanvalue = '';
+  String statuswargavalue = '';
   DateTime? selectedDate;
   bool visibility = true;
   bool visibility1 = true;
@@ -141,6 +155,13 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
     addressController.text = widget.alamat;
     dateController.text = widget.tgl_lahir;
     genderValue = widget.jekel;
+    agamavalue = widget.agama;
+    statuspernikahanvalue = widget.statusNikah;
+    statuswargavalue = widget.statusWarga;
+    warganegaraanvalue = widget.warganegara;
+    tempatlahirController.text = widget.tempatLahir;
+    rtController.text = widget.rt;
+    rwController.text = widget.rw;
 
     kecamatanListFuture = fetchKecamatanFromDatabase();
     kecamatanListFuture.then((kecamatanList) {
@@ -260,6 +281,13 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
         'kota': 'Jember',
         'tgl_lahir': formattedDate,
         'alamat': addressController.text,
+        'agama': agamavalue,
+        'rt': rtController.text,
+        'rw': rwController.text,
+        'status_nikah': statuspernikahanvalue,
+        'status_warga': statuswargavalue,
+        'warganegara': warganegaraanvalue,
+        'tempat_lahir': tempatlahirController.text,
       };
       if (passwordController.text.isNotEmpty) {
         userData['password'] = passwordController.text;
@@ -351,14 +379,12 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
               Card(
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(40.0), 
+                  borderRadius: BorderRadius.circular(40.0),
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        40.0), 
-                    color: Color(0xFF057438), 
+                    borderRadius: BorderRadius.circular(40.0),
+                    color: Color(0xFF057438),
                   ),
                   child: Form(
                     key: _formKey,
@@ -371,6 +397,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: TextFormField(
                             keyboardType: TextInputType.phone,
+                            readOnly: true,
                             autofocus: true,
                             controller: nikController,
                             style: TextStyle(color: Colors.white),
@@ -399,14 +426,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange),
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors.white),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             validator: (value) {
@@ -454,15 +478,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             validator: (value) {
@@ -496,31 +516,23 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                 color: Colors.white,
                               ),
                               enabledBorder: OutlineInputBorder(
-                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
-                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), // Set the border color to yellow
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), // Set the border color to yellow
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             validator: (value) {
@@ -553,31 +565,23 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                 color: Colors.white,
                               ),
                               enabledBorder: OutlineInputBorder(
-                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
-                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), // Set the border color to yellow
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), // Set the border color to yellow
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             validator: (value) {
@@ -624,38 +628,31 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               ),
                               labelText: "Password",
                               labelStyle: TextStyle(color: Colors.white),
-                              hintText: "Masukkan Password Anda",
+                              hintText:
+                                  "Masukkan Password Jika Ingin Mengubahnya",
                               hintStyle: TextStyle(color: Colors.white),
                               prefixIcon: Icon(
                                 Icons.lock_rounded,
                                 color: Colors.white,
                               ),
                               enabledBorder: OutlineInputBorder(
-                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
-                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), // Set the border color to yellow
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), // Set the border color to yellow
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               errorMaxLines: 3,
                             ),
@@ -700,31 +697,23 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                 color: Colors.white,
                               ),
                               enabledBorder: OutlineInputBorder(
-                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
-                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), // Set the border color to yellow
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), // Set the border color to yellow
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               errorMaxLines: 3,
                             ),
@@ -763,15 +752,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             validator: (value) {
@@ -786,13 +771,21 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: DropdownButtonFormField<String>(
+                            value: agamavalue.isEmpty ? null : agamavalue,
+                            hint: Text("Pilih Agama Anda",
+                                style: TextStyle(color: Colors.white)),
                             onChanged: (String? newValue) {
                               setState(() {
-                                agamavalue = newValue!;
+                                agamavalue = newValue ?? '';
                               });
                             },
-                            items: <String>['Islam', 'Kristen', 'Katolik', 'Hindu', 'Budha']
-                                .map<DropdownMenuItem<String>>((String value) {
+                            items: <String>[
+                              'Islam',
+                              'Kristen',
+                              'Katolik',
+                              'Hindu',
+                              'Budha'
+                            ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(
@@ -827,15 +820,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), 
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                           ),
@@ -844,10 +833,12 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: DropdownButtonFormField<String>(
-                            value: genderValue,
+                            value: genderValue.isEmpty ? null : genderValue,
+                            hint: Text("Pilih Gender",
+                                style: TextStyle(color: Colors.white)),
                             onChanged: (String? newValue) {
                               setState(() {
-                                genderValue = newValue!;
+                                genderValue = newValue ?? '';
                               });
                             },
                             items: <String>['Laki-Laki', 'Perempuan']
@@ -891,15 +882,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), 
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                           ),
@@ -908,13 +895,22 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: DropdownButtonFormField<String>(
+                            value: statuspernikahanvalue.isEmpty
+                                ? null
+                                : statuspernikahanvalue,
+                            hint: Text("Pilih Status Pernikahan",
+                                style: TextStyle(color: Colors.white)),
                             onChanged: (String? newValue) {
                               setState(() {
-                                statuspernikahanvalue = newValue!;
+                                statuspernikahanvalue = newValue ?? '';
                               });
                             },
-                            items: <String>['Belum Kawin', 'Kawin', 'Cerai Mati']
-                                .map<DropdownMenuItem<String>>((String value) {
+                            items: <String>[
+                              'Belum Kawin',
+                              'Kawin',
+                              'Cerai Hidup',
+                              'Cerai Mati'
+                            ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(
@@ -949,15 +945,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), 
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                           ),
@@ -966,9 +958,14 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: DropdownButtonFormField<String>(
+                            value: warganegaraanvalue.isEmpty
+                                ? null
+                                : warganegaraanvalue,
+                            hint: Text("Pilih Kewarganegaraan",
+                                style: TextStyle(color: Colors.white)),
                             onChanged: (String? newValue) {
                               setState(() {
-                                warganegaraanvalue = newValue!;
+                                warganegaraanvalue = newValue ?? '';
                               });
                             },
                             items: <String>['WNI', 'WNA']
@@ -1007,15 +1004,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), 
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                           ),
@@ -1024,21 +1017,26 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: DropdownButtonFormField<String>(
+                            value: statuswargavalue.isEmpty
+                                ? null
+                                : statuswargavalue,
+                            hint: Text("Pilih Status Warga",
+                                style: TextStyle(color: Colors.white)),
                             onChanged: (String? newValue) {
                               setState(() {
-                                statuswargavalue = newValue!;
+                                statuswargavalue = newValue ?? '';
                               });
                             },
-                            items: <String>['Sekolah', 'Bekerja', 'Menganggur']
-                                .map<DropdownMenuItem<String>>((String value) {
+                            items: <String>[
+                              'Pelajar',
+                              'Mahasiswa',
+                              'Bekerja',
+                              'Belum Bekerja'
+                            ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(
-                                  value,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
+                                child: Text(value,
+                                    style: TextStyle(color: Colors.white)),
                               );
                             }).toList(),
                             dropdownColor: Color(0xFF057438),
@@ -1065,15 +1063,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), 
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                           ),
@@ -1111,14 +1105,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors.orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             validator: (value) {
@@ -1139,8 +1130,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
-                                controller:
-                                    dateController, 
+                                controller: dateController,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(25.0),
@@ -1164,13 +1154,12 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                   errorStyle: TextStyle(color: Colors.orange),
                                   errorBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(25.0),
-                                    borderSide: BorderSide(
-                                        color: Colors.orange), 
+                                    borderSide:
+                                        BorderSide(color: Colors.orange),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(25.0),
-                                    borderSide: BorderSide(
-                                        color: Colors.white),
+                                    borderSide: BorderSide(color: Colors.white),
                                   ),
                                 ),
                                 validator: (value) {
@@ -1220,7 +1209,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                       .map<DropdownMenuItem<String>>(
                                           (String value) {
                                     return DropdownMenuItem<String>(
-                                      value: value,
+                                      value: value == '' ? null : value,
                                       child: Text(
                                         value,
                                         style: TextStyle(
@@ -1282,7 +1271,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                       .map<DropdownMenuItem<String>>(
                                           (String value) {
                                     return DropdownMenuItem<String>(
-                                      value: value,
+                                      value: value == '' ? null : value,
                                       child: Text(
                                         value,
                                         style: TextStyle(
@@ -1353,15 +1342,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             validator: (value) {
@@ -1405,15 +1390,11 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), 
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             validator: (value) {
@@ -1467,7 +1448,6 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                         .orange), // Set the border color to yellow
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
                                     color: Colors

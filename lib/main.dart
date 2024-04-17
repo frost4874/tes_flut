@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tes_flut/halamantes.dart';
 import 'package:tes_flut/views/Splash.dart';
 
 void main() {

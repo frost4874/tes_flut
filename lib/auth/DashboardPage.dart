@@ -25,6 +25,13 @@ class _DashboardPageState extends State<DashboardPage> {
   late String _tglLahir = '';
   late String _kota = '';
   late String _telepon = '';
+  late String _rt = '';
+  late String _rw = '';
+  late String _tempatlahir = '';
+  late String _agama = '';
+  late String _statusWarga = '';
+  late String _warganegara = '';
+  late String _statusNikah = '';
   late int _selectedIndex = 0;
   late PageController _pageController;
   late List<String>? _judulBerkas = [];
@@ -51,14 +58,21 @@ class _DashboardPageState extends State<DashboardPage> {
       setState(() {
         _nik = responseData['nik'] ?? '';
         _name = responseData['name'] ?? '';
+        _email = responseData['email'] ?? '';
+        _jekel = responseData['jekel'] ?? '';
         _kecamatan = responseData['kecamatan'] ?? '';
         _desa = responseData['desa'] ?? '';
-        _email = responseData['email'] ?? '';
-        _alamat = responseData['alamat'] ?? '';
-        _jekel = responseData['jekel'] ?? '';
-        _tglLahir = responseData['tgl_lahir'] ?? '';
         _kota = responseData['kota'] ?? '';
+        _tempatlahir = responseData['tempat_lahir'] ?? '';
+        _tglLahir = responseData['tgl_lahir'] ?? '';
+        _agama = responseData['agama'] ?? '';
+        _alamat = responseData['alamat'] ?? '';
         _telepon = responseData['telepon'] ?? '';
+        _statusWarga = responseData['status_warga'] ?? '';
+        _warganegara = responseData['warganegara'] ?? '';
+        _statusNikah = responseData['status_nikah'] ?? '';
+        _rt = responseData['rt'] ?? '';
+        _rw = responseData['rw'] ?? '';
       });
       print(response.body);
     } else {
@@ -126,21 +140,53 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   void _searchBerkas(String query) {
+    List<String> results = [];
     if (query.isNotEmpty) {
-      List<String> results = [];
       for (String berkas in _judulBerkas ?? []) {
         if (berkas.toLowerCase().contains(query.toLowerCase())) {
           results.add(berkas);
         }
       }
-      setState(() {
-        _searchResults = results;
-      });
     } else {
-      setState(() {
-        _searchResults = _judulBerkas ?? [];
-      });
+      results.addAll(_judulBerkas ?? []);
     }
+    setState(() {
+      _searchResults =
+          results.isNotEmpty ? results : ['Tidak ada hasil yang ditemukan'];
+    });
+  }
+
+  Widget _buildHelloCard() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+      margin: EdgeInsets.only(
+          top: 20, bottom: 20), // Menambahkan jarak di bagian atas dan bawah
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Hallo !!',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF057438),
+            ),
+          ),
+          Text(
+            _name.toUpperCase(),
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF057438),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -197,6 +243,13 @@ class _DashboardPageState extends State<DashboardPage> {
                         alamat: _alamat,
                         kota: _kota,
                         jekel: _jekel,
+                        tempatlahir: _tempatlahir,
+                        agama: _agama,
+                        statusWarga: _statusWarga,
+                        warganegara: _warganegara,
+                        statusNikah: _statusNikah,
+                        rt: _rt,
+                        rw: _rw,
                       ),
                     ],
                   ),
@@ -239,6 +292,10 @@ class _DashboardPageState extends State<DashboardPage> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
+              if (_searchResults.isEmpty ||
+                  _searchResults.contains('Tidak ada hasil yang ditemukan')) {
+                return _buildHelloCard();
+              }
               if (!_showAllFiles && index >= 9) {
                 return InkWell(
                   onTap: () {
@@ -339,8 +396,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                 ),
                                 itemCount: _showAllFiles
                                     ? (_judulBerkas?.length ?? 0)
-                                    : ((_judulBerkas?.length ?? 0) < 10
-                                        ? (_judulBerkas?.length ?? 0)
+                                    : ((_searchResults?.length ?? 0) < 10
+                                        ? (_searchResults?.length ?? 0)
                                         : 10),
                                 itemBuilder: (context, index) {
                                   if (!_showAllFiles &&
