@@ -221,7 +221,8 @@ class _ProfilPageState extends State<ProfilPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RiwayatPage()),
+                                builder: (context) =>
+                                    RiwayatPage(nik: widget.nik)),
                           );
                         },
                       ),

@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Stack(
                 children: [
                   Container(
-                    width: 600,
+                    width: double.infinity,
                     height: 300,
                     child: Image.asset(
                       'images/jj1.png',
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Container(
-                    width: 600,
+                    width: double.infinity,
                     height: 300,
                     color: Color(0xFF057438).withOpacity(0.5),
                   ),
@@ -124,6 +124,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 20),
                   Text(
                     'Welcome',
                     style: TextStyle(
@@ -139,124 +140,115 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 16,
                     ),
                   ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: TextFormField(
-                style: TextStyle(color: Color(0xFF057438)),
-                keyboardType: TextInputType.name,
-                controller: _nikController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  labelText: "NIK",
-                  labelStyle: TextStyle(color: Color(0xFF057438)),
-                  hintText: "Masukkan NIK Anda",
-                  hintStyle: TextStyle(color: Color(0xFF057438)),
-                  prefixIcon: Icon(
-                    Icons.email_rounded,
-                    color: Color(0xFF057438),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: TextFormField(
-                style: TextStyle(color: Color(0xFF057438)),
-                keyboardType: TextInputType.multiline,
-                controller: _passwordController,
-                obscureText: visibility,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    icon: visibility
-                        ? Icon(
-                            Icons.visibility,
-                            color: Color(0xFF057438),
-                          )
-                        : Icon(
-                            Icons.visibility_off,
-                            color: Color(0xFF057438),
-                          ),
-                    onPressed: () {
-                      setState(() {
-                        visibility = !visibility;
-                      });
-                    },
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  labelText: "Password",
-                  labelStyle: TextStyle(color: Color(0xFF057438)),
-                  hintText: "Masukkan Password",
-                  hintStyle: TextStyle(color: Color(0xFF057438)),
-                  prefixIcon: Icon(
-                    Icons.lock_rounded,
-                    color: Color(0xFF057438),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Belum punya akun? ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterPage()));
-                    },
-                    child: Text(
-                      'Daftar disini',
-                      style: TextStyle(
-                        fontSize: 16,
+                  SizedBox(height: 20),
+                  TextFormField(
+                    style: TextStyle(color: Color(0xFF057438)),
+                    keyboardType: TextInputType.name,
+                    controller: _nikController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      labelText: "NIK",
+                      labelStyle: TextStyle(color: Color(0xFF057438)),
+                      hintText: "Masukkan NIK Anda",
+                      hintStyle: TextStyle(color: Color(0xFF057438)),
+                      prefixIcon: Icon(
+                        Icons.email_rounded,
                         color: Color(0xFF057438),
                       ),
                     ),
                   ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    style: TextStyle(color: Color(0xFF057438)),
+                    keyboardType: TextInputType.multiline,
+                    controller: _passwordController,
+                    obscureText: visibility,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: visibility
+                            ? Icon(
+                                Icons.visibility,
+                                color: Color(0xFF057438),
+                              )
+                            : Icon(
+                                Icons.visibility_off,
+                                color: Color(0xFF057438),
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            visibility = !visibility;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      labelText: "Password",
+                      labelStyle: TextStyle(color: Color(0xFF057438)),
+                      hintText: "Masukkan Password",
+                      hintStyle: TextStyle(color: Color(0xFF057438)),
+                      prefixIcon: Icon(
+                        Icons.lock_rounded,
+                        color: Color(0xFF057438),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Belum punya akun? ",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterPage()));
+                        },
+                        child: Text(
+                          'Daftar disini',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF057438),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await _login(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF057438),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 150.0),
+                      ),
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Container(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: () async {
-                  await _login(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF057438),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 190.0),
-                ),
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
               ),
             ),
           ],
