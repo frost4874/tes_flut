@@ -1074,7 +1074,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         SizedBox(height: 15),
-                        Container(
+                        Align(
                           alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () {
@@ -1091,18 +1091,17 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                               ),
-                              padding:
-                                  MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                                 EdgeInsets.symmetric(
-                                    vertical: 20.0, horizontal: 160.0),
+                                  vertical: 20.0, 
+                                  horizontal: MediaQuery.of(context).size.width * 0.35,
+                                ),
                               ),
                             ),
                           ),

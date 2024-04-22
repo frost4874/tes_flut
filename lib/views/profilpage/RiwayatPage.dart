@@ -49,7 +49,11 @@ class _RiwayatPageState extends State<RiwayatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Riwayat'),
+        title: Text('Riwayat',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: Color(0xFF057438),
       ),
       body: Center(

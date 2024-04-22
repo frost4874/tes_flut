@@ -315,32 +315,35 @@ class _ProfilPageState extends State<ProfilPage> {
                       },
                     );
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xFF057438), width: 2.0),
-                      borderRadius: BorderRadius.circular(20.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5), // Warna shadow
-                          spreadRadius: 2, // Seberapa jauh shadow tersebar
-                          blurRadius: 5, // Seberapa blur shadow
-                          offset: Offset(0, 3), // Perubahan posisi shadow
-                        ),
-                      ],
-                      color: Colors.red,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 80),
-                      child: Text(
-                        'LOGOUT',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                  child: Align(
+                    alignment: Alignment.center, 
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xFF057438), width: 2.0),
+                        borderRadius: BorderRadius.circular(20.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5), 
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                        color: Colors.red,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 80),
+                        child: Text(
+                          'LOGOUT',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
+
                 ),
               ),
             ),

@@ -195,7 +195,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -224,8 +223,8 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Container(
-                    alignment: Alignment.center,
+                  Align(
+                    alignment: Alignment.center, 
                     child: ElevatedButton(
                       onPressed: () async {
                         await _login(context);
@@ -236,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         padding: EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 150.0),
+                            vertical: 20.0, horizontal: MediaQuery.of(context).size.width * 0.35),
                       ),
                       child: Text(
                         'Login',
