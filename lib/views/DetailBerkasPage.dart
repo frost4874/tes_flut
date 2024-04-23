@@ -322,7 +322,7 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                               EdgeInsets.symmetric(
                                 vertical: 20.0, 
-                                horizontal: MediaQuery.of(context).size.width * 0.35,
+                                horizontal: MediaQuery.of(context).size.width * 0.30,
                               ),
                             ),
                           ),
