@@ -424,7 +424,7 @@ class _StatusPageState extends State<StatusPage> {
   Color getStatusTextColor(int statusCode) {
     switch (statusCode) {
       case 0:
-        return Colors.yellow;
+        return const Color.fromARGB(255, 195, 177, 16);
       case 1:
         return Colors.green;
       case 2:

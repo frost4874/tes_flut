@@ -106,7 +106,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
-                              fontFamily: 'jotione',
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
@@ -114,7 +114,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
-                              fontFamily: 'jotione',
+                              fontWeight: FontWeight.bold,
                             ),
                           )
                         ],
@@ -319,7 +319,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     alignment: Alignment.center, 
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xFF057438), width: 2.0),
+                        border: Border.all(color: Colors.red, width: 2.0),
                         borderRadius: BorderRadius.circular(20.0),
                         boxShadow: [
                           BoxShadow(

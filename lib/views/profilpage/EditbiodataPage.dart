@@ -330,51 +330,24 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF057438),
+        title: Text(
+          'Edit Biodata',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontFamily: 'Interbold',
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        elevation: 4,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 70,
-                    height: 65,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF057438),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.edit_note,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                  ),
-                  SizedBox(width: 30),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Edit Biodata',
-                        style: TextStyle(
-                          color: Color(0xFF057438),
-                          fontSize: 30,
-                          fontFamily: 'Interbold',
-                        ),
-                      ),
-                      Text(
-                        'Masyarakat Desa Jember',
-                        style: TextStyle(
-                          color: Color(0xFF057438),
-                          fontSize: 16,
-                          fontFamily: 'Interbold',
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
               SizedBox(height: 20),
               Card(
                 elevation: 5.0,
