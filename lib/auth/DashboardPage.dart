@@ -525,8 +525,8 @@ class _DashboardPageState extends State<DashboardPage> {
       _selectedIndex = index;
       _pageController.animateToPage(
         index,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.ease,
+        duration: Duration(milliseconds: 800),
+        curve: Curves.decelerate,
       );
     });
   }

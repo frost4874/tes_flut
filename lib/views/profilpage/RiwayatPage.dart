@@ -55,6 +55,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
           ),
         ),
         backgroundColor: Color(0xFF057438),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Center(
           child: isLoading

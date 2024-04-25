@@ -111,6 +111,19 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF057438),
+        title: Text(
+          'Pengajuan Surat',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontFamily: 'Interbold',
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        elevation: 4,
+      ),
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: Padding(
@@ -118,46 +131,6 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 70,
-                    height: 65,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF057438),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.document_scanner,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                  ),
-                  SizedBox(width: 30),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Pengajuan Surat',
-                        style: TextStyle(
-                          color: Color(0xFF057438),
-                          fontSize: 30,
-                          fontFamily: 'Interbold',
-                        ),
-                      ),
-                      Text(
-                        'Masyarakat Desa Jember',
-                        style: TextStyle(
-                          color: Color(0xFF057438),
-                          fontSize: 16,
-                          fontFamily: 'Interbold',
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
               SizedBox(height: 20),
               Card(
                 elevation: 5.0,
