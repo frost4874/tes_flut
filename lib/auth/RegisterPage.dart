@@ -397,9 +397,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             keyboardType: TextInputType.name,
                             controller: nameController,
                             decoration: InputDecoration(
-                              labelText: "Nama",
+                              labelText: "Nama Lengkap",
                               labelStyle: TextStyle(color: Colors.white),
-                              hintText: "Masukkan Nama Anda",
+                              hintText: "Masukkan Nama Lengkap Anda",
                               hintStyle: TextStyle(color: Colors.white),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
@@ -455,9 +455,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             autofocus: true,
                             controller: tlpController,
                             decoration: InputDecoration(
-                              labelText: "No Telepon",
+                              labelText: "No Handphone",
                               labelStyle: TextStyle(color: Colors.white),
-                              hintText: "Masukkan No Telepon Anda",
+                              hintText: "Masukkan No Handphone Anda",
                               hintStyle: TextStyle(color: Colors.white),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
