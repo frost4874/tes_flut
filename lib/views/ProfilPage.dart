@@ -106,6 +106,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
@@ -113,6 +114,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
                           )
                         ],
