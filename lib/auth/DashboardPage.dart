@@ -339,7 +339,7 @@ class _DashboardPageState extends State<DashboardPage> {
               }
               return Card(
                 elevation: 4,
-                margin: EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+                margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
