@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tes_flut/views/profilpage/editakun/AlamateditPage.dart';
+import 'package:tes_flut/views/profilpage/editakun/EmaileditPage.dart';
 
 class EditakunPage extends StatelessWidget {
   @override
@@ -84,7 +85,10 @@ class EditakunPage extends StatelessWidget {
                   //email
                   TextButton(
                     onPressed: () {
-                      // Aksi yang ingin dilakukan ketika tombol ditekan
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EmailEditPage()),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),

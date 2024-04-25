@@ -110,7 +110,7 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(5, 5, 20, 0),
+                    padding: EdgeInsets.fromLTRB(5, 0, 20, 0),
                     child: TextFormField(
                       controller: _rtcontroller,
                       style: TextStyle(color: Colors.white, fontSize: 14),
@@ -138,39 +138,11 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 20, 5),
-                    child: TextFormField(
-                      controller: _alamatcontroller,
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        hintText: 'Masukkan Alamat',
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 14),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: _alamatcontroller.text.isEmpty
-                            ? null
-                            : GestureDetector(
-                                onTap: () {
-                                  _alamatcontroller.clear();
-                                },
-                                child: Icon(
-                                  Icons.clear,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                              ),
-                      ),
-                    ),
-                  ),
+
 
                   // Dropdown Kecamatan
                   Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 20, 5),
+                    padding: EdgeInsets.fromLTRB(5, 0, 20, 0),
                     child: DropdownButtonFormField<String>(
                       value: _selectedKecamatan,
                       decoration: InputDecoration(
@@ -209,7 +181,7 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
 
                   // Dropdown Desa
                   Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 20, 5),
+                    padding: EdgeInsets.fromLTRB(5, 0, 20, 0),
                     child: DropdownButtonFormField<String>(
                       value: _selectedDesa,
                       decoration: InputDecoration(
@@ -243,6 +215,35 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                           _checkTextField(); // Memanggil _checkTextField saat ada perubahan pada Dropdown Desa
                         });
                       },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(5, 0, 20, 10),
+                    child: TextFormField(
+                      controller: _alamatcontroller,
+                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                        hintText: 'Masukkan Alamat',
+                        hintStyle: TextStyle(color: Colors.white, fontSize: 14),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
+                        suffixIcon: _alamatcontroller.text.isEmpty
+                            ? null
+                            : GestureDetector(
+                                onTap: () {
+                                  _alamatcontroller.clear();
+                                },
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                              ),
+                      ),
                     ),
                   ),
                 ],
