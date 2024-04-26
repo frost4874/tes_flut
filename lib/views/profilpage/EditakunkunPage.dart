@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:tes_flut/views/profilpage/editakun/AlamateditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/EmaileditPage.dart';
+import 'package:tes_flut/views/profilpage/editakun/NameeditPage.dart';
+import 'package:tes_flut/views/profilpage/editakun/NohpeditPage.dart';
 
 class EditakunPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text('Edit Akun',
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
+            color: Color(0xFF057438),
+            fontSize: 18,
           ),
         ),
-        backgroundColor: Color(0xFF057438),
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Color(0xFF057438)),
       ),
       body: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           SizedBox(height: 10,),
           Card(
-            elevation: 5.0,
             margin: EdgeInsets.zero,
             child: Container(
               padding: EdgeInsets.zero,
               decoration: BoxDecoration(
-                color: Color(0xFF057438),
+                color: Colors.white,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +36,10 @@ class EditakunPage extends StatelessWidget {
                   //name
                   TextButton(
                     onPressed: () {
-                      // Aksi yang ingin dilakukan ketika tombol ditekan
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NameEditPage()),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -54,7 +58,7 @@ class EditakunPage extends StatelessWidget {
                         Text(
                           'Nama Lengkap',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFF057438),
                             fontSize: 14,
                           ),
                         ),
@@ -66,14 +70,14 @@ class EditakunPage extends StatelessWidget {
                               Text(
                                 'data nama',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
                               SizedBox(width: 10,),
                               Icon(
                                 Icons.keyboard_arrow_right,
-                                color: Colors.white,
+                                color: Color(0xFF057438),
                               ),
                             ],
                           ),
@@ -107,7 +111,7 @@ class EditakunPage extends StatelessWidget {
                         Text(
                           'Email',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFF057438),
                             fontSize: 14,
                           ),
                         ),
@@ -119,14 +123,14 @@ class EditakunPage extends StatelessWidget {
                               Text(
                                 'data email',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
                               SizedBox(width: 10,),
                               Icon(
                                 Icons.keyboard_arrow_right,
-                                color: Colors.white,
+                                color: Color(0xFF057438),
                               ),
                             ],
                           ),
@@ -157,7 +161,7 @@ class EditakunPage extends StatelessWidget {
                         Text(
                           'Jenis Kelamin',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFF057438),
                             fontSize: 14,
                           ),
                         ),
@@ -167,16 +171,16 @@ class EditakunPage extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                'data jenis kelamin',
+                                '',//tempat untuk menaruh jenis
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
                               SizedBox(width: 10,),
                               Icon(
                                 Icons.keyboard_arrow_right,
-                                color: Colors.white,
+                                color: Color(0xFF057438),
                               ),
                             ],
                           ),
@@ -207,7 +211,7 @@ class EditakunPage extends StatelessWidget {
                         Text(
                           'Tempat Tanggal Lahir',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFF057438),
                             fontSize: 14,
                           ),
                         ),
@@ -219,14 +223,14 @@ class EditakunPage extends StatelessWidget {
                               Text(
                                 'data kota, tanggal lahir',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
                               SizedBox(width: 10,),
                               Icon(
                                 Icons.keyboard_arrow_right,
-                                color: Colors.white,
+                                color: Color(0xFF057438),
                               ),
                             ],
                           ),
@@ -238,7 +242,10 @@ class EditakunPage extends StatelessWidget {
                   //no hp
                   TextButton(
                     onPressed: () {
-                      // Aksi yang ingin dilakukan ketika tombol ditekan
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NohpEditPage()),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -257,7 +264,7 @@ class EditakunPage extends StatelessWidget {
                         Text(
                           'No.Handphone',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFF057438),
                             fontSize: 14,
                           ),
                         ),
@@ -269,14 +276,14 @@ class EditakunPage extends StatelessWidget {
                               Text(
                                 'data no hp',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
                               SizedBox(width: 10,),
                               Icon(
                                 Icons.keyboard_arrow_right,
-                                color: Colors.white,
+                                color: Color(0xFF057438),
                               ),
                             ],
                           ),
@@ -307,7 +314,7 @@ class EditakunPage extends StatelessWidget {
                         Text(
                           'Status Diri',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFF057438),
                             fontSize: 14,
                           ),
                         ),
@@ -319,7 +326,7 @@ class EditakunPage extends StatelessWidget {
                               SizedBox(width: 10,),
                               Icon(
                                 Icons.keyboard_arrow_right,
-                                color: Colors.white,
+                                color: Color(0xFF057438),
                               ),
                             ],
                           ),
@@ -353,7 +360,7 @@ class EditakunPage extends StatelessWidget {
                         Text(
                           'Alamat',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFF057438),
                             fontSize: 14,
                           ),
                         ),
@@ -365,14 +372,14 @@ class EditakunPage extends StatelessWidget {
                               Text(
                                 'data desa',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
                               SizedBox(width: 10,),
                               Icon(
                                 Icons.keyboard_arrow_right,
-                                color: Colors.white,
+                                color: Color(0xFF057438),
                               ),
                             ],
                           ),
@@ -403,7 +410,7 @@ class EditakunPage extends StatelessWidget {
                         Text(
                           'Ganti Password',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFF057438),
                             fontSize: 14,
                           ),
                         ),
@@ -414,7 +421,7 @@ class EditakunPage extends StatelessWidget {
                             children: <Widget>[
                               Icon(
                                 Icons.keyboard_arrow_right,
-                                color: Colors.white,
+                                color: Color(0xFF057438),
                               ),
                             ],
                           ),

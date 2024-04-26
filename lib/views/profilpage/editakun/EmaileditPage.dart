@@ -34,23 +34,24 @@ class _EmailEditPageState extends State<EmailEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text(
-          'Ubah Alamat',
+          'Ubah Email',
           style: TextStyle(
-            color: Colors.white,
+            color: Color(0xFF057438),
             fontSize: 18,
           ),
         ),
-        backgroundColor: Color(0xFF057438),
-        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Color(0xFF057438)),
         actions: [
           TextButton(
             onPressed: _isAnyFieldNotEmpty ? _saveAddress : null,
             child: Text(
               'Simpan',
               style: TextStyle(
-                color: _isAnyFieldNotEmpty ? Colors.white : Colors.grey,
+                color: _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey.withOpacity(0.5),
                 fontSize: 16,
               ),
             ),
@@ -62,30 +63,31 @@ class _EmailEditPageState extends State<EmailEditPage> {
         children: <Widget>[
           SizedBox(height: 10,),
           Card(
-            elevation: 5.0,
             margin: EdgeInsets.zero,
             child: Container(
               padding: EdgeInsets.zero,
               decoration: BoxDecoration(
-                color: Color(0xFF057438),
+                color: Colors.white,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(5, 10, 20, 10),
+                    padding: EdgeInsets.fromLTRB(5, 0, 20, 0),
                     child: TextFormField(
                       controller: _emailcontroller,
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      style: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                      maxLength: 50,
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        hintText: 'Masukkan Alamat',
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 14),
+                        hintText: 'Masukkan Email',
+                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
                         ),
+                        counterText: '',
                         suffixIcon: _emailcontroller.text.isEmpty
                             ? null
                             : GestureDetector(
@@ -94,7 +96,7 @@ class _EmailEditPageState extends State<EmailEditPage> {
                                 },
                                 child: Icon(
                                   Icons.clear,
-                                  color: Colors.white,
+                                  color: Color(0xFF057438),
                                   size: 20,
                                 ),
                               ),
@@ -102,6 +104,16 @@ class _EmailEditPageState extends State<EmailEditPage> {
                     ),
                   ),
                 ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+            child: Text(
+              'Max. 50 Karakter',
+              style: TextStyle(
+                color: Color(0xFF057438).withOpacity(0.5),
+                fontSize: 12,
               ),
             ),
           ),

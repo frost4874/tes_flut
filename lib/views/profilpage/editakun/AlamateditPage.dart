@@ -42,23 +42,24 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text(
           'Ubah Alamat',
           style: TextStyle(
-            color: Colors.white,
+            color: Color(0xFF057438),
             fontSize: 18,
           ),
         ),
-        backgroundColor: Color(0xFF057438),
-        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Color(0xFF057438)),
         actions: [
           TextButton(
             onPressed: _isAnyFieldNotEmpty ? _saveAddress : null,
             child: Text(
               'Simpan',
               style: TextStyle(
-                color: _isAnyFieldNotEmpty ? Colors.white : Colors.grey,
+                color: _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey.withOpacity(0.5),
                 fontSize: 16,
               ),
             ),
@@ -70,93 +71,34 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
         children: <Widget>[
           SizedBox(height: 10),
           Card(
-            elevation: 5.0,
             margin: EdgeInsets.zero,
             child: Container(
               padding: EdgeInsets.zero,
               decoration: BoxDecoration(
-                color: Color(0xFF057438),
+                color: Colors.white,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(5, 5, 20, 0),
-                    child: TextFormField(
-                      controller: _rwcontroller,
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        hintText: 'Masukkan RW',
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 14),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: _rwcontroller.text.isEmpty
-                            ? null
-                            : GestureDetector(
-                                onTap: () {
-                                  _rwcontroller.clear();
-                                },
-                                child: Icon(
-                                  Icons.clear,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                              ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 20, 0),
-                    child: TextFormField(
-                      controller: _rtcontroller,
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        hintText: 'Masukkan RT',
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 14),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: _rtcontroller.text.isEmpty
-                            ? null
-                            : GestureDetector(
-                                onTap: () {
-                                  _rtcontroller.clear();
-                                },
-                                child: Icon(
-                                  Icons.clear,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                              ),
-                      ),
-                    ),
-                  ),
 
 
                   // Dropdown Kecamatan
                   Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 20, 0),
+                    padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
                     child: DropdownButtonFormField<String>(
                       value: _selectedKecamatan,
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                         hintText: 'Pilih Kecamatan',
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 14),
+                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
                         ),
                         suffixIcon: Icon(
                           Icons.arrow_drop_down,
-                          color: Colors.white,
+                          color: Color(0xFF057438),
                           size: 20,
                         ),
                       ),
@@ -181,21 +123,21 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
 
                   // Dropdown Desa
                   Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 20, 0),
+                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                     child: DropdownButtonFormField<String>(
                       value: _selectedDesa,
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                         hintText: 'Pilih Desa',
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 14),
+                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
                         ),
                         suffixIcon: Icon(
                           Icons.arrow_drop_down,
-                          color: Colors.white,
+                          color: Color(0xFF057438),
                           size: 20,
                         ),
                       ),
@@ -218,15 +160,74 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 20, 10),
+                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    child: TextFormField(
+                      controller: _rtcontroller,
+                      style: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                        hintText: 'Masukkan RT',
+                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
+                        suffixIcon: _rtcontroller.text.isEmpty
+                            ? null
+                            : GestureDetector(
+                                onTap: () {
+                                  _rtcontroller.clear();
+                                },
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Color(0xFF057438),
+                                  size: 20,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    child: TextFormField(
+                      controller: _rwcontroller,
+                      style: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                        hintText: 'Masukkan RW',
+                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
+                        suffixIcon: _rwcontroller.text.isEmpty
+                            ? null
+                            : GestureDetector(
+                                onTap: () {
+                                  _rwcontroller.clear();
+                                },
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Color(0xFF057438),
+                                  size: 20,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                  
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 20, 10),
                     child: TextFormField(
                       controller: _alamatcontroller,
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      style: TextStyle(color: Color(0xFF057438), fontSize: 14),
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                         hintText: 'Masukkan Alamat',
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 14),
+                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
@@ -239,7 +240,7 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                                 },
                                 child: Icon(
                                   Icons.clear,
-                                  color: Colors.white,
+                                  color: Color(0xFF057438),
                                   size: 20,
                                 ),
                               ),
