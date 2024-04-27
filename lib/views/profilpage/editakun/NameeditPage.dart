@@ -27,9 +27,11 @@ class _NameEditPageState extends State<NameEditPage> {
     });
   }
 
-  void _saveAddress() {
-    // Implementasi logika untuk menyimpan alamat
+  void _save() {
+    Navigator.pop(context, _namecontroller.text);
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class _NameEditPageState extends State<NameEditPage> {
         iconTheme: IconThemeData(color: Color(0xFF057438)),
         actions: [
           TextButton(
-            onPressed: _isAnyFieldNotEmpty ? _saveAddress : null,
+            onPressed: _isAnyFieldNotEmpty ? _save : null,
             child: Text(
               'Simpan',
               style: TextStyle(
@@ -88,17 +90,17 @@ class _NameEditPageState extends State<NameEditPage> {
                         ),
                         counterText: '',
                         suffixIcon: _namecontroller.text.isEmpty
-                            ? null
-                            : GestureDetector(
-                                onTap: () {
-                                  _namecontroller.clear();
-                                },
-                                child: Icon(
-                                  Icons.clear,
-                                  color: Color(0xFF057438),
-                                  size: 20,
-                                ),
-                              ),
+                        ? null
+                        : GestureDetector(
+                          onTap: () {
+                            _namecontroller.clear();
+                          },
+                          child: Icon(
+                            Icons.clear,
+                            color: Color(0xFF057438),
+                            size: 20,
+                          ),
+                        ),
                       ),
                     ),
                   ),

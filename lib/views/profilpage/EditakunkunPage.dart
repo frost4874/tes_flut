@@ -19,6 +19,70 @@ class _EditPageState extends State<EditakunPage> {
   String? _selectedpilihjenis;
   bool _isAnyFieldNotEmpty = false;
   Color _checkIconColor = Colors.grey[200]!;
+  String? name;
+  String? email;
+  String? nohp;
+  String formattedNohp = '';
+  String? displayedNohp = '';
+
+  void _navigateToNameEditPage() async {
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NameEditPage()),
+    );
+    if (result != null) {
+      setState(() {
+        name = result;
+      });
+    }
+  }
+
+  void _navigateToEmailEditPage() async {
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EmailEditPage()),
+    );
+    if (result != null) {
+      setState(() {
+        email = result;
+      });
+    }
+  }
+
+  void _navigateToNohpEditPage() async {
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NohpEditPage()),
+    );
+    if (result != null) {
+      setState(() {
+        nohp = result;
+        formattedNohp = formatPhoneNumber(nohp) ?? '';
+        displayedNohp = formattedNohp.isNotEmpty ? formattedNohp : nohp;
+      });
+    }
+    @override
+    void initState() {
+      super.initState();
+      displayedNohp = formattedNohp.isEmpty ? nohp : formattedNohp;
+    }
+  }
+
+
+  String? formatPhoneNumber(String? phoneNumber) {
+    if (phoneNumber == null || phoneNumber.length < 3) {
+      return phoneNumber;
+    }
+
+    String firstChar = phoneNumber.substring(0, 1);
+    String lastChar = phoneNumber.substring(phoneNumber.length - 1);
+    String middlePart = phoneNumber.substring(1, phoneNumber.length - 1);
+
+    String maskedMiddlePart = middlePart.replaceAll(RegExp(r'\d'), '*');
+
+    return '$firstChar$maskedMiddlePart$lastChar';
+  }
+
 
   void _showGenderDialog(BuildContext context) {
   showDialog(
@@ -94,6 +158,31 @@ class _EditPageState extends State<EditakunPage> {
   );
 }
   
+  String? formatEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      return email;
+    }
+
+    List<String> parts = email.split("@");
+    if (parts.length != 2) {
+      return email;
+    }
+
+    String username = parts[0];
+    String domain = parts[1];
+
+    if (username.length < 2) {
+      return email;
+    }
+
+    String firstChar = username.substring(0, 1);
+    String lastChar = username.substring(username.length - 1);
+
+    String middlePart = "*" * (username.length - 2);
+
+    return '$firstChar$middlePart$lastChar@$domain';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,19 +227,16 @@ class _EditPageState extends State<EditakunPage> {
                   //name
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NameEditPage()),
-                      );
+                      _navigateToNameEditPage();
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.transparent.withOpacity(0); // Atur warna klikannya di sini
+                            return Colors.transparent.withOpacity(0); 
                           }
-                          return Colors.transparent; // Kembali ke transparan jika tidak ditekan
+                          return Colors.transparent; 
                         },
                       ),
                     ),
@@ -170,7 +256,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                'data nama',
+                                name ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -191,10 +277,7 @@ class _EditPageState extends State<EditakunPage> {
                   //email
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => EmailEditPage()),
-                      );
+                      _navigateToEmailEditPage();
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -223,7 +306,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                'data email',
+                                formatEmail(email) ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -344,10 +427,7 @@ class _EditPageState extends State<EditakunPage> {
                   //no hp
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NohpEditPage()),
-                      );
+                      _navigateToNohpEditPage();
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -376,7 +456,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                'data no hp',
+                                displayedNohp ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,

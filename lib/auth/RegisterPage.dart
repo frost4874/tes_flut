@@ -141,9 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
     if (pickedDate != null) {
       setState(() {
         selectedDate = pickedDate;
-        // Format tanggal yang dipilih tanpa informasi jam
         String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
-        // Assign formattedDate ke TextFormField
         dateController.text = formattedDate;
       });
     }
@@ -185,7 +183,6 @@ class _RegisterPageState extends State<RegisterPage> {
               onPressed: () {
                 Navigator.pop(context);
                 Navigator.pushReplacement(
-                  // Ganti halaman dan hapus halaman sebelumnya dari tumpukan
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
@@ -236,10 +233,8 @@ class _RegisterPageState extends State<RegisterPage> {
       );
 
       if (response.statusCode == 200) {
-        // Registrasi berhasil, tampilkan dialog sukses
         _showRegistrationSuccessDialog(context);
       } else {
-        // Registrasi gagal, tampilkan pesan kesalahan
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -602,31 +597,25 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: Colors.white,
                               ),
                               enabledBorder: OutlineInputBorder(
-                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8)),
+                                  color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8)),
+                                  color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
-                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), // Set the border color to yellow
+                                  color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                    color: Colors
-                                        .white), // Set the border color to yellow
+                                  color: Colors.white),
                               ),
                               errorMaxLines: 3,
                             ),
@@ -681,31 +670,25 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: Colors.white,
                               ),
                               enabledBorder: OutlineInputBorder(
-                                // To change border color when enabled
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8)),
+                                  color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                // To change border color when focused
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8)),
+                                  color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
-                                // To change border color when error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                    color: Colors
-                                        .orange), // Set the border color to yellow
+                                  color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                // To change border color when focused with error
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                    color: Colors
-                                        .white), // Set the border color to yellow
+                                  color: Colors.white), 
                               ),
                               errorMaxLines: 3,
                             ),
