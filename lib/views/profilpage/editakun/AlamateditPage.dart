@@ -115,7 +115,7 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                       onChanged: (String? newValue) {
                         setState(() {
                           _selectedKecamatan = newValue;
-                          _checkTextField(); // Memanggil _checkTextField saat ada perubahan pada Dropdown Kecamatan
+                          _checkTextField();
                         });
                       },
                     ),

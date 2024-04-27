@@ -1,10 +1,99 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:tes_flut/views/profilpage/editakun/AlamateditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/EmaileditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/NameeditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/NohpeditPage.dart';
+import 'package:tes_flut/views/profilpage/editakun/PasswordeditPage.dart';
 
-class EditakunPage extends StatelessWidget {
+
+class EditakunPage extends StatefulWidget {
+  EditakunPage({super.key}); 
+
+  @override
+  _EditPageState createState() => _EditPageState();
+}
+
+class _EditPageState extends State<EditakunPage> {
+  String? _selectedpilihjenis;
+  bool _isAnyFieldNotEmpty = false;
+  Color _checkIconColor = Colors.grey[200]!;
+
+  void _showGenderDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(
+          'Pilih Jenis Kelamin',
+          style: TextStyle(
+            fontSize: 16,
+            color: Color(0xFF057438),
+          ),
+          textAlign: TextAlign.center,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              title: Text(
+                'Laki-laki',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF057438),
+                ),
+              ),
+              onTap: () {
+                setState(() {
+                  _selectedpilihjenis = 'Laki-laki';
+                  _isAnyFieldNotEmpty = _selectedpilihjenis == 'Laki-laki';
+                  _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Perempuan',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF057438),
+                ),
+              ),
+              onTap: () {
+                setState(() {
+                  _selectedpilihjenis = 'Perempuan';
+                  _isAnyFieldNotEmpty = true;
+                  _checkIconColor = Color(0xFF057438);
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Lainnya',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF057438),
+                ),
+              ),
+              onTap: () {
+                setState(() {
+                  _selectedpilihjenis = 'Lainnya';
+                  _isAnyFieldNotEmpty = true;
+                  _checkIconColor = Color(0xFF057438);
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +106,19 @@ class EditakunPage extends StatelessWidget {
           ),
         ),
         iconTheme: IconThemeData(color: Color(0xFF057438)),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 50.0),
+            child: IconButton(
+              onPressed: _isAnyFieldNotEmpty ? () {} : null,
+              icon: Icon(
+                Icons.check,
+                size: 25.0,
+                color: _checkIconColor, 
+              ),
+            ),
+          ),
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.zero,
@@ -142,7 +244,7 @@ class EditakunPage extends StatelessWidget {
                   //jenis kelamin
                   TextButton(
                     onPressed: () {
-                      // Aksi yang ingin dilakukan ketika tombol ditekan
+                      _showGenderDialog(context);
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -171,7 +273,7 @@ class EditakunPage extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                '',//tempat untuk menaruh jenis
+                                _selectedpilihjenis ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -391,7 +493,10 @@ class EditakunPage extends StatelessWidget {
                   //password
                   TextButton(
                     onPressed: () {
-                      
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PasswordEditPage()),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
