@@ -32,12 +32,17 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
   void _checkTextField() {
     setState(() {
       _isAnyFieldNotEmpty = _alamatcontroller.text.isNotEmpty ||
-          _rtcontroller.text.isNotEmpty ||
-          _rwcontroller.text.isNotEmpty ||
-          _selectedKecamatan != null ||
-          _selectedDesa != null;
+        _rtcontroller.text.isNotEmpty ||
+        _rwcontroller.text.isNotEmpty ||
+        _selectedKecamatan != null ||
+        _selectedDesa != null;
     });
   }
+
+  void _saveAddress() {
+    Navigator.pop(context, _selectedDesa);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +91,7 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
                     child: DropdownButtonFormField<String>(
+                      icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF057438)),
                       value: _selectedKecamatan,
                       decoration: InputDecoration(
                         contentPadding:
@@ -95,11 +101,6 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: Icon(
-                          Icons.arrow_drop_down,
-                          color: Color(0xFF057438),
-                          size: 20,
                         ),
                       ),
                       items: <String>['Kecamatan A', 'Kecamatan B', 'Kecamatan C']
@@ -125,6 +126,7 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                     child: DropdownButtonFormField<String>(
+                      icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF057438)),
                       value: _selectedDesa,
                       decoration: InputDecoration(
                         contentPadding:
@@ -134,11 +136,6 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: Icon(
-                          Icons.arrow_drop_down,
-                          color: Color(0xFF057438),
-                          size: 20,
                         ),
                       ),
                       items: <String>['Desa X', 'Desa Y', 'Desa Z']
@@ -154,7 +151,7 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                       onChanged: (String? newValue) {
                         setState(() {
                           _selectedDesa = newValue;
-                          _checkTextField(); // Memanggil _checkTextField saat ada perubahan pada Dropdown Desa
+                          _checkTextField();
                         });
                       },
                     ),
@@ -254,9 +251,5 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
         ],
       ),
     );
-  }
-
-  void _saveAddress() {
-    // Implementasi logika untuk menyimpan alamat
   }
 }

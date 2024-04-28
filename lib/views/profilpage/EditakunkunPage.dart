@@ -6,6 +6,8 @@ import 'package:tes_flut/views/profilpage/editakun/EmaileditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/NameeditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/NohpeditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/PasswordeditPage.dart';
+import 'package:tes_flut/views/profilpage/editakun/StatusdirieditPage.dart';
+import 'package:tes_flut/views/profilpage/editakun/Tempattledit.dart';
 
 
 class EditakunPage extends StatefulWidget {
@@ -22,13 +24,18 @@ class _EditPageState extends State<EditakunPage> {
   String? name;
   String? email;
   String? nohp;
+  String? tempatLahir= '';
+  String? tanggalLahir= '';
   String formattedNohp = '';
   String? displayedNohp = '';
+  String? desa = '';
+  String? _tempatLahirSementara;
+  String? _tanggalLahirSementara;
 
   void _navigateToNameEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NameEditPage()),
+      MaterialPageRoute(builder: (context) => NameEditPage(name: name)),
     );
     if (result != null) {
       setState(() {
@@ -36,6 +43,33 @@ class _EditPageState extends State<EditakunPage> {
       });
     }
   }
+
+    void _navigateToTtlEditPage() async {
+    // Simpan nilai tempat lahir dan tanggal lahir saat ini ke variabel sementara
+    _tempatLahirSementara = tempatLahir;
+    _tanggalLahirSementara = tanggalLahir;
+
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TtlEditPage(tempatLahir: tempatLahir!, tanggalLahir: tanggalLahir!)),
+    );
+
+    if (result != null) {
+      setState(() {
+        // Perbarui nilai tempat lahir dan tanggal lahir dengan nilai yang disimpan
+        tempatLahir = result['tempatLahir'];
+        tanggalLahir = result['tanggalLahir'] != null ? result['tanggalLahir']!.toString() : '';
+      });
+    } else {
+      // Jika pengguna membatalkan, kembalikan nilai tempat lahir dan tanggal lahir dari variabel sementara
+      setState(() {
+        tempatLahir = _tempatLahirSementara;
+        tanggalLahir = _tanggalLahirSementara;
+      });
+    }
+  }
+
+
 
   void _navigateToEmailEditPage() async {
     var result = await Navigator.push(
@@ -48,6 +82,20 @@ class _EditPageState extends State<EditakunPage> {
       });
     }
   }
+
+
+  void _navigateToDesaEditPage() async {
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AlamatEditPage()),
+    );
+    if (result != null) {
+      setState(() {
+        desa = result;
+      });
+    }
+  }
+
 
   void _navigateToNohpEditPage() async {
     var result = await Navigator.push(
@@ -67,7 +115,6 @@ class _EditPageState extends State<EditakunPage> {
       displayedNohp = formattedNohp.isEmpty ? nohp : formattedNohp;
     }
   }
-
 
   String? formatPhoneNumber(String? phoneNumber) {
     if (phoneNumber == null || phoneNumber.length < 3) {
@@ -377,7 +424,7 @@ class _EditPageState extends State<EditakunPage> {
                   //tempat tanggal lahir
                   TextButton(
                     onPressed: () {
-                      // Aksi yang ingin dilakukan ketika tombol ditekan
+                      _navigateToTtlEditPage();
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -406,7 +453,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                'data kota, tanggal lahir',
+                                '$tempatLahir, $tanggalLahir',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -477,7 +524,10 @@ class _EditPageState extends State<EditakunPage> {
                   //status diri
                   TextButton(
                     onPressed: () {
-                      // Aksi yang ingin dilakukan ketika tombol ditekan
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DatadiriEditPage()),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -520,10 +570,7 @@ class _EditPageState extends State<EditakunPage> {
                   //alamat
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AlamatEditPage()),
-                      );
+                      _navigateToDesaEditPage();
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -552,7 +599,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                'data desa',
+                                 desa ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,

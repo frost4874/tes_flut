@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NameEditPage extends StatefulWidget {
+  final String? name;
+
+  const NameEditPage({Key? key, this.name}) : super(key: key);
   @override
   _NameEditPageState createState() => _NameEditPageState();
 }
@@ -12,6 +15,7 @@ class _NameEditPageState extends State<NameEditPage> {
   @override
   void initState() {
     super.initState();
+    _namecontroller = TextEditingController(text: widget.name); 
     _namecontroller.addListener(_checkTextField);
   }
 
