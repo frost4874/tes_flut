@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tes_flut/auth/LoginPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:tes_flut/views/UserData.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -20,6 +24,8 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController dateController = TextEditingController();
+  String? _imagektp;
+  String? _imagekk;
   String genderValue = 'Laki-Laki';
   DateTime? selectedDate;
   TextEditingController addressController = TextEditingController();
@@ -33,6 +39,30 @@ class _RegisterPageState extends State<RegisterPage> {
   late Future<List<String>> desaListFuture;
   String? selectedDesa;
   String? selectedKecamatanId;
+
+
+  void _openImagektpPicker(BuildContext context) async {
+    final pickedImagektp = await ImagePicker().pickImage(
+      source: ImageSource.gallery, // Ubah menjadi ImageSource.camera jika ingin menggunakan kamera
+    );
+    if (pickedImagektp != null) {
+      setState(() {
+        _imagektp = pickedImagektp.path;
+      });
+    }
+  }
+
+  void _openImagekkPicker(BuildContext context) async {
+    final pickedImagekk = await ImagePicker().pickImage(
+      source: ImageSource.gallery, // Ubah menjadi ImageSource.camera jika ingin menggunakan kamera
+    );
+    if (pickedImagekk != null) {
+      setState(() {
+        _imagektp = pickedImagekk.path;
+      });
+    }
+  }
+
 
 //nyoba nyoba doang ini
   Future<List<String>> fetchKecamatanFromDatabase() async {
@@ -1025,6 +1055,62 @@ class _RegisterPageState extends State<RegisterPage> {
                             },
                           ),
                         ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0), 
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20), 
+                              ),
+                              foregroundColor: Colors.white, 
+                              backgroundColor: Color(0xFF057438), 
+                              side: BorderSide(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              _openImagektpPicker(context);
+                            },
+                            child: Text('Pilih Gambar KTP'),
+                          ),
+                        ),       
+                         Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(20),
+                          child: _imagektp!= null
+                              ? Image.file(File(_imagektp!))
+                              : Text(
+                                  'Belum ada gambar KTP',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                        ),
+
+                        Container(
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0), 
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              foregroundColor: Colors.white,
+                              backgroundColor: Color(0xFF057438),
+                              side: BorderSide(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              _openImagekkPicker(context);
+                            },
+                            child: Text('Pilih Gambar KK'),
+                          ),
+                        ),       
+                         Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(20),
+                          child: _imagekk!= null
+                              ? Image.file(File(_imagekk!))
+                              : Text(
+                                  'Belum ada gambar KK',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                        ),
+
                         Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
