@@ -8,7 +8,6 @@ import 'package:tes_flut/views/UserData.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
-
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
@@ -40,10 +39,10 @@ class _RegisterPageState extends State<RegisterPage> {
   String? selectedDesa;
   String? selectedKecamatanId;
 
-
   void _openImagektpPicker(BuildContext context) async {
     final pickedImagektp = await ImagePicker().pickImage(
-      source: ImageSource.gallery, // Ubah menjadi ImageSource.camera jika ingin menggunakan kamera
+      source: ImageSource
+          .gallery, // Ubah menjadi ImageSource.camera jika ingin menggunakan kamera
     );
     if (pickedImagektp != null) {
       setState(() {
@@ -54,15 +53,15 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _openImagekkPicker(BuildContext context) async {
     final pickedImagekk = await ImagePicker().pickImage(
-      source: ImageSource.gallery, // Ubah menjadi ImageSource.camera jika ingin menggunakan kamera
+      source: ImageSource
+          .gallery, // Ubah menjadi ImageSource.camera jika ingin menggunakan kamera
     );
     if (pickedImagekk != null) {
       setState(() {
-        _imagektp = pickedImagekk.path;
+        _imagekk = pickedImagekk.path;
       });
     }
   }
-
 
 //nyoba nyoba doang ini
   Future<List<String>> fetchKecamatanFromDatabase() async {
@@ -226,6 +225,44 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _saveRegistrationData() async {
     if (_formKey.currentState!.validate()) {
+      if (_imagektp == null || _imagekk == null) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(
+                'Harap Unggah Gambar',
+                style: TextStyle(
+                  color: Color(0xFF057438),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              content: Text(
+                'Anda harus mengunggah gambar KTP dan KK untuk melanjutkan registrasi.',
+                style: TextStyle(
+                  color: Color(0xFF057438),
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Colors.yellow,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        return; // Menghentikan eksekusi lebih lanjut jika gambar tidak diunggah
+      }
+
+      // Lakukan penyimpanan data registrasi jika gambar telah diunggah
       String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
 
       UserData userData = UserData(
@@ -629,23 +666,21 @@ class _RegisterPageState extends State<RegisterPage> {
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                  color: Colors.white.withOpacity(0.8)),
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                  color: Colors.white.withOpacity(0.8)),
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.orange),
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.white),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               errorMaxLines: 3,
                             ),
@@ -702,23 +737,21 @@ class _RegisterPageState extends State<RegisterPage> {
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                  color: Colors.white.withOpacity(0.8)),
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                                 borderSide: BorderSide(
-                                  color: Colors.white.withOpacity(0.8)),
+                                    color: Colors.white.withOpacity(0.8)),
                               ),
                               errorStyle: TextStyle(color: Colors.orange),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.orange),
+                                borderSide: BorderSide(color: Colors.orange),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                  color: Colors.white), 
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               errorMaxLines: 3,
                             ),
@@ -1056,14 +1089,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0), 
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20), 
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              foregroundColor: Colors.white, 
-                              backgroundColor: Color(0xFF057438), 
+                              foregroundColor: Colors.white,
+                              backgroundColor: Color(0xFF057438),
                               side: BorderSide(color: Colors.white),
                             ),
                             onPressed: () {
@@ -1071,20 +1104,19 @@ class _RegisterPageState extends State<RegisterPage> {
                             },
                             child: Text('Pilih Gambar KTP'),
                           ),
-                        ),       
-                         Container(
+                        ),
+                        Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(20),
-                          child: _imagektp!= null
+                          child: _imagektp != null
                               ? Image.file(File(_imagektp!))
                               : Text(
                                   'Belum ada gambar KTP',
                                   style: TextStyle(color: Colors.white),
                                 ),
                         ),
-
                         Container(
-                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0), 
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -1099,18 +1131,17 @@ class _RegisterPageState extends State<RegisterPage> {
                             },
                             child: Text('Pilih Gambar KK'),
                           ),
-                        ),       
-                         Container(
+                        ),
+                        Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(20),
-                          child: _imagekk!= null
+                          child: _imagekk != null
                               ? Image.file(File(_imagekk!))
                               : Text(
                                   'Belum ada gambar KK',
                                   style: TextStyle(color: Colors.white),
                                 ),
                         ),
-
                         Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
@@ -1160,16 +1191,20 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                               ),
-                              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              padding:
+                                  MaterialStateProperty.all<EdgeInsetsGeometry>(
                                 EdgeInsets.symmetric(
-                                  vertical: 20.0, 
-                                  horizontal: MediaQuery.of(context).size.width * 0.3,
+                                  vertical: 20.0,
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.3,
                                 ),
                               ),
                             ),
