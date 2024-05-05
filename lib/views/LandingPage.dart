@@ -19,7 +19,7 @@ class LandingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Image.asset(
-                      'images/kabjember1.png',
+                      'assets/images/kabjember1.png',
                       width: 140,
                       height: 165,
                     ),

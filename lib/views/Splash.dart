@@ -18,12 +18,14 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 2));
-    _animation = CurvedAnimation(parent: _animationController, curve: Curves.easeOut);
+    _animation =
+        CurvedAnimation(parent: _animationController, curve: Curves.easeOut);
 
     _animationController.forward();
 
     Timer(Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => LandingPage()));
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (_) => LandingPage()));
     });
   }
 
@@ -47,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'images/kabjember1.png',
+                'assets/images/kabjember1.png',
                 width: 95,
                 height: 110,
               ),
