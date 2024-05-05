@@ -198,7 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 Text(
-                  'Klik Ok untuk melanjutkan ke Login.',
+                  'Akun anda dalam proses validasi.',
                   style: TextStyle(
                     color: Color(0xFF057438),
                   ),

@@ -25,21 +25,22 @@ class _LoginPageState extends State<LoginPage> {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = json.decode(response.body);
-      if (responseData['success']) {
-        print('login berhasil');
+      if (responseData['status'] == 'Aktif') {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => DashboardPage(Biodata: _nikController.text),
           ),
         );
+        print('login berhasil');
+        // Check if the user status is active
       } else {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Login Failed'),
-              content: Text(responseData['message']),
+              title: Text('Akun Belum Aktif'),
+              content: Text('Mohon maaf, akun anda dalam proses validasi.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
@@ -53,7 +54,6 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     } else {
-      // Jika gagal login, tampilkan pesan kesalahan
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     height: 300,
                     child: Image.asset(
-                      'images/jj1.png',
+                      'assets/images/jj1.png',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -237,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.symmetric(
                             vertical: 20.0,
                             horizontal:
-                                MediaQuery.of(context).size.width * 0.30),
+                                MediaQuery.of(context).size.width * 0.35),
                       ),
                       child: Text(
                         'Login',
