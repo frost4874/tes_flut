@@ -237,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.symmetric(
                             vertical: 20.0,
                             horizontal:
-                                MediaQuery.of(context).size.width * 0.35),
+                                MediaQuery.of(context).size.width * 0.30),
                       ),
                       child: Text(
                         'Login',
