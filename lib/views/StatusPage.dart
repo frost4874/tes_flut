@@ -22,8 +22,8 @@ class _StatusPageState extends State<StatusPage> {
   }
 
   Future<void> fetchData() async {
-    var url =
-        Uri.parse('http://localhost:8000/api/data-requests/${widget.Biodata}');
+    var url = Uri.parse(
+        'https://suratdesajember.framework-tif.com/api/data-requests/${widget.Biodata}');
     try {
       var response = await http.get(url);
       if (response.statusCode == 200) {
@@ -50,7 +50,8 @@ class _StatusPageState extends State<StatusPage> {
   void updateData(String content, String keterangan, String idRequest) async {
     // Send HTTP PUT request
     try {
-      var url = Uri.parse('http://localhost:8000/api/update-data/$idRequest');
+      var url = Uri.parse(
+          'https://suratdesajember.framework-tif.com/api/update-data/$idRequest');
       var response = await http.put(
         url,
         body: json.encode({
@@ -220,7 +221,7 @@ class _StatusPageState extends State<StatusPage> {
                     final status = dataRequests[index]['status'];
 
                     // Jika status adalah 4, maka skip tampilan dokumen
-                    if (status == 4) {
+                    if (status == 3) {
                       return Container();
                     }
 
@@ -414,8 +415,6 @@ class _StatusPageState extends State<StatusPage> {
         return 'Telah di ACC';
       case 2:
         return 'Telah di Print';
-      case 3:
-        return 'Selesai';
       default:
         return 'Status tidak diketahui';
     }
@@ -429,8 +428,6 @@ class _StatusPageState extends State<StatusPage> {
         return Colors.green;
       case 2:
         return Colors.green;
-      case 3:
-        return Color(0xFF057438);
       default:
         return Colors.red;
     }

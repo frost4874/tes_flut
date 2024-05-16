@@ -65,8 +65,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
 //nyoba nyoba doang ini
   Future<List<String>> fetchKecamatanFromDatabase() async {
-    final response =
-        await http.get(Uri.parse('http://192.168.1.5:8000/api/kecamatan'));
+    final response = await http.get(
+        Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
     if (response.statusCode == 200) {
       List<String> kecamatanList = [];
       final data = json.decode(response.body);
@@ -81,8 +81,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _fetchDesaByKecamatanId(String kecamatanId) async {
     try {
-      final response = await http
-          .get(Uri.parse('http://192.168.1.5:8000/api/desa/$kecamatanId'));
+      final response = await http.get(Uri.parse(
+          'https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
       if (response.statusCode == 200) {
         List<String> desaList = (json.decode(response.body) as List)
             .map((item) => item['nama'] as String)
@@ -103,8 +103,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<List<String>> fetchDesaFromDatabase(String kecamatanId) async {
-    final response = await http
-        .get(Uri.parse('http://192.168.1.5:8000/api/desa/$kecamatanId'));
+    final response = await http.get(Uri.parse(
+        'https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
     if (response.statusCode == 200) {
       List<String> desaList = [];
       final data = json.decode(response.body);
@@ -118,8 +118,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<String> fetchKecamatanId(String kecamatanName) async {
-    final response =
-        await http.get(Uri.parse('http://192.168.1.5:8000/api/kecamatan'));
+    final response = await http.get(
+        Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
     if (response.statusCode == 200) {
       final List<dynamic> kecamatans = json.decode(response.body);
       final kecamatan = kecamatans
@@ -269,21 +269,23 @@ class _RegisterPageState extends State<RegisterPage> {
 
       // Kirim gambar sebagai multipart/form-data
       var request = http.MultipartRequest(
-          'POST', Uri.parse('http://192.168.1.5:8000/api/register_flutter'));
+          'POST',
+          Uri.parse(
+              'https://suratdesajember.framework-tif.com/api/register_flutter'));
       // Read bytes from the files
       List<int> ktpBytes = await ktpFile.readAsBytes();
       List<int> kkBytes = await kkFile.readAsBytes();
       // Add images to request
       request.files.add(http.MultipartFile.fromBytes(
-        'foto_ktp',
+        'fotoKtp',
         ktpBytes,
-        filename: '${nikController.text}_ktp.jpg',
+        filename: 'ktp_image.jpg',
         contentType: MediaType('image', 'jpeg'),
       ));
       request.files.add(http.MultipartFile.fromBytes(
-        'foto_kk',
+        'fotoKk',
         kkBytes,
-        filename: '${nikController.text}_kk.jpg',
+        filename: 'kk_image.jpg',
         contentType: MediaType('image', 'jpeg'),
       ));
       String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
@@ -297,36 +299,73 @@ class _RegisterPageState extends State<RegisterPage> {
       request.fields['kecamatan'] = selectedKecamatan ?? '';
       request.fields['desa'] = selectedDesa ?? '';
       request.fields['kota'] = 'Jember';
-      request.fields['tgl_lahir'] = formattedDate;
+      request.fields['tanggalLahir'] = formattedDate;
       request.fields['alamat'] = addressController.text;
       request.fields['password'] = passwordController.text;
 
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
-      // Log response status code
       print('Response status code: ${response.statusCode}');
+      // Setelah mendapatkan respons 302
+      if (response.statusCode == 302) {
+        // Periksa header Location
+        String? redirectUrl = response.headers['location'];
 
-      // Handle response
-      if (response.statusCode == 200) {
-        _showRegistrationSuccessDialog(context);
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Registrasi Gagal'),
-              content: Text('Registrasi Gagal'),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
+        if (redirectUrl != null) {
+          // Cetak URL yang di-redirect
+          print('Redirect URL: $redirectUrl');
+
+          // Lakukan permintaan baru ke URL yang dituju
+          final redirectResponse = await http.get(Uri.parse(redirectUrl));
+
+          // Periksa respons dari redirect
+          if (redirectResponse.statusCode == 200) {
+            // Registrasi berhasil setelah mengikuti redirect
+            _showRegistrationSuccessDialog(context);
+          } else {
+            // Gagal mengikuti redirect
+            print('Failed to follow redirect: ${redirectResponse.statusCode}');
+            // Tampilkan pesan kesalahan
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Registrasi Gagal'),
+                  content: Text('Registrasi Gagal'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
             );
-          },
-        );
+          }
+        } else {
+          // Header Location tidak tersedia
+          print('Redirect URL not found in headers');
+          // Tampilkan pesan kesalahan
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Registrasi Gagal'),
+                content: Text('Registrasi Gagal'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
       }
     }
   }

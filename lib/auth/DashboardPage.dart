@@ -50,7 +50,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> _fetchProfile() async {
     final response = await http.get(
-      Uri.parse('http://localhost:8000/api/profile/${widget.Biodata}'),
+      Uri.parse(
+          'https://suratdesajember.framework-tif.com/api/profile/${widget.Biodata}'),
     );
 
     if (response.statusCode == 200) {
@@ -82,7 +83,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> _fetchBerkas() async {
     final response = await http.get(
-      Uri.parse('http://localhost:8000/api/berkas'),
+      Uri.parse('https://suratdesajember.framework-tif.com/api/berkas'),
     );
 
     if (response.statusCode == 200) {

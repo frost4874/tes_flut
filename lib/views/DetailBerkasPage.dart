@@ -54,7 +54,8 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
     List<String> formTambahan,
   ) async {
     try {
-      var url = Uri.parse('http://localhost:8000/api/send_request');
+      var url = Uri.parse(
+          'https://suratdesajember.framework-tif.com/api/send_request');
       String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
       var response = await http.post(
         url,
@@ -286,16 +287,20 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                             ),
                           ),
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                             ),
-                            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            padding:
+                                MaterialStateProperty.all<EdgeInsetsGeometry>(
                               EdgeInsets.symmetric(
-                                vertical: 20.0, 
-                                horizontal: MediaQuery.of(context).size.width * 0.30,
+                                vertical: 20.0,
+                                horizontal:
+                                    MediaQuery.of(context).size.width * 0.30,
                               ),
                             ),
                           ),

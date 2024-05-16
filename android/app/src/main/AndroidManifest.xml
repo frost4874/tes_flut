@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     
     <application
-        android:label="tes_flut"
+        android:label="Surat Desa"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
