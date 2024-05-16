@@ -11,8 +11,8 @@ class UserData {
   final String tanggalLahir;
   final String password;
   final String role;
-  late String? fotoKtp;
-  late String? fotoKk;
+  final String fotoKtp;
+  final String fotoKk;
 
   UserData({
     required this.nik,
@@ -27,8 +27,8 @@ class UserData {
     required this.password,
     this.role = 'Pemohon', // Default role
     this.kota = 'Jember',
-    String? fotoKtp,
-    String? fotoKk,
+    required this.fotoKtp,
+    required this.fotoKk,
   });
 
   Map<String, dynamic> toJson() {
@@ -45,6 +45,8 @@ class UserData {
       'tgl_lahir': tanggalLahir,
       'password': password,
       'role': role,
+      'foto_ktp': fotoKtp,
+      'foto_kk': fotoKk,
     };
   }
 }

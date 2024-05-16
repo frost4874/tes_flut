@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _login(BuildContext context) async {
     final response = await http.post(
-      Uri.parse('http://localhost:8000/api/login_flutter'),
+      Uri.parse('http://192.168.1.5:8000/api/login_flutter'),
       body: {
         'nik': _nikController.text,
         'password': _passwordController.text,
