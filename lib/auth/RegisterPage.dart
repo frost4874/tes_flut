@@ -277,15 +277,15 @@ class _RegisterPageState extends State<RegisterPage> {
       List<int> kkBytes = await kkFile.readAsBytes();
       // Add images to request
       request.files.add(http.MultipartFile.fromBytes(
-        'fotoKtp',
+        'foto_ktp',
         ktpBytes,
-        filename: 'ktp_image.jpg',
+        filename: '${nikController.text}_ktp.jpg',
         contentType: MediaType('image', 'jpeg'),
       ));
       request.files.add(http.MultipartFile.fromBytes(
-        'fotoKk',
+        'foto_kk',
         kkBytes,
-        filename: 'kk_image.jpg',
+        filename: '${nikController.text}_kk.jpg',
         contentType: MediaType('image', 'jpeg'),
       ));
       String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
@@ -299,73 +299,36 @@ class _RegisterPageState extends State<RegisterPage> {
       request.fields['kecamatan'] = selectedKecamatan ?? '';
       request.fields['desa'] = selectedDesa ?? '';
       request.fields['kota'] = 'Jember';
-      request.fields['tanggalLahir'] = formattedDate;
+      request.fields['tgl_lahir'] = formattedDate;
       request.fields['alamat'] = addressController.text;
       request.fields['password'] = passwordController.text;
 
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
+      // Log response status code
       print('Response status code: ${response.statusCode}');
-      // Setelah mendapatkan respons 302
-      if (response.statusCode == 302) {
-        // Periksa header Location
-        String? redirectUrl = response.headers['location'];
 
-        if (redirectUrl != null) {
-          // Cetak URL yang di-redirect
-          print('Redirect URL: $redirectUrl');
-
-          // Lakukan permintaan baru ke URL yang dituju
-          final redirectResponse = await http.get(Uri.parse(redirectUrl));
-
-          // Periksa respons dari redirect
-          if (redirectResponse.statusCode == 200) {
-            // Registrasi berhasil setelah mengikuti redirect
-            _showRegistrationSuccessDialog(context);
-          } else {
-            // Gagal mengikuti redirect
-            print('Failed to follow redirect: ${redirectResponse.statusCode}');
-            // Tampilkan pesan kesalahan
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Registrasi Gagal'),
-                  content: Text('Registrasi Gagal'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text('OK'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
+      // Handle response
+      if (response.statusCode == 200) {
+        _showRegistrationSuccessDialog(context);
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Registrasi Gagal'),
+              content: Text('Registrasi Gagal'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
             );
-          }
-        } else {
-          // Header Location tidak tersedia
-          print('Redirect URL not found in headers');
-          // Tampilkan pesan kesalahan
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Registrasi Gagal'),
-                content: Text('Registrasi Gagal'),
-                actions: <Widget>[
-                  TextButton(
-                    child: Text('OK'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        }
+          },
+        );
       }
     }
   }
