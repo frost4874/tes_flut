@@ -22,7 +22,8 @@ class _RiwayatPageState extends State<RiwayatPage> {
   }
 
   Future<void> fetchData() async {
-    var url = Uri.parse('http://localhost:8000/api/riwayat/${widget.nik}');
+    var url = Uri.parse(
+        'https://suratdesajember.framework-tif.com/api/riwayat/${widget.nik}');
     try {
       var response = await http.get(url);
       if (response.statusCode == 200) {
@@ -49,7 +50,8 @@ class _RiwayatPageState extends State<RiwayatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Riwayat',
+        title: Text(
+          'Riwayat',
           style: TextStyle(
             color: Colors.white,
           ),
@@ -71,7 +73,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                         final status = riwayatList[index]['status'];
 
                         // Check if the status is 4, if not, return an empty container
-                        if (status != 4) {
+                        if (status != 3) {
                           return Container();
                         }
 
@@ -126,7 +128,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
 
   String getStatusText(int statusCode) {
     switch (statusCode) {
-      case 4:
+      case 3:
         return 'Selesai';
       default:
         return 'Status tidak diketahui';
@@ -135,7 +137,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
 
   Color getStatusTextColor(int statusCode) {
     switch (statusCode) {
-      case 4:
+      case 3:
         return Color(0xFF057438);
       default:
         return Colors.red;

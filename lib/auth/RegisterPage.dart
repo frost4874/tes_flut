@@ -4,7 +4,7 @@ import 'package:tes_flut/auth/LoginPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import 'package:tes_flut/views/UserData.dart';
+import 'package:http_parser/http_parser.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
@@ -65,8 +65,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
 //nyoba nyoba doang ini
   Future<List<String>> fetchKecamatanFromDatabase() async {
-    final response =
-        await http.get(Uri.parse('http://localhost:8000/api/kecamatan'));
+    final response = await http.get(
+        Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
     if (response.statusCode == 200) {
       List<String> kecamatanList = [];
       final data = json.decode(response.body);
@@ -81,8 +81,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _fetchDesaByKecamatanId(String kecamatanId) async {
     try {
-      final response = await http
-          .get(Uri.parse('http://localhost:8000/api/desa/$kecamatanId'));
+      final response = await http.get(Uri.parse(
+          'https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
       if (response.statusCode == 200) {
         List<String> desaList = (json.decode(response.body) as List)
             .map((item) => item['nama'] as String)
@@ -103,8 +103,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<List<String>> fetchDesaFromDatabase(String kecamatanId) async {
-    final response = await http
-        .get(Uri.parse('http://localhost:8000/api/desa/$kecamatanId'));
+    final response = await http.get(Uri.parse(
+        'https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
     if (response.statusCode == 200) {
       List<String> desaList = [];
       final data = json.decode(response.body);
@@ -118,8 +118,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<String> fetchKecamatanId(String kecamatanName) async {
-    final response =
-        await http.get(Uri.parse('http://localhost:8000/api/kecamatan'));
+    final response = await http.get(
+        Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
     if (response.statusCode == 200) {
       final List<dynamic> kecamatans = json.decode(response.body);
       final kecamatan = kecamatans
@@ -226,6 +226,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void _saveRegistrationData() async {
     if (_formKey.currentState!.validate()) {
       if (_imagektp == null || _imagekk == null) {
+        // Menampilkan pesan untuk meminta pengguna untuk mengunggah gambar
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -262,63 +263,109 @@ class _RegisterPageState extends State<RegisterPage> {
         return; // Menghentikan eksekusi lebih lanjut jika gambar tidak diunggah
       }
 
-      // Lakukan penyimpanan data registrasi jika gambar telah diunggah
+      // Lakukan konversi gambar ke bentuk byte
+      File ktpFile = File(_imagektp!);
+      File kkFile = File(_imagekk!);
+
+      // Kirim gambar sebagai multipart/form-data
+      var request = http.MultipartRequest(
+          'POST',
+          Uri.parse(
+              'https://suratdesajember.framework-tif.com/api/register_flutter'));
+      // Read bytes from the files
+      List<int> ktpBytes = await ktpFile.readAsBytes();
+      List<int> kkBytes = await kkFile.readAsBytes();
+      // Add images to request
+      request.files.add(http.MultipartFile.fromBytes(
+        'fotoKtp',
+        ktpBytes,
+        filename: 'ktp_image.jpg',
+        contentType: MediaType('image', 'jpeg'),
+      ));
+      request.files.add(http.MultipartFile.fromBytes(
+        'fotoKk',
+        kkBytes,
+        filename: 'kk_image.jpg',
+        contentType: MediaType('image', 'jpeg'),
+      ));
       String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
 
-      UserData userData = UserData(
-        nik: nikController.text,
-        nama: nameController.text,
-        email: emailController.text,
-        telepon: tlpController.text,
-        jekel: genderValue,
-        kecamatan: selectedKecamatan ?? '',
-        desa: selectedDesa ?? '',
-        kota: 'Jember',
-        tanggalLahir: formattedDate,
-        alamat: addressController.text,
-        password: passwordController.text,
-      );
+      // Tambahkan data pengguna lainnya sebagai fields
+      request.fields['nik'] = nikController.text;
+      request.fields['nama'] = nameController.text;
+      request.fields['email'] = emailController.text;
+      request.fields['telepon'] = tlpController.text;
+      request.fields['jekel'] = genderValue;
+      request.fields['kecamatan'] = selectedKecamatan ?? '';
+      request.fields['desa'] = selectedDesa ?? '';
+      request.fields['kota'] = 'Jember';
+      request.fields['tanggalLahir'] = formattedDate;
+      request.fields['alamat'] = addressController.text;
+      request.fields['password'] = passwordController.text;
 
-      // Cetak data pengguna ke terminal
-      print('Data Registrasi:');
-      print('NIK: ${userData.nik}');
-      print('Nama: ${userData.nama}');
-      print('Gender: ${userData.jekel}');
-      print('Kecamatan: ${userData.kecamatan}');
-      print('Desa: ${userData.desa}');
-      print('Kota: ${userData.kota}');
-      print('Tanggal Lahir: ${userData.tanggalLahir}');
-      print('Password: ${userData.password}');
-      print('Role: ${userData.role}');
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+      print('Response status code: ${response.statusCode}');
+      // Setelah mendapatkan respons 302
+      if (response.statusCode == 302) {
+        // Periksa header Location
+        String? redirectUrl = response.headers['location'];
 
-      final response = await http.post(
-        Uri.parse('http://localhost:8000/api/register_flutter'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(userData.toJson()),
-      );
+        if (redirectUrl != null) {
+          // Cetak URL yang di-redirect
+          print('Redirect URL: $redirectUrl');
 
-      if (response.statusCode == 200) {
-        _showRegistrationSuccessDialog(context);
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Registrasi Gagal'),
-              content: Text('Regstrasi Gagal'),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
+          // Lakukan permintaan baru ke URL yang dituju
+          final redirectResponse = await http.get(Uri.parse(redirectUrl));
+
+          // Periksa respons dari redirect
+          if (redirectResponse.statusCode == 200) {
+            // Registrasi berhasil setelah mengikuti redirect
+            _showRegistrationSuccessDialog(context);
+          } else {
+            // Gagal mengikuti redirect
+            print('Failed to follow redirect: ${redirectResponse.statusCode}');
+            // Tampilkan pesan kesalahan
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Registrasi Gagal'),
+                  content: Text('Registrasi Gagal'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
             );
-          },
-        );
+          }
+        } else {
+          // Header Location tidak tersedia
+          print('Redirect URL not found in headers');
+          // Tampilkan pesan kesalahan
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Registrasi Gagal'),
+                content: Text('Registrasi Gagal'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
       }
     }
   }
@@ -1109,7 +1156,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(20),
                           child: _imagektp != null
-                              ? Image.file(File(_imagektp!))
+                              ? Text(
+                                  _imagektp!
+                                      .split('/')
+                                      .last, // Menampilkan nama file dari path
+                                  style: TextStyle(color: Colors.white),
+                                )
                               : Text(
                                   'Belum ada gambar KTP',
                                   style: TextStyle(color: Colors.white),
@@ -1136,7 +1188,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(20),
                           child: _imagekk != null
-                              ? Image.file(File(_imagekk!))
+                              ? Text(
+                                  _imagekk!
+                                      .split('/')
+                                      .last, // Menampilkan nama file dari path
+                                  style: TextStyle(color: Colors.white),
+                                )
                               : Text(
                                   'Belum ada gambar KK',
                                   style: TextStyle(color: Colors.white),
