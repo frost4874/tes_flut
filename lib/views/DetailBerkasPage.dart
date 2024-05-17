@@ -146,23 +146,31 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: 20),
-                      Center(
-                        child: Text(
-                          '${widget.judul}'
-                              .toString()
-                              .split(' ')
-                              .map((String word) {
-                            return word[0].toUpperCase() + word.substring(1);
-                          }).join(' '),
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: "jomolhari",
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                      Padding(
+                        padding:EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                '${widget.judul}'
+                                    .toString()
+                                    .split(' ')
+                                    .map((String word) {
+                                  return word[0].toUpperCase() + word.substring(1);
+                                }).join(' '),
+                                textAlign: TextAlign.center,  // Added this line
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: "jomolhari",
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                      
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

@@ -1493,7 +1493,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                 EdgeInsets.symmetric(
                                   vertical: 20.0,
                                   horizontal:
-                                      MediaQuery.of(context).size.width * 0.3,
+                                      MediaQuery.of(context).size.width * 0.2,
                                 ),
                               ),
                             ),

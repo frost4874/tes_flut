@@ -391,7 +391,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 shrinkWrap: true,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 5,
+                                  crossAxisCount: 4,
                                   crossAxisSpacing: 10,
                                   mainAxisSpacing: 10,
                                 ),
@@ -411,8 +411,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                         });
                                       },
                                       child: Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                        padding:EdgeInsets.fromLTRB(0, 5, 0, 0),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -421,8 +420,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                         child: Column(
                                           children: [
                                             Container(
-                                              width: 45,
-                                              height: 45,
+                                              width: 40,
+                                              height: 40,
                                               decoration: BoxDecoration(
                                                 color: Colors.black,
                                                 borderRadius:
@@ -431,7 +430,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                               child: Icon(
                                                 Icons.window,
                                                 color: Colors.white,
-                                                size: 35,
+                                                size: 30,
                                               ),
                                             ),
                                             SizedBox(height: 5),
@@ -457,23 +456,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                     children: [
                                       IconButton(
                                         onPressed: () {
-                                          print(
-                                              'Berkas $judulBerkas dengan ID $idBerkas diklik! dengan form tambahan $formTambahan');
-                                          _showBerkasDetail(
-                                              judulBerkas,
-                                              idBerkas,
-                                              formTambahan,
-                                              widget.Biodata,
-                                              _kecamatan,
-                                              _desa);
+                                          print('Berkas $judulBerkas dengan ID $idBerkas diklik! dengan form tambahan $formTambahan');
+                                          _showBerkasDetail(judulBerkas, idBerkas, formTambahan, widget.Biodata, _kecamatan, _desa);
                                         },
                                         icon: Container(
                                           width: 43,
                                           height: 43,
                                           decoration: BoxDecoration(
                                             color: randomColor,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                            borderRadius: BorderRadius.circular(15),
                                           ),
                                           child: Center(
                                             child: Icon(
@@ -484,19 +475,42 @@ class _DashboardPageState extends State<DashboardPage> {
                                           ),
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                          judulBerkas,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF057438),
+                                      GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text('Judul Berkas'),
+                                                content: Text(judulBerkas),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    child: Text('Tutup'),
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Flexible(
+                                          child: Text(
+                                            judulBerkas,
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 8,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF057438),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ],
                                   );
+
                                 },
                               ),
                             ],
