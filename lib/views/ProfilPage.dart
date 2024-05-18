@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tes_flut/auth/LoginPage.dart';
-import 'package:tes_flut/views/profilpage/EditbiodataPage.dart';
+import 'package:tes_flut/views/profilpage/EditakunPage.dart';
 import 'package:tes_flut/views/profilpage/RiwayatPage.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -168,7 +168,7 @@ class _ProfilPageState extends State<ProfilPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EditbiodataPage(
+                                builder: (context) => EditakunPage(
                                       nik: widget.nik,
                                       name: widget.name,
                                       email: widget.email,

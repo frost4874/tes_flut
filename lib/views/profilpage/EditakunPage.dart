@@ -1,6 +1,7 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:tes_flut/views/profilpage/editakun/AlamateditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/EmaileditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/NameeditPage.dart';
@@ -11,7 +12,44 @@ import 'package:tes_flut/views/profilpage/editakun/Tempattledit.dart';
 
 
 class EditakunPage extends StatefulWidget {
-  EditakunPage({super.key}); 
+  final String nik;
+  final String name;
+  final String email;
+  final String kecamatan;
+  final String desa;
+  final String kota;
+  final String alamat;
+  final String tgl_lahir;
+  final String telepon;
+  final String jekel;
+  final String tempatLahir;
+  final String agama;
+  final String statusWarga;
+  final String warganegara;
+  final String statusNikah;
+  final String rt;
+  final String rw;
+
+  EditakunPage({
+    Key? key,
+    required this.nik,
+    required this.name,
+    required this.email,
+    required this.kecamatan,
+    required this.desa,
+    required this.kota,
+    required this.alamat,
+    required this.tgl_lahir,
+    required this.telepon,
+    required this.jekel,
+    required this.tempatLahir,
+    required this.agama,
+    required this.statusWarga,
+    required this.warganegara,
+    required this.statusNikah,
+    required this.rt,
+    required this.rw,
+  }) : super(key: key);
 
   @override
   _EditPageState createState() => _EditPageState();
@@ -23,14 +61,35 @@ class _EditPageState extends State<EditakunPage> {
   Color _checkIconColor = Colors.grey[200]!;
   String? name;
   String? email;
-  String? nohp;
+  String? telepon;
   String? tempatLahir= '';
-  String? tanggalLahir= '';
+  String? tgl_lahir= '';
   String formattedNohp = '';
   String? displayedNohp = '';
   String? desa = '';
   String? _tempatLahirSementara;
   String? _tanggalLahirSementara;
+
+
+  @override
+  void initState() {
+    super.initState();
+    telepon = widget.telepon;
+    tgl_lahir = widget.tgl_lahir;
+    tempatLahir = widget.tempatLahir;
+    formattedNohp = formatPhoneNumber(telepon) ?? '';
+    displayedNohp = formattedNohp.isEmpty ? telepon : formattedNohp;
+
+    if (widget.jekel == 'Laki-Laki') {
+      _selectedpilihjenis = 'Laki-Laki';
+    } else if (widget.jekel == 'Perempuan') {
+      _selectedpilihjenis = 'Perempuan';
+    } else if (widget.jekel == 'Lainnya') {
+      _selectedpilihjenis = 'Lainnya';
+    }
+  }
+
+ 
 
   void _navigateToNameEditPage() async {
     var result = await Navigator.push(
@@ -46,25 +105,24 @@ class _EditPageState extends State<EditakunPage> {
 
     void _navigateToTtlEditPage() async {
     // Simpan nilai tempat lahir dan tanggal lahir saat ini ke variabel sementara
-    _tempatLahirSementara = tempatLahir;
-    _tanggalLahirSementara = tanggalLahir;
+    _tempatLahirSementara = widget.tempatLahir;
+    _tanggalLahirSementara = widget.tgl_lahir;
 
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TtlEditPage(tempatLahir: tempatLahir!, tanggalLahir: tanggalLahir!)),
+      MaterialPageRoute(builder: (context) => TtlEditPage(tempatLahir: tempatLahir!, tgl_lahir: tgl_lahir!)),
     );
 
     if (result != null) {
       setState(() {
         // Perbarui nilai tempat lahir dan tanggal lahir dengan nilai yang disimpan
-        tempatLahir = result['tempatLahir'];
-        tanggalLahir = result['tanggalLahir'] != null ? result['tanggalLahir']!.toString() : '';
+        _tempatLahirSementara = result['tempatLahir'];
+        _tanggalLahirSementara = result['tanggalLahir'] != null ? result['tanggalLahir']!.toString() : '';
       });
     } else {
-      // Jika pengguna membatalkan, kembalikan nilai tempat lahir dan tanggal lahir dari variabel sementara
       setState(() {
         tempatLahir = _tempatLahirSementara;
-        tanggalLahir = _tanggalLahirSementara;
+        tgl_lahir = _tanggalLahirSementara;
       });
     }
   }
@@ -104,15 +162,15 @@ class _EditPageState extends State<EditakunPage> {
     );
     if (result != null) {
       setState(() {
-        nohp = result;
-        formattedNohp = formatPhoneNumber(nohp) ?? '';
-        displayedNohp = formattedNohp.isNotEmpty ? formattedNohp : nohp;
+        telepon = result;
+        formattedNohp = formatPhoneNumber(telepon) ?? '';
+        displayedNohp = formattedNohp.isNotEmpty ? formattedNohp : telepon;
       });
     }
     @override
     void initState() {
       super.initState();
-      displayedNohp = formattedNohp.isEmpty ? nohp : formattedNohp;
+      displayedNohp = formattedNohp.isEmpty ? telepon : formattedNohp;
     }
   }
 
@@ -149,16 +207,16 @@ class _EditPageState extends State<EditakunPage> {
           children: <Widget>[
             ListTile(
               title: Text(
-                'Laki-laki',
+                'Laki-Laki',
                 style: TextStyle(
                   fontSize: 14,
                   color: Color(0xFF057438),
                 ),
               ),
-              onTap: () {
+              onTap: _selectedpilihjenis == 'Laki-Laki' ? null : () {
                 setState(() {
-                  _selectedpilihjenis = 'Laki-laki';
-                  _isAnyFieldNotEmpty = _selectedpilihjenis == 'Laki-laki';
+                  _selectedpilihjenis = 'Laki-Laki';
+                  _isAnyFieldNotEmpty = _selectedpilihjenis == 'Laki-Laki';
                   _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
                   Navigator.of(context).pop();
                 });
@@ -172,7 +230,7 @@ class _EditPageState extends State<EditakunPage> {
                   color: Color(0xFF057438),
                 ),
               ),
-              onTap: () {
+              onTap: _selectedpilihjenis == 'Perempuan' ? null : () {
                 setState(() {
                   _selectedpilihjenis = 'Perempuan';
                   _isAnyFieldNotEmpty = true;
@@ -189,7 +247,7 @@ class _EditPageState extends State<EditakunPage> {
                   color: Color(0xFF057438),
                 ),
               ),
-              onTap: () {
+              onTap: _selectedpilihjenis == 'Lainnya' ? null : () {
                 setState(() {
                   _selectedpilihjenis = 'Lainnya';
                   _isAnyFieldNotEmpty = true;
@@ -204,6 +262,8 @@ class _EditPageState extends State<EditakunPage> {
     },
   );
 }
+
+
   
   String? formatEmail(String? email) {
     if (email == null || email.isEmpty) {
@@ -271,6 +331,7 @@ class _EditPageState extends State<EditakunPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(height: 10,),
+                  
                   //name
                   TextButton(
                     onPressed: () {
@@ -303,7 +364,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                name ?? '',
+                                name ?? widget.name, //manggil name
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -353,7 +414,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                formatEmail(email) ?? '',
+                                formatEmail(email) ?? formatEmail(widget.email)!,
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -453,7 +514,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                '$tempatLahir, $tanggalLahir',
+                                '$tempatLahir, $tgl_lahir',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
