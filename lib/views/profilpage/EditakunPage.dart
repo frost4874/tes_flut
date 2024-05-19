@@ -62,7 +62,7 @@ class _EditPageState extends State<EditakunPage> {
   String? name;
   String? email;
   String? telepon;
-  String? tempatlahir= '';
+  String? kota= '';
   String? tgl_lahir= '';
   String formattedNohp = '';
   String? displayedNohp = '';
@@ -74,9 +74,11 @@ class _EditPageState extends State<EditakunPage> {
   @override
   void initState() {
     super.initState();
+    email = widget.email;
+    name = widget.name;
     telepon = widget.telepon;
     tgl_lahir = widget.tgl_lahir;
-    tempatlahir = widget.tempatlahir;
+    kota = widget.kota;
     formattedNohp = formatPhoneNumber(telepon) ?? '';
     displayedNohp = formattedNohp.isNotEmpty ? formattedNohp : telepon;
 
@@ -94,7 +96,7 @@ class _EditPageState extends State<EditakunPage> {
   void _navigateToNameEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NameEditPage(name: name)),
+      MaterialPageRoute(builder: (context) => NameEditPage(name: widget.name)),
     );
     if (result != null) {
       setState(() {
@@ -105,13 +107,13 @@ class _EditPageState extends State<EditakunPage> {
 
   void _navigateToTtlEditPage() async {
     // Simpan nilai tempat lahir dan tanggal lahir saat ini ke variabel sementara
-    _tempatLahirSementara = widget.tempatlahir;
+    _tempatLahirSementara = widget.kota;
     _tanggalLahirSementara = widget.tgl_lahir;
 
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => TtlEditPage(
-        tempatlahir: tempatlahir!, 
+        kota: kota!, 
         tgl_lahir: tgl_lahir!
       )),
     );
@@ -124,7 +126,7 @@ class _EditPageState extends State<EditakunPage> {
       });
     } else {
       setState(() {
-        tempatlahir = _tempatLahirSementara;
+        kota = _tempatLahirSementara;
         tgl_lahir = _tanggalLahirSementara;
       });
     }
@@ -135,7 +137,7 @@ class _EditPageState extends State<EditakunPage> {
   void _navigateToEmailEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EmailEditPage()),
+      MaterialPageRoute(builder: (context) => EmailEditPage(email: widget.email,)),
     );
     if (result != null) {
       setState(() {
@@ -177,14 +179,14 @@ class _EditPageState extends State<EditakunPage> {
     }
   }
 
-  String? formatPhoneNumber(String? phoneNumber) {
-    if (phoneNumber == null || phoneNumber.length < 3) {
-      return phoneNumber;
+  String? formatPhoneNumber(String? telepon) {
+    if (telepon == null || telepon.length < 3) {
+      return telepon;
     }
 
-    String firstChar = phoneNumber.substring(0, 1);
-    String lastChar = phoneNumber.substring(phoneNumber.length - 1);
-    String middlePart = phoneNumber.substring(1, phoneNumber.length - 1);
+    String firstChar = telepon.substring(0, 1);
+    String lastChar = telepon.substring(telepon.length - 1);
+    String middlePart = telepon.substring(1, telepon.length - 1);
 
     String maskedMiddlePart = middlePart.replaceAll(RegExp(r'\d'), '*');
 
@@ -517,7 +519,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                '$tempatlahir, $tgl_lahir',
+                                '$kota, $tgl_lahir',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -567,7 +569,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                widget.telepon,
+                                telepon ?? widget.telepon,
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TtlEditPage extends StatefulWidget {
-  final String tempatlahir;
+  final String kota;
   final String tgl_lahir;
 
-  TtlEditPage({required this.tempatlahir, required this.tgl_lahir});
+  TtlEditPage({required this.kota, required this.tgl_lahir});
 
   @override
   _TtlEditPageState createState() => _TtlEditPageState();
@@ -15,12 +15,15 @@ class _TtlEditPageState extends State<TtlEditPage> {
   TextEditingController _tanggalController = TextEditingController();
   bool _isAnyFieldNotEmpty = false;
   DateTime? selectedDate;
-  String? tempatlahir;
+  String? _initialKota;
+  String? _initialTanggalLahir;
 
   @override
   void initState() {
     super.initState();
-    _tempatController.text = widget.tempatlahir;
+    _initialKota = widget.kota;
+    _initialTanggalLahir = widget.tgl_lahir;
+    _tempatController.text = widget.kota;
     _tanggalController.text = widget.tgl_lahir;
     _tempatController.addListener(_checkTextField);
     _tanggalController.addListener(_checkTextField);
@@ -35,8 +38,8 @@ class _TtlEditPageState extends State<TtlEditPage> {
 
   void _checkTextField() {
     setState(() {
-      _isAnyFieldNotEmpty = _tempatController.text.isNotEmpty || selectedDate != null;
-      tempatlahir = _tempatController.text;
+      _isAnyFieldNotEmpty = (_tempatController.text != _initialKota && _tempatController.text.isNotEmpty) ||
+          (_tanggalController.text != _initialTanggalLahir && _tanggalController.text.isNotEmpty);
     });
   }
 
@@ -64,16 +67,17 @@ class _TtlEditPageState extends State<TtlEditPage> {
     if (pickedDate != null) {
       setState(() {
         selectedDate = pickedDate;
+        _tanggalController.text = '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}';
         _checkTextField();
       });
     }
   }
 
   void _save() {
-    String? tempatlahir = _tempatController.text;
+    String tempatlahir = _tempatController.text;
     String? formattedDate = selectedDate != null
         ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
-        : null;
+        : _tanggalController.text;
 
     Navigator.pop(context, {'tempatLahir': tempatlahir, 'tanggalLahir': formattedDate});
   }
@@ -161,9 +165,7 @@ class _TtlEditPageState extends State<TtlEditPage> {
                               style: TextStyle(color: Color(0xFF057438), fontSize: 14),
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                                hintText: selectedDate != null
-                                    ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
-                                    : 'Pilih Tanggal Lahir Anda',
+                                hintText: 'Pilih Tanggal Lahir Anda',
                                 hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
