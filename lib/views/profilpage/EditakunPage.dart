@@ -22,7 +22,7 @@ class EditakunPage extends StatefulWidget {
   final String tgl_lahir;
   final String telepon;
   final String jekel;
-  final String tempatLahir;
+  final String tempatlahir;
   final String agama;
   final String statusWarga;
   final String warganegara;
@@ -42,7 +42,7 @@ class EditakunPage extends StatefulWidget {
     required this.tgl_lahir,
     required this.telepon,
     required this.jekel,
-    required this.tempatLahir,
+    required this.tempatlahir,
     required this.agama,
     required this.statusWarga,
     required this.warganegara,
@@ -62,7 +62,7 @@ class _EditPageState extends State<EditakunPage> {
   String? name;
   String? email;
   String? telepon;
-  String? tempatLahir= '';
+  String? tempatlahir= '';
   String? tgl_lahir= '';
   String formattedNohp = '';
   String? displayedNohp = '';
@@ -76,9 +76,9 @@ class _EditPageState extends State<EditakunPage> {
     super.initState();
     telepon = widget.telepon;
     tgl_lahir = widget.tgl_lahir;
-    tempatLahir = widget.tempatLahir;
+    tempatlahir = widget.tempatlahir;
     formattedNohp = formatPhoneNumber(telepon) ?? '';
-    displayedNohp = formattedNohp.isEmpty ? telepon : formattedNohp;
+    displayedNohp = formattedNohp.isNotEmpty ? formattedNohp : telepon;
 
     if (widget.jekel == 'Laki-Laki') {
       _selectedpilihjenis = 'Laki-Laki';
@@ -103,14 +103,17 @@ class _EditPageState extends State<EditakunPage> {
     }
   }
 
-    void _navigateToTtlEditPage() async {
+  void _navigateToTtlEditPage() async {
     // Simpan nilai tempat lahir dan tanggal lahir saat ini ke variabel sementara
-    _tempatLahirSementara = widget.tempatLahir;
+    _tempatLahirSementara = widget.tempatlahir;
     _tanggalLahirSementara = widget.tgl_lahir;
 
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TtlEditPage(tempatLahir: tempatLahir!, tgl_lahir: tgl_lahir!)),
+      MaterialPageRoute(builder: (context) => TtlEditPage(
+        tempatlahir: tempatlahir!, 
+        tgl_lahir: tgl_lahir!
+      )),
     );
 
     if (result != null) {
@@ -121,7 +124,7 @@ class _EditPageState extends State<EditakunPage> {
       });
     } else {
       setState(() {
-        tempatLahir = _tempatLahirSementara;
+        tempatlahir = _tempatLahirSementara;
         tgl_lahir = _tanggalLahirSementara;
       });
     }
@@ -158,7 +161,7 @@ class _EditPageState extends State<EditakunPage> {
   void _navigateToNohpEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NohpEditPage()),
+      MaterialPageRoute(builder: (context) => NohpEditPage(telepon: widget.telepon)),
     );
     if (result != null) {
       setState(() {
@@ -514,7 +517,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                '$tempatLahir, $tgl_lahir',
+                                '$tempatlahir, $tgl_lahir',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -564,7 +567,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                displayedNohp ?? '',
+                                widget.telepon,
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,

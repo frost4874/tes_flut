@@ -179,7 +179,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                       tgl_lahir: widget.tgl_lahir,
                                       telepon: widget.telepon,
                                       jekel: widget.jekel,
-                                      tempatLahir: widget.tempatlahir,
+                                      tempatlahir: widget.tempatlahir,
                                       agama: widget.agama,
                                       statusWarga: widget.statusWarga,
                                       warganegara: widget.warganegara,

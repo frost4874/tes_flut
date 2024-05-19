@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TtlEditPage extends StatefulWidget {
-  final String tempatLahir;
+  final String tempatlahir;
   final String tgl_lahir;
 
-  TtlEditPage({required this.tempatLahir, required this.tgl_lahir});
+  TtlEditPage({required this.tempatlahir, required this.tgl_lahir});
 
   @override
   _TtlEditPageState createState() => _TtlEditPageState();
@@ -15,12 +15,12 @@ class _TtlEditPageState extends State<TtlEditPage> {
   TextEditingController _tanggalController = TextEditingController();
   bool _isAnyFieldNotEmpty = false;
   DateTime? selectedDate;
-  String? tempatLahir;
+  String? tempatlahir;
 
   @override
   void initState() {
     super.initState();
-    _tempatController.text = widget.tempatLahir;
+    _tempatController.text = widget.tempatlahir;
     _tanggalController.text = widget.tgl_lahir;
     _tempatController.addListener(_checkTextField);
     _tanggalController.addListener(_checkTextField);
@@ -36,7 +36,7 @@ class _TtlEditPageState extends State<TtlEditPage> {
   void _checkTextField() {
     setState(() {
       _isAnyFieldNotEmpty = _tempatController.text.isNotEmpty || selectedDate != null;
-      tempatLahir = _tempatController.text;
+      tempatlahir = _tempatController.text;
     });
   }
 
@@ -70,12 +70,12 @@ class _TtlEditPageState extends State<TtlEditPage> {
   }
 
   void _save() {
-    String? tempatLahir = _tempatController.text;
+    String? tempatlahir = _tempatController.text;
     String? formattedDate = selectedDate != null
         ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
         : null;
 
-    Navigator.pop(context, {'tempatLahir': tempatLahir, 'tanggalLahir': formattedDate});
+    Navigator.pop(context, {'tempatLahir': tempatlahir, 'tanggalLahir': formattedDate});
   }
 
   @override

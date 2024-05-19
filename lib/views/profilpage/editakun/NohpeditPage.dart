@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class NohpEditPage extends StatefulWidget {
+  final String? telepon;
+
+  NohpEditPage({
+    Key? key,
+    required this.telepon,
+  }) : super(key: key);
+
   @override
   _NohpEditPageState createState() => _NohpEditPageState();
 }
