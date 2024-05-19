@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TtlEditPage extends StatefulWidget {
-  final String kota;
+  final String tempatlahir;
   final String tgl_lahir;
 
-  TtlEditPage({required this.kota, required this.tgl_lahir});
+  TtlEditPage({required this.tempatlahir, required this.tgl_lahir});
 
   @override
   _TtlEditPageState createState() => _TtlEditPageState();
@@ -21,9 +21,9 @@ class _TtlEditPageState extends State<TtlEditPage> {
   @override
   void initState() {
     super.initState();
-    _initialKota = widget.kota;
+    _initialKota = widget.tempatlahir;
     _initialTanggalLahir = widget.tgl_lahir;
-    _tempatController.text = widget.kota;
+    _tempatController.text = widget.tempatlahir;
     _tanggalController.text = widget.tgl_lahir;
     _tempatController.addListener(_checkTextField);
     _tanggalController.addListener(_checkTextField);

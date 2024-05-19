@@ -15,7 +15,7 @@ class EditbiodataPage extends StatefulWidget {
   final String tgl_lahir;
   final String telepon;
   final String jekel;
-  final String tempatLahir;
+  final String tempatlahir;
   final String agama;
   final String statusWarga;
   final String warganegara;
@@ -35,7 +35,7 @@ class EditbiodataPage extends StatefulWidget {
     required this.tgl_lahir,
     required this.telepon,
     required this.jekel,
-    required this.tempatLahir,
+    required this.tempatlahir,
     required this.agama,
     required this.statusWarga,
     required this.warganegara,
@@ -159,7 +159,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
     statuspernikahanvalue = widget.statusNikah;
     statuswargavalue = widget.statusWarga;
     warganegaraanvalue = widget.warganegara;
-    tempatlahirController.text = widget.tempatLahir;
+    tempatlahirController.text = widget.tempatlahir;
     rtController.text = widget.rt;
     rwController.text = widget.rw;
 

@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 
 class DatadiriEditPage extends StatefulWidget {
+  final String? agama;
+  final String? statusWarga;
+  final String? warganegara;
+  final String? statusNikah;
+
+    DatadiriEditPage({
+    Key? key,
+    required this.agama,
+    required this.statusWarga,
+    required this.warganegara,
+    required this.statusNikah,
+  }) : super(key: key);
+
+
   @override
   _DatadiriEditPageState createState() => _DatadiriEditPageState();
 }
@@ -234,7 +248,7 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        hintText: 'Pilih Status Pernikahan Anda',
+                        hintText: 'Pilih Status Pekerjaan Anda',
                         hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),

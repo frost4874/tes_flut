@@ -63,6 +63,7 @@ class _EditPageState extends State<EditakunPage> {
   String? email;
   String? telepon;
   String? kota= '';
+  String? tempatlahir= '';
   String? tgl_lahir= '';
   String formattedNohp = '';
   String? displayedNohp = '';
@@ -79,6 +80,7 @@ class _EditPageState extends State<EditakunPage> {
     telepon = widget.telepon;
     tgl_lahir = widget.tgl_lahir;
     kota = widget.kota;
+    tempatlahir = widget.tempatlahir;
     formattedNohp = formatPhoneNumber(telepon) ?? '';
     displayedNohp = formattedNohp.isNotEmpty ? formattedNohp : telepon;
 
@@ -96,7 +98,9 @@ class _EditPageState extends State<EditakunPage> {
   void _navigateToNameEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NameEditPage(name: widget.name)),
+      MaterialPageRoute(builder: (context) => NameEditPage(
+        name: widget.name
+      )),
     );
     if (result != null) {
       setState(() {
@@ -107,13 +111,13 @@ class _EditPageState extends State<EditakunPage> {
 
   void _navigateToTtlEditPage() async {
     // Simpan nilai tempat lahir dan tanggal lahir saat ini ke variabel sementara
-    _tempatLahirSementara = widget.kota;
+    _tempatLahirSementara = widget.tempatlahir;
     _tanggalLahirSementara = widget.tgl_lahir;
 
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => TtlEditPage(
-        kota: kota!, 
+        tempatlahir: tempatlahir!, 
         tgl_lahir: tgl_lahir!
       )),
     );
@@ -126,7 +130,7 @@ class _EditPageState extends State<EditakunPage> {
       });
     } else {
       setState(() {
-        kota = _tempatLahirSementara;
+        tempatlahir = _tempatLahirSementara;
         tgl_lahir = _tanggalLahirSementara;
       });
     }
@@ -519,7 +523,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                '$kota, $tgl_lahir',
+                                '$tempatlahir, $tgl_lahir',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -592,7 +596,12 @@ class _EditPageState extends State<EditakunPage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DatadiriEditPage()),
+                        MaterialPageRoute(builder: (context) => DatadiriEditPage(
+                          agama: widget.agama,
+                          statusWarga: widget.statusWarga,
+                          warganegara: widget.warganegara,
+                          statusNikah: widget.statusNikah,
+                        )),
                       );
                     },
                     style: ButtonStyle(
