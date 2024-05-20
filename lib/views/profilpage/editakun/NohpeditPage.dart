@@ -17,10 +17,13 @@ class _NohpEditPageState extends State<NohpEditPage> {
   TextEditingController _nohpcontroller = TextEditingController();
   bool _isAnyFieldNotEmpty = false;
   final _formKey = GlobalKey<FormState>();
+  String? _initialtelepon;
 
   @override
   void initState() {
     super.initState();
+    _initialtelepon = widget.telepon;
+    _nohpcontroller = TextEditingController(text: _formatTelepon(widget.telepon));
     _nohpcontroller.addListener(_checkTextField);
   }
 
@@ -32,7 +35,7 @@ class _NohpEditPageState extends State<NohpEditPage> {
 
   void _checkTextField() {
     setState(() {
-      _isAnyFieldNotEmpty = _nohpcontroller.text.isNotEmpty;
+      _isAnyFieldNotEmpty = _nohpcontroller.text != _initialtelepon && _nohpcontroller.text.isNotEmpty;
     });
   }
 
@@ -44,6 +47,10 @@ class _NohpEditPageState extends State<NohpEditPage> {
 
   @override
   Widget build(BuildContext context) {
+    String telepon = widget.telepon ?? '';
+
+    String formattedTelepon = _formatTelepon(telepon);
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -90,7 +97,6 @@ class _NohpEditPageState extends State<NohpEditPage> {
                       child: TextFormField(
                         keyboardType: TextInputType.phone,
                         controller: _nohpcontroller,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         style: TextStyle(color: Color(0xFF057438), fontSize: 14),
                         maxLength: 20,
                         validator: (value) {
@@ -150,4 +156,19 @@ class _NohpEditPageState extends State<NohpEditPage> {
       ),
     );
   }
+
+  String _formatTelepon(String? telepon) {
+    if (telepon == null || telepon.length < 3) {
+      return telepon ?? '';
+    }
+
+    String firstChar = telepon.substring(0, 3);
+    String lastChar = telepon.substring(telepon.length - 1);
+    String middlePart = telepon.substring(3, telepon.length - 1);
+
+    String maskedMiddlePart = middlePart.replaceAll(RegExp(r'\d'), '*');
+
+    return '$firstChar$maskedMiddlePart$lastChar';
+  }
 }
+

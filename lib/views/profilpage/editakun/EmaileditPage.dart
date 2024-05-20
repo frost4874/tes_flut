@@ -22,7 +22,7 @@ class _EmailEditPageState extends State<EmailEditPage> {
   void initState() {
     super.initState();
     _initialEmail = widget.email;
-    _emailcontroller = TextEditingController(text: widget.email);
+    _emailcontroller = TextEditingController(text: formatEmail(widget.email));
     _emailcontroller.addListener(_checkTextField);
   }
 
@@ -157,3 +157,28 @@ class _EmailEditPageState extends State<EmailEditPage> {
     );
   }
 }
+
+String? formatEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      return email;
+    }
+
+    List<String> parts = email.split("@");
+    if (parts.length != 2) {
+      return email;
+    }
+
+    String username = parts[0];
+    String domain = parts[1];
+
+    if (username.length < 2) {
+      return email;
+    }
+
+    String firstChar = username.substring(0, 1);
+    String lastChar = username.substring(username.length - 1);
+
+    String middlePart = "*" * (username.length - 2);
+
+    return '$firstChar$middlePart$lastChar@$domain';
+  }

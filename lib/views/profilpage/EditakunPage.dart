@@ -56,7 +56,6 @@ class EditakunPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditakunPage> {
-  String? _selectedpilihjenis;
   bool _isAnyFieldNotEmpty = false;
   Color _checkIconColor = Colors.grey[200]!;
   String? name;
@@ -70,6 +69,7 @@ class _EditPageState extends State<EditakunPage> {
   String? desa = '';
   String? _tempatLahirSementara;
   String? _tanggalLahirSementara;
+  String? _selectedpilihjenis;
 
 
   @override
@@ -91,6 +91,8 @@ class _EditPageState extends State<EditakunPage> {
     } else if (widget.jekel == 'Lainnya') {
       _selectedpilihjenis = 'Lainnya';
     }
+
+    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
   }
 
  
@@ -188,7 +190,7 @@ class _EditPageState extends State<EditakunPage> {
       return telepon;
     }
 
-    String firstChar = telepon.substring(0, 1);
+    String firstChar = telepon.substring(0, 3);
     String lastChar = telepon.substring(telepon.length - 1);
     String middlePart = telepon.substring(1, telepon.length - 1);
 
@@ -199,78 +201,79 @@ class _EditPageState extends State<EditakunPage> {
 
 
   void _showGenderDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(
-          'Pilih Jenis Kelamin',
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFF057438),
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF057438),
+          title: Text(
+            'Pilih Jenis Kelamin',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              title: Text(
-                'Laki-Laki',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF057438),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'Laki-Laki',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
                 ),
+                onTap: _selectedpilihjenis == 'Laki-Laki' ? null : () {
+                  setState(() {
+                    _selectedpilihjenis = 'Laki-Laki';
+                    _isAnyFieldNotEmpty = _selectedpilihjenis != widget.jekel;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
               ),
-              onTap: _selectedpilihjenis == 'Laki-Laki' ? null : () {
-                setState(() {
-                  _selectedpilihjenis = 'Laki-Laki';
-                  _isAnyFieldNotEmpty = _selectedpilihjenis == 'Laki-Laki';
-                  _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Perempuan',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF057438),
+              ListTile(
+                title: Text(
+                  'Perempuan',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
                 ),
+                onTap: _selectedpilihjenis == 'Perempuan' ? null : () {
+                  setState(() {
+                    _selectedpilihjenis = 'Perempuan';
+                    _isAnyFieldNotEmpty = _selectedpilihjenis != widget.jekel;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
               ),
-              onTap: _selectedpilihjenis == 'Perempuan' ? null : () {
-                setState(() {
-                  _selectedpilihjenis = 'Perempuan';
-                  _isAnyFieldNotEmpty = true;
-                  _checkIconColor = Color(0xFF057438);
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Lainnya',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF057438),
+              ListTile(
+                title: Text(
+                  'Lainnya',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
                 ),
+                onTap: _selectedpilihjenis == 'Lainnya' ? null : () {
+                  setState(() {
+                    _selectedpilihjenis = 'Lainnya';
+                    _isAnyFieldNotEmpty = _selectedpilihjenis != widget.jekel;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
               ),
-              onTap: _selectedpilihjenis == 'Lainnya' ? null : () {
-                setState(() {
-                  _selectedpilihjenis = 'Lainnya';
-                  _isAnyFieldNotEmpty = true;
-                  _checkIconColor = Color(0xFF057438);
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+            ],
+          ),
+        );
+      },
+    );
+  }
 
 
   
@@ -573,7 +576,7 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                telepon ?? widget.telepon,
+                                formatPhoneNumber(telepon) ?? formatPhoneNumber(widget.telepon)!,
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
