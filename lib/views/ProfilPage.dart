@@ -77,7 +77,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 Container(
                   width: double.infinity,
                   height: 200,
-                  color: Colors.black.withOpacity(0.8),
+                  color: Color(0xFF057438).withOpacity(0.9),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(30, 100, 40, 0),
