@@ -1,6 +1,25 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class AlamatEditPage extends StatefulWidget {
+  final String? kecamatan;
+  final String? desa;
+  final String? rt;
+  final String? rw;
+  final String? alamat;
+
+    AlamatEditPage({
+    Key? key,
+    required this.kecamatan,
+    required this.desa,
+    required this.rt,
+    required this.rw,
+    required this.alamat,
+  }) : super(key: key);
+
   @override
   _AlamatEditPageState createState() => _AlamatEditPageState();
 }
@@ -12,6 +31,83 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
   String? _selectedKecamatan;
   String? _selectedDesa;
   bool _isAnyFieldNotEmpty = false;
+  String? rt;
+  String? rw;
+  String? alamat;
+
+  late Future<List<String>> kecamatanListFuture;
+  String? selectedKecamatan;
+
+  late Future<List<String>> desaListFuture;
+  String? selectedDesa;
+  String? selectedKecamatanId;
+
+//nyoba nyoba doang ini
+  Future<List<String>> fetchKecamatanFromDatabase() async {
+    final response =
+        await http.get(Uri.parse('http://localhost:8000/api/kecamatan'));
+    if (response.statusCode == 200) {
+      List<String> kecamatanList = [];
+      final data = json.decode(response.body);
+      for (var kecamatan in data) {
+        kecamatanList.add(kecamatan['nama']);
+      }
+      return kecamatanList;
+    } else {
+      throw Exception('Failed to load kecamatan data');
+    }
+  }
+
+  void _fetchDesaByKecamatanId(String kecamatanId) async {
+    try {
+      final response = await http
+          .get(Uri.parse('http://localhost:8000/api/desa/$kecamatanId'));
+      if (response.statusCode == 200) {
+        List<String> desaList = (json.decode(response.body) as List)
+            .map((item) => item['nama'] as String)
+            .toList();
+        setState(() {
+          selectedDesa = null;
+          desaListFuture = Future.value(desaList);
+        });
+      } else {
+        throw Exception('Failed to load desa data');
+      }
+    } catch (error) {
+      print('Error fetching desa data: $error');
+      setState(() {
+        desaListFuture = Future.error('Failed to load desa data');
+      });
+    }
+  }
+
+  Future<List<String>> fetchDesaFromDatabase(String kecamatanId) async {
+    final response = await http
+        .get(Uri.parse('http://localhost:8000/api/desa/$kecamatanId'));
+    if (response.statusCode == 200) {
+      List<String> desaList = [];
+      final data = json.decode(response.body);
+      for (var desa in data) {
+        desaList.add(desa['nama']);
+      }
+      return desaList;
+    } else {
+      throw Exception('Failed to load desa data');
+    }
+  }
+
+  Future<String> fetchKecamatanId(String kecamatanName) async {
+    final response =
+        await http.get(Uri.parse('http://localhost:8000/api/kecamatan'));
+    if (response.statusCode == 200) {
+      final List<dynamic> kecamatans = json.decode(response.body);
+      final kecamatan = kecamatans
+          .firstWhere((kecamatan) => kecamatan['nama'] == kecamatanName);
+      return kecamatan['id'].toString();
+    } else {
+      throw Exception('Failed to load kecamatan data');
+    }
+  }
 
   @override
   void initState() {

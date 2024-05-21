@@ -153,10 +153,16 @@ class _EditPageState extends State<EditakunPage> {
   }
 
 
-  void _navigateToDesaEditPage() async {
+  void _navigateToAlamatEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AlamatEditPage()),
+      MaterialPageRoute(builder: (context) => AlamatEditPage(
+        kecamatan: widget.kecamatan,
+        desa: widget.desa,
+        alamat: widget.alamat,
+        rt: widget.rt,
+        rw: widget.rw,
+      )),
     );
     if (result != null) {
       setState(() {
@@ -648,7 +654,7 @@ class _EditPageState extends State<EditakunPage> {
                   //alamat
                   TextButton(
                     onPressed: () {
-                      _navigateToDesaEditPage();
+                      _navigateToAlamatEditPage();
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),

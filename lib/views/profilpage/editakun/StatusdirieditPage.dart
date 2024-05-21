@@ -22,10 +22,10 @@ class DatadiriEditPage extends StatefulWidget {
 class _DatadiriEditPageState extends State<DatadiriEditPage> {
   TextEditingController _Pekerjaancontroller = TextEditingController();
   TextEditingController _statuscontroller = TextEditingController();
-  String? _selectedAgama;
-  String? _selectedWarganegara;
-  String? _selectedStatusPernikahan;
-  String? _selectedStatusWarga;
+  String? agama;
+  String? statusWarga;
+  String? statusNikah;
+  String? warganegara;
   Color _checkIconColor = Colors.grey[200]!;
   bool _isAnyFieldNotEmpty = false;
 
@@ -35,41 +35,41 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
 
     //AGAMA
     if (widget.agama == 'Islam') {
-      _selectedAgama = 'Islam';
+      agama = 'Islam';
     } else if (widget.agama == 'Kristen') {
-      _selectedAgama = 'Kristen';
+      agama = 'Kristen';
     } else if (widget.agama == 'Katolik') {
-      _selectedAgama = 'Katolik';
+      agama = 'Katolik';
     } else if (widget.agama == 'Hindu') {
-      _selectedAgama = 'Hindu';
+      agama = 'Hindu';
     } else if (widget.agama == 'Budha') {
-      _selectedAgama = 'Budha';
+      agama = 'Budha';
     }
 
     //WARGANEGARAAN
     if (widget.warganegara == 'WNI') {
-      _selectedWarganegara = 'WNI';
+      warganegara = 'WNI';
     } else if (widget.warganegara == 'WNA') {
-      _selectedWarganegara = 'WNA';
+      warganegara = 'WNA';
     }
 
     //STATUS PERNIKAHAN
     if (widget.statusNikah == 'Belum Kawin') {
-      _selectedStatusPernikahan = 'Belum Kawin';
+      statusNikah = 'Belum Kawin';
     } else if (widget.statusNikah == 'Kawin') {
-      _selectedStatusPernikahan = 'Kawin';
+      statusNikah = 'Kawin';
     } else if (widget.statusNikah == 'Cerai Mati') {
-      _selectedStatusPernikahan = 'Cerai Mati';
+      statusNikah = 'Cerai Mati';
     }
 
 
     //STATUS PEKERJAAN
     if (widget.statusWarga == 'Sekolah') {
-      _selectedStatusWarga = 'Sekolah';
+      statusWarga = 'Sekolah';
     } else if (widget.statusWarga == 'Kerja') {
-      _selectedStatusWarga = 'Kerja';
+      statusWarga = 'Kerja';
     } else if (widget.statusWarga == 'Bekerja') {
-      _selectedStatusWarga = 'Bekerja';
+      statusWarga = 'Bekerja';
     }
 
 
@@ -102,10 +102,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedAgama == 'Islam' ? null : () {
+                onTap: agama == 'Islam' ? null : () {
                   setState(() {
-                    _selectedAgama = 'Islami';
-                    _isAnyFieldNotEmpty = _selectedAgama != widget.agama;
+                    agama = 'Islami';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -119,10 +119,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedAgama == 'Kristen' ? null : () {
+                onTap: agama == 'Kristen' ? null : () {
                   setState(() {
-                    _selectedAgama = 'Kristen';
-                    _isAnyFieldNotEmpty = _selectedAgama != widget.agama;
+                    agama = 'Kristen';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -136,10 +136,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedAgama == 'Katolik' ? null : () {
+                onTap: agama == 'Katolik' ? null : () {
                   setState(() {
-                    _selectedAgama = 'Katolik';
-                    _isAnyFieldNotEmpty = _selectedAgama != widget.agama;
+                    agama = 'Katolik';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -153,10 +153,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedAgama == 'Hindu' ? null : () {
+                onTap: agama == 'Hindu' ? null : () {
                   setState(() {
-                    _selectedAgama = 'Hindu';
-                    _isAnyFieldNotEmpty = _selectedAgama != widget.agama;
+                    agama = 'Hindu';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -170,10 +170,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedAgama == 'Budha' ? null : () {
+                onTap: agama == 'Budha' ? null : () {
                   setState(() {
-                    _selectedAgama = 'Budha';
-                    _isAnyFieldNotEmpty = _selectedAgama != widget.agama;
+                    agama = 'Budha';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -212,10 +212,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedWarganegara == 'WNI' ? null : () {
+                onTap: warganegara == 'WNI' ? null : () {
                   setState(() {
-                    _selectedWarganegara = 'WNI';
-                    _isAnyFieldNotEmpty = _selectedWarganegara != widget.warganegara;
+                    warganegara = 'WNI';
+                    _isAnyFieldNotEmpty = warganegara != widget.warganegara;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -229,10 +229,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedWarganegara == 'WNA' ? null : () {
+                onTap: warganegara == 'WNA' ? null : () {
                   setState(() {
-                    _selectedWarganegara = 'WNA';
-                    _isAnyFieldNotEmpty = _selectedWarganegara != widget.warganegara;
+                    warganegara = 'WNA';
+                    _isAnyFieldNotEmpty = warganegara != widget.warganegara;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -271,10 +271,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedStatusPernikahan == 'Belum Kawin' ? null : () {
+                onTap: statusNikah == 'Belum Kawin' ? null : () {
                   setState(() {
-                    _selectedStatusPernikahan = 'Belum Kawin';
-                    _isAnyFieldNotEmpty = _selectedStatusPernikahan != widget.statusNikah;
+                    statusNikah = 'Belum Kawin';
+                    _isAnyFieldNotEmpty = statusNikah != widget.statusNikah;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -288,10 +288,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedStatusPernikahan == 'Kawin' ? null : () {
+                onTap: statusNikah == 'Kawin' ? null : () {
                   setState(() {
-                    _selectedStatusPernikahan = 'Kawin';
-                    _isAnyFieldNotEmpty = _selectedStatusPernikahan != widget.statusNikah;
+                    statusNikah = 'Kawin';
+                    _isAnyFieldNotEmpty = statusNikah != widget.statusNikah;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -305,10 +305,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedStatusPernikahan == 'Cerai Mati' ? null : () {
+                onTap: statusNikah == 'Cerai Mati' ? null : () {
                   setState(() {
-                    _selectedStatusPernikahan = 'Cerai Mati';
-                    _isAnyFieldNotEmpty = _selectedStatusPernikahan != widget.statusNikah;
+                    statusNikah = 'Cerai Mati';
+                    _isAnyFieldNotEmpty = statusNikah != widget.statusNikah;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -347,10 +347,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedStatusWarga == 'Sekolah' ? null : () {
+                onTap: statusWarga == 'Sekolah' ? null : () {
                   setState(() {
-                    _selectedStatusWarga = 'Sekolah';
-                    _isAnyFieldNotEmpty = _selectedStatusWarga != widget.statusWarga;
+                    statusWarga = 'Sekolah';
+                    _isAnyFieldNotEmpty = statusWarga != widget.statusWarga;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -364,10 +364,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedStatusWarga == 'Kerja' ? null : () {
+                onTap: statusWarga == 'Kerja' ? null : () {
                   setState(() {
-                    _selectedStatusWarga = 'Kerja';
-                    _isAnyFieldNotEmpty = _selectedStatusWarga != widget.statusWarga;
+                    statusWarga = 'Kerja';
+                    _isAnyFieldNotEmpty = statusWarga != widget.statusWarga;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -381,10 +381,10 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     color: Colors.white,
                   ),
                 ),
-                onTap: _selectedStatusWarga == 'Bekerja' ? null : () {
+                onTap: statusWarga == 'Bekerja' ? null : () {
                   setState(() {
-                    _selectedStatusWarga = 'Bekerja';
-                    _isAnyFieldNotEmpty = _selectedStatusWarga != widget.statusWarga;
+                    statusWarga = 'Bekerja';
+                    _isAnyFieldNotEmpty = statusWarga != widget.statusWarga;
                     _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
                     Navigator.of(context).pop();
                   });
@@ -509,7 +509,7 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                _selectedAgama ?? '',
+                                agama ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -560,7 +560,7 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                _selectedWarganegara ?? '',
+                                warganegara ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -611,7 +611,7 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                _selectedStatusPernikahan ?? '',
+                                statusNikah ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
@@ -662,7 +662,7 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                _selectedStatusWarga ?? '',
+                                statusWarga ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
