@@ -279,7 +279,12 @@ class _DashboardPageState extends State<DashboardPage> {
               ],
               currentIndex: _selectedIndex,
               selectedItemColor: Color(0xFF057438),
+              backgroundColor: Colors.white, // Mengatur warna latar belakang
               onTap: _onBottomNavigationBarItemTapped,
+              showSelectedLabels: true, // Menampilkan label yang dipilih
+              showUnselectedLabels: true, // Menampilkan label yang tidak dipilih
+              type: BottomNavigationBarType.fixed, // Menyesuaikan jenis BottomNavigationBar
+              elevation: 0, // Menghilangkan bayangan atau garis pembatas
             ),
           ),
         ],
@@ -389,21 +394,14 @@ class _DashboardPageState extends State<DashboardPage> {
                               SizedBox(height: 10),
                               GridView.builder(
                                 shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4,
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
                                   crossAxisSpacing: 10,
                                   mainAxisSpacing: 10,
                                 ),
-                                itemCount: _showAllFiles
-                                    ? (_judulBerkas?.length ?? 0)
-                                    : ((_searchResults?.length ?? 0) < 10
-                                        ? (_searchResults?.length ?? 0)
-                                        : 10),
+                                itemCount: _showAllFiles ? (_judulBerkas?.length ?? 0) : ((_searchResults?.length ?? 0) < 10 ? (_searchResults?.length ?? 0) : 10),
                                 itemBuilder: (context, index) {
-                                  if (!_showAllFiles &&
-                                      index >= 9 &&
-                                      _searchResults.length > 9) {
+                                  if (!_showAllFiles && index >= 9 && _searchResults.length > 9) {
                                     return InkWell(
                                       onTap: () {
                                         setState(() {
@@ -411,11 +409,10 @@ class _DashboardPageState extends State<DashboardPage> {
                                         });
                                       },
                                       child: Container(
-                                        padding:EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(20),
                                         ),
                                         child: Column(
                                           children: [
@@ -424,8 +421,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                               height: 40,
                                               decoration: BoxDecoration(
                                                 color: Colors.black,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                                borderRadius: BorderRadius.circular(10),
                                               ),
                                               child: Icon(
                                                 Icons.window,
@@ -452,50 +448,33 @@ class _DashboardPageState extends State<DashboardPage> {
                                   String judulBerkas = _searchResults[index];
                                   String idBerkas = _idBerkas![index];
                                   String formTambahan = _formTambahan![index];
-                                  return Column(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          print('Berkas $judulBerkas dengan ID $idBerkas diklik! dengan form tambahan $formTambahan');
-                                          _showBerkasDetail(judulBerkas, idBerkas, formTambahan, widget.Biodata, _kecamatan, _desa);
-                                        },
-                                        icon: Container(
-                                          width: 43,
-                                          height: 43,
-                                          decoration: BoxDecoration(
-                                            color: randomColor,
-                                            borderRadius: BorderRadius.circular(15),
-                                          ),
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.email,
-                                              color: Colors.white,
-                                              size: 35,
+                                  return Container(
+                                    width: 60,
+                                    height: 100,
+                                    child: Column(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            print('Berkas $judulBerkas dengan ID $idBerkas diklik! dengan form tambahan $formTambahan');
+                                            _showBerkasDetail(judulBerkas, idBerkas, formTambahan, widget.Biodata, _kecamatan, _desa);
+                                          },
+                                          icon: Container(
+                                            width: 43,
+                                            height: 43,
+                                            decoration: BoxDecoration(
+                                              color: randomColor,
+                                              borderRadius: BorderRadius.circular(15),
+                                            ),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.email,
+                                                color: Colors.white,
+                                                size: 35,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text('Judul Berkas'),
-                                                content: Text(judulBerkas),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    child: Text('Tutup'),
-                                                    onPressed: () {
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        },
-                                        child: Flexible(
+                                        Flexible(
                                           child: Text(
                                             judulBerkas,
                                             textAlign: TextAlign.center,
@@ -507,12 +486,12 @@ class _DashboardPageState extends State<DashboardPage> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   );
-
                                 },
                               ),
+
                             ],
                           ),
                         ),

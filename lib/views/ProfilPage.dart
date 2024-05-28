@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tes_flut/auth/LoginPage.dart';
 import 'package:tes_flut/views/profilpage/EditakunPage.dart';
-import 'package:tes_flut/views/profilpage/EditbiodataPage.dart';
 import 'package:tes_flut/views/profilpage/RiwayatPage.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -233,7 +232,7 @@ class _ProfilPageState extends State<ProfilPage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 0, horizontal: 80),
+              padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
               child: Align(
                 alignment: Alignment.center,
                 child: InkWell(
@@ -281,24 +280,21 @@ class _ProfilPageState extends State<ProfilPage> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Color(0xFF057438), width: 2.0),
+                                        color: Color(0xFF057438), width: 3.0),
                                     borderRadius: BorderRadius.circular(20.0),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey
-                                            .withOpacity(0.5), // Warna shadow
-                                        spreadRadius:
-                                            2, // Seberapa jauh shadow tersebar
-                                        blurRadius: 5, // Seberapa blur shadow
-                                        offset: Offset(
-                                            0, 3), // Perubahan posisi shadow
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius:2,
+                                        blurRadius: 5,
+                                        offset: Offset(0, 3),
                                       ),
                                     ],
                                     color: Colors.red,
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 20),
+                                        vertical: 10, horizontal: 100),
                                     child: Text(
                                       'LOGOUT',
                                       style: TextStyle(
@@ -306,6 +302,8 @@ class _ProfilPageState extends State<ProfilPage> {
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
+                                       maxLines: 1,
+                                       softWrap: false,
                                     ),
                                   ),
                                 ),

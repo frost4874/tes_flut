@@ -338,7 +338,7 @@ class _StatusPageState extends State<StatusPage> {
                                 );
                               },
                               child: Image.asset(
-                                'images/notes.png',
+                                'assets/images/notes.png',
                                 width: 25,
                                 height: 25,
                                 color: Color(0xFF057438),
@@ -390,7 +390,7 @@ class _StatusPageState extends State<StatusPage> {
                                 }
                               },
                               child: Image.asset(
-                                'images/edit.png',
+                                'assets/images/edit.png',
                                 width: 25,
                                 height: 25,
                                 color: status == 0
