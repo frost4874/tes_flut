@@ -69,7 +69,7 @@ class _ProfilPageState extends State<ProfilPage> {
                   width: double.infinity,
                   height: 200,
                   child: Image.asset(
-                    'images/jj1.png',
+                    'assets/images/jj1.png',
                     fit: BoxFit.cover,
                   ),
                 ),
