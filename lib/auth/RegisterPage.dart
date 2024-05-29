@@ -299,7 +299,7 @@ class _RegisterPageState extends State<RegisterPage> {
       request.fields['kecamatan'] = selectedKecamatan ?? '';
       request.fields['desa'] = selectedDesa ?? '';
       request.fields['kota'] = 'Jember';
-      request.fields['tanggalLahir'] = formattedDate;
+      request.fields['tgl_lahir'] = formattedDate;
       request.fields['alamat'] = addressController.text;
       request.fields['password'] = passwordController.text;
 
