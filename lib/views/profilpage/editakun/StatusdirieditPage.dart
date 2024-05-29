@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 
 class DatadiriEditPage extends StatefulWidget {
+  final String? agama;
+  final String? statusWarga;
+  final String? warganegara;
+  final String? statusNikah;
+
+    DatadiriEditPage({
+    Key? key,
+    required this.agama,
+    required this.statusWarga,
+    required this.warganegara,
+    required this.statusNikah,
+  }) : super(key: key);
+
+
   @override
   _DatadiriEditPageState createState() => _DatadiriEditPageState();
 }
@@ -8,36 +22,381 @@ class DatadiriEditPage extends StatefulWidget {
 class _DatadiriEditPageState extends State<DatadiriEditPage> {
   TextEditingController _Pekerjaancontroller = TextEditingController();
   TextEditingController _statuscontroller = TextEditingController();
-  String? _selectedAgama;
-  String? _selectedWarganegara;
-  String? _selectedPernikahan;
-  String? _selectedStatusWarga;
+  String? agama;
+  String? statusWarga;
+  String? statusNikah;
+  String? warganegara;
+  Color _checkIconColor = Colors.grey[200]!;
   bool _isAnyFieldNotEmpty = false;
 
   @override
   void initState() {
     super.initState();
-    _Pekerjaancontroller.addListener(_checkTextField);
-    _statuscontroller.addListener(_checkTextField);
+
+    //AGAMA
+    if (widget.agama == 'Islam') {
+      agama = 'Islam';
+    } else if (widget.agama == 'Kristen') {
+      agama = 'Kristen';
+    } else if (widget.agama == 'Katolik') {
+      agama = 'Katolik';
+    } else if (widget.agama == 'Hindu') {
+      agama = 'Hindu';
+    } else if (widget.agama == 'Budha') {
+      agama = 'Budha';
+    }
+
+    //WARGANEGARAAN
+    if (widget.warganegara == 'WNI') {
+      warganegara = 'WNI';
+    } else if (widget.warganegara == 'WNA') {
+      warganegara = 'WNA';
+    }
+
+    //STATUS PERNIKAHAN
+    if (widget.statusNikah == 'Belum Kawin') {
+      statusNikah = 'Belum Kawin';
+    } else if (widget.statusNikah == 'Kawin') {
+      statusNikah = 'Kawin';
+    } else if (widget.statusNikah == 'Cerai Mati') {
+      statusNikah = 'Cerai Mati';
+    }
+
+
+    //STATUS PEKERJAAN
+    if (widget.statusWarga == 'Sekolah') {
+      statusWarga = 'Sekolah';
+    } else if (widget.statusWarga == 'Kerja') {
+      statusWarga = 'Kerja';
+    } else if (widget.statusWarga == 'Bekerja') {
+      statusWarga = 'Bekerja';
+    }
+
+
+    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
   }
 
-  @override
-  void dispose() {
-    _Pekerjaancontroller.dispose();
-    _statuscontroller.dispose();
-    super.dispose();
+
+  void _showAgamaDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF057438),
+          title: Text(
+            'Pilih Agama Anda',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'Islam',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: agama == 'Islam' ? null : () {
+                  setState(() {
+                    agama = 'Islami';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Kristen',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: agama == 'Kristen' ? null : () {
+                  setState(() {
+                    agama = 'Kristen';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Katolik',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: agama == 'Katolik' ? null : () {
+                  setState(() {
+                    agama = 'Katolik';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Hindu',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: agama == 'Hindu' ? null : () {
+                  setState(() {
+                    agama = 'Hindu';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Budha',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: agama == 'Budha' ? null : () {
+                  setState(() {
+                    agama = 'Budha';
+                    _isAnyFieldNotEmpty = agama != widget.agama;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
-  void _checkTextField() {
-    setState(() {
-       _isAnyFieldNotEmpty = _Pekerjaancontroller.text.isNotEmpty ||
-      _statuscontroller.text.isNotEmpty ||
-      _selectedAgama != null ||
-      _selectedPernikahan != null ||
-      _selectedStatusWarga != null ||
-      _selectedWarganegara != null;
-    });
+
+  void _showKewarganegaraanDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF057438),
+          title: Text(
+            'Pilih Kewarganegaraan Anda',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'WNI',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: warganegara == 'WNI' ? null : () {
+                  setState(() {
+                    warganegara = 'WNI';
+                    _isAnyFieldNotEmpty = warganegara != widget.warganegara;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'WNA',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: warganegara == 'WNA' ? null : () {
+                  setState(() {
+                    warganegara = 'WNA';
+                    _isAnyFieldNotEmpty = warganegara != widget.warganegara;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
+
+
+  void _showStatusPernikahanDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF057438),
+          title: Text(
+            'Pilih Status Pernikahan Anda',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'Belum Kawin',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: statusNikah == 'Belum Kawin' ? null : () {
+                  setState(() {
+                    statusNikah = 'Belum Kawin';
+                    _isAnyFieldNotEmpty = statusNikah != widget.statusNikah;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Kawin',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: statusNikah == 'Kawin' ? null : () {
+                  setState(() {
+                    statusNikah = 'Kawin';
+                    _isAnyFieldNotEmpty = statusNikah != widget.statusNikah;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Cerai Mati',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: statusNikah == 'Cerai Mati' ? null : () {
+                  setState(() {
+                    statusNikah = 'Cerai Mati';
+                    _isAnyFieldNotEmpty = statusNikah != widget.statusNikah;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+
+  void _showStatusWargaDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF057438),
+          title: Text(
+            'Pilih Status Warga Anda',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'Sekolah',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: statusWarga == 'Sekolah' ? null : () {
+                  setState(() {
+                    statusWarga = 'Sekolah';
+                    _isAnyFieldNotEmpty = statusWarga != widget.statusWarga;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438)  : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Kerja',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: statusWarga == 'Kerja' ? null : () {
+                  setState(() {
+                    statusWarga = 'Kerja';
+                    _isAnyFieldNotEmpty = statusWarga != widget.statusWarga;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Bekerja',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: statusWarga == 'Bekerja' ? null : () {
+                  setState(() {
+                    statusWarga = 'Bekerja';
+                    _isAnyFieldNotEmpty = statusWarga != widget.statusWarga;
+                    _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 
   void _save() {
     
@@ -51,7 +410,7 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text(
-          'Ubah Nama Lengkap',
+          'Status Diri',
           style: TextStyle(
             color: Color(0xFF057438),
             fontSize: 18,
@@ -118,147 +477,209 @@ class _DatadiriEditPageState extends State<DatadiriEditPage> {
                     ),
                   ),
 
-                  // Dropdown agama
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
-                    child: DropdownButtonFormField<String>(
-                      icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF057438)),
-                      value: _selectedAgama,
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        hintText: 'Pilih Agama Anda',
-                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
+                  // agaama
+                  TextButton(
+                    onPressed: () {
+                      _showAgamaDialog(context);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      overlayColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.transparent.withOpacity(0); 
+                          }
+                          return Colors.transparent;
+                        },
                       ),
-                      items: <String>['Islam', 'Kristen', 'Katolik', 'Hindu', 'Budha']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Pilih Agama Anda',
+                          style: TextStyle(
+                            color: Color(0xFF057438),
+                            fontSize: 14,
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedAgama = newValue;
-                          _checkTextField();
-                        });
-                      },
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                agama ?? '',
+                                style: TextStyle(
+                                  color: Color(0xFF057438),
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Color(0xFF057438),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(height: 10,),
 
-                  // Dropdown warganegara
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
-                    child: DropdownButtonFormField<String>(
-                      icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF057438)),
-                      value: _selectedWarganegara,
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        hintText: 'Pilih Warganegara Anda',
-                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
+                  // kewarganegaraan
+                  TextButton(
+                    onPressed: () {
+                      _showKewarganegaraanDialog(context);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      overlayColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.transparent.withOpacity(0); 
+                          }
+                          return Colors.transparent;
+                        },
                       ),
-                      items: <String>['WNI', 'WNA']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Pilih Warganegaraan Anda',
+                          style: TextStyle(
+                            color: Color(0xFF057438),
+                            fontSize: 14,
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedWarganegara = newValue;
-                          _checkTextField();
-                        });
-                      },
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                warganegara ?? '',
+                                style: TextStyle(
+                                  color: Color(0xFF057438),
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Color(0xFF057438),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(height: 10,),
 
-
-                  // Dropdown pernikahan
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
-                    child: DropdownButtonFormField<String>(
-                      icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF057438)),
-                      value: _selectedPernikahan,
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        hintText: 'Pilih Status Pernikahan Anda',
-                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
+                  // statusnikah
+                  TextButton(
+                    onPressed: () {
+                      _showStatusPernikahanDialog(context);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      overlayColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.transparent.withOpacity(0); 
+                          }
+                          return Colors.transparent;
+                        },
                       ),
-                      items: <String>['Belum Kawin', 'Kawin', 'Cerai Mati']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Pilih Status Pernikahan Anda',
+                          style: TextStyle(
+                            color: Color(0xFF057438),
+                            fontSize: 14,
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedPernikahan = newValue;
-                          _checkTextField();
-                        });
-                      },
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                statusNikah ?? '',
+                                style: TextStyle(
+                                  color: Color(0xFF057438),
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Color(0xFF057438),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(height: 10,),
 
-
-                  // Dropdown warga
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
-                    child: DropdownButtonFormField<String>(
-                      icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF057438)),
-                      value: _selectedStatusWarga,
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                        hintText: 'Pilih Status Pernikahan Anda',
-                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
+                  // statuspekerjaan
+                  TextButton(
+                    onPressed: () {
+                      _showStatusWargaDialog(context);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      overlayColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.transparent.withOpacity(0); 
+                          }
+                          return Colors.transparent;
+                        },
                       ),
-                      items: <String>['Pelajar', 'Mahasiswa', 'Bekerja', 'Belum Bekerja']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Pilih Status Warga Anda',
+                          style: TextStyle(
+                            color: Color(0xFF057438),
+                            fontSize: 14,
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedStatusWarga = newValue;
-                          _checkTextField();
-                        });
-                      },
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                statusWarga ?? '',
+                                style: TextStyle(
+                                  color: Color(0xFF057438),
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Color(0xFF057438),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(height: 10,),
 
                 ],
               ),

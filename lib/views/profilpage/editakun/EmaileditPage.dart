@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class EmailEditPage extends StatefulWidget {
+  final String? email;
+
+  EmailEditPage({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
+
   @override
   _EmailEditPageState createState() => _EmailEditPageState();
 }
@@ -9,10 +16,13 @@ class _EmailEditPageState extends State<EmailEditPage> {
   TextEditingController _emailcontroller = TextEditingController();
   bool _isAnyFieldNotEmpty = false;
   final _formKey = GlobalKey<FormState>();
+  String? _initialEmail;
 
   @override
   void initState() {
     super.initState();
+    _initialEmail = widget.email;
+    _emailcontroller = TextEditingController(text: formatEmail(widget.email));
     _emailcontroller.addListener(_checkTextField);
   }
 
@@ -24,7 +34,7 @@ class _EmailEditPageState extends State<EmailEditPage> {
 
   void _checkTextField() {
     setState(() {
-      _isAnyFieldNotEmpty = _emailcontroller.text.isNotEmpty;
+      _isAnyFieldNotEmpty = _emailcontroller.text != _initialEmail && _emailcontroller.text.isNotEmpty;
     });
   }
 
@@ -50,11 +60,13 @@ class _EmailEditPageState extends State<EmailEditPage> {
         iconTheme: IconThemeData(color: Color(0xFF057438)),
         actions: [
           TextButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _save();
-              }
-            },
+            onPressed: _isAnyFieldNotEmpty
+                ? () {
+                    if (_formKey.currentState!.validate()) {
+                      _save();
+                    }
+                  }
+                : null,
             child: Text(
               'Simpan',
               style: TextStyle(
@@ -91,12 +103,12 @@ class _EmailEditPageState extends State<EmailEditPage> {
                           if (value == null || value.isEmpty) {
                             return 'Harap isi bidang ini';
                           } else if (!RegExp(
-                            r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                            .hasMatch(value)) {
-                              return 'Masukkan email dengan format yang valid';
-                            }
-                            return null;
-                          },
+                              r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value)) {
+                            return 'Masukkan email dengan format yang valid';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                           hintText: 'Masukkan Email',
@@ -107,22 +119,21 @@ class _EmailEditPageState extends State<EmailEditPage> {
                           ),
                           errorStyle: TextStyle(color: Colors.red),
                           errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.red),
+                            borderSide: BorderSide(color: Colors.red),
                           ),
                           counterText: '',
-                          suffixIcon: _emailcontroller.text.isEmpty
-                          ? null
-                          : GestureDetector(
-                            onTap: () {
-                              _emailcontroller.clear();
-                            },
-                            child: Icon(
-                              Icons.clear,
-                              color: Color(0xFF057438),
-                              size: 20,
-                            ),
-                          ),
+                          suffixIcon: _isAnyFieldNotEmpty
+                              ? GestureDetector(
+                                  onTap: () {
+                                    _emailcontroller.clear();
+                                  },
+                                  child: Icon(
+                                    Icons.clear,
+                                    color: Color(0xFF057438),
+                                    size: 20,
+                                  ),
+                                )
+                              : null,
                         ),
                       ),
                     ),
@@ -146,3 +157,28 @@ class _EmailEditPageState extends State<EmailEditPage> {
     );
   }
 }
+
+String? formatEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      return email;
+    }
+
+    List<String> parts = email.split("@");
+    if (parts.length != 2) {
+      return email;
+    }
+
+    String username = parts[0];
+    String domain = parts[1];
+
+    if (username.length < 2) {
+      return email;
+    }
+
+    String firstChar = username.substring(0, 1);
+    String lastChar = username.substring(username.length - 1);
+
+    String middlePart = "*" * (username.length - 2);
+
+    return '$firstChar$middlePart$lastChar@$domain';
+  }

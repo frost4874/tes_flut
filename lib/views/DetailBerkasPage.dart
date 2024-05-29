@@ -25,6 +25,7 @@ class DetailBerkasPage extends StatefulWidget {
 
 class _DetailBerkasPageState extends State<DetailBerkasPage> {
   final TextEditingController keteranganController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List<TextEditingController> tambahanControllers = [];
   bool _isMounted = false;
 
@@ -53,6 +54,10 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
     String desa,
     List<String> formTambahan,
   ) async {
+    if (!_formKey.currentState!.validate()) {
+      return; // Jika form tidak valid, jangan submit data
+    }
+
     try {
       var url = Uri.parse(
           'https://suratdesajember.framework-tif.com/api/send_request');
@@ -129,189 +134,230 @@ class _DetailBerkasPageState extends State<DetailBerkasPage> {
         physics: AlwaysScrollableScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 20),
-              Card(
-                elevation: 5.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40.0),
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 20),
+                Card(
+                  elevation: 5.0,
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40.0),
-                    color: Color(0xFF057438),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: 20),
-                      Center(
-                        child: Text(
-                          '${widget.judul}'
-                              .toString()
-                              .split(' ')
-                              .map((String word) {
-                            return word[0].toUpperCase() + word.substring(1);
-                          }).join(' '),
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: "jomolhari",
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 5,
-                                horizontal: 30), // adjusted padding value
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25.0),
-                            ),
-                            child: TextFormField(
-                              controller: keteranganController,
-                              autofocus: true,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ), // added text color
-                              decoration: InputDecoration(
-                                labelText: 'Keterangan',
-                                labelStyle: TextStyle(color: Colors.white),
-                                hintText:
-                                    'Isi data berikut sesuai dengan form tambahan yang diterima',
-                                hintStyle: TextStyle(color: Colors.white),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                  borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                  borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40.0),
+                      color: Color(0xFF057438),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding:EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                          child: Column(
+                            children: [
+                              Center(
+                                child: Text(
+                                  '${widget.judul}'
+                                      .toString()
+                                      .split(' ')
+                                      .map((String word) {
+                                    return word[0].toUpperCase() + word.substring(1);
+                                  }).join(' '),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: "jomolhari",
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: widget.formTambahan.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                      height: 5), // added SizedBox for spacing
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10,
-                                        horizontal:
-                                            30), // adjusted padding value
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 5,
+                                  horizontal: 30), // adjusted padding value
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              child: TextFormField(
+                                controller: keteranganController,
+                                autofocus: true,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ), // added text color
+                                decoration: InputDecoration(
+                                  labelText: 'Keterangan',
+                                  labelStyle: TextStyle(color: Colors.white),
+                                  hintText:
+                                      'Isi data berikut sesuai dengan form tambahan yang diterima',
+                                  hintStyle: TextStyle(color: Colors.white),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.white.withOpacity(0.8),
                                     ),
-                                    child: TextFormField(
-                                      controller: tambahanControllers[index],
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ), // added text color
-                                      decoration: InputDecoration(
-                                        labelText:
-                                            '${widget.formTambahan[index]}',
-                                        labelStyle:
-                                            TextStyle(color: Colors.white),
-                                        hintText:
-                                            'Masukkan ${widget.formTambahan[index]}',
-                                        hintStyle:
-                                            TextStyle(color: Colors.white),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                          borderSide: BorderSide(
-                                            color:
-                                                Colors.white.withOpacity(0.8),
+                                  ),
+                                  errorStyle: TextStyle(color: Colors.orange),
+                                  errorBorder: OutlineInputBorder(
+                                    // To change border color when error
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    borderSide: BorderSide(
+                                        color: Colors
+                                            .orange), // Set the border color to yellow
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.white.withOpacity(0.8),
+                                    ),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Harap isi bidang ini';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: widget.formTambahan.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                        height: 5), // added SizedBox for spacing
+                                    Container(
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 10,
+                                          horizontal:
+                                              30), // adjusted padding value
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25.0),
+                                      ),
+                                      child: TextFormField(
+                                        controller: tambahanControllers[index],
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ), // added text color
+                                        decoration: InputDecoration(
+                                          labelText:
+                                              '${widget.formTambahan[index]}',
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          hintText:
+                                              'Masukkan ${widget.formTambahan[index]}',
+                                          hintStyle:
+                                              TextStyle(color: Colors.white),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0),
+                                            borderSide: BorderSide(
+                                              color:
+                                                  Colors.white.withOpacity(0.8),
+                                            ),
+                                          ),
+                                          errorStyle: TextStyle(color: Colors.orange),
+                                          errorBorder: OutlineInputBorder(
+                                            // To change border color when error
+                                            borderRadius: BorderRadius.circular(25.0),
+                                            borderSide: BorderSide(
+                                                color: Colors
+                                                    .orange), // Set the border color to yellow
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0),
+                                            borderSide: BorderSide(
+                                              color:
+                                                  Colors.white.withOpacity(0.8),
+                                            ),
                                           ),
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                          borderSide: BorderSide(
-                                            color:
-                                                Colors.white.withOpacity(0.8),
-                                          ),
-                                        ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Harap isi bidang ini';
+                                          }
+                                          return null;
+                                        },
                                       ),
                                     ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Align(
-                        alignment: Alignment.center,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            submitDataToServer(
-                              widget.idBerkas,
-                              widget.nik,
-                              widget.kecamatan,
-                              widget.desa,
-                              widget.formTambahan,
-                            );
-                          },
-                          child: Text(
-                            'Submit',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF057438),
-                              fontWeight: FontWeight.bold,
+                                  ],
+                                );
+                              },
                             ),
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Align(
+                          alignment: Alignment.center,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                submitDataToServer(
+                                  widget.idBerkas,
+                                  widget.nik,
+                                  widget.kecamatan,
+                                  widget.desa,
+                                  widget.formTambahan,
+                                );
+                              }
+                            },
+                            child: Text(
+                              'Submit',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0xFF057438),
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                              EdgeInsets.symmetric(
-                                vertical: 20.0,
-                                horizontal:
-                                    MediaQuery.of(context).size.width * 0.30,
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.white),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                              ),
+                              padding:
+                                  MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                EdgeInsets.symmetric(
+                                  vertical: 20.0,
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.30,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                    ],
+                        SizedBox(height: 20),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
