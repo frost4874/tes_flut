@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:tes_flut/views/ProsedurPage.dart';
 import 'package:tes_flut/views/StatusPage.dart';
 import 'package:tes_flut/views/ProfilPage.dart';
 import 'package:tes_flut/views/DetailBerkasPage.dart';
@@ -191,106 +192,147 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xFF057438), Color(0xFF0B8043)],
-              ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF057438), Color(0xFF0B8043)],
             ),
-            child: Column(
-              children: <Widget>[
-                if (_selectedIndex == 0)
-                  Container(
-                    padding: EdgeInsets.fromLTRB(40, 30, 40, 0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Cari...',
-                        hintStyle: TextStyle(color: Color(0xFF057438)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        prefixIcon:
-                            Icon(Icons.search, color: Color(0xFF057438)),
+          ),
+          child: Column(
+            children: <Widget>[
+              if (_selectedIndex == 0) ...[
+                Container(
+                  padding: EdgeInsets.fromLTRB(40, 30, 40, 0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Cari...',
+                      hintStyle: TextStyle(color: Color(0xFF057438)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide.none,
                       ),
-                      onChanged: (String query) {
-                        _searchBerkas(query);
+                      prefixIcon: Icon(Icons.search, color: Color(0xFF057438)),
+                    ),
+                    onChanged: (String query) {
+                      _searchBerkas(query);
+                    },
+                  ),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    SizedBox(width: 20),
+                    IconButton(
+                      icon: Icon(
+                        Icons.help_outline,
+                        size: 24.0,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProsedurLayananPage(),
+                          ),
+                        );
                       },
                     ),
-                  ),
-                Expanded(
-                  child: PageView(
-                    controller: _pageController,
-                    onPageChanged: _onPageChanged,
-                    children: [
-                      _buildBiodataList(),
-                      StatusPage(Biodata: widget.Biodata),
-                      ProfilPage(
-                        name: _name,
-                        email: _email,
-                        nik: _nik,
-                        kecamatan: _kecamatan,
-                        desa: _desa,
-                        telepon: _telepon,
-                        tgl_lahir: _tglLahir,
-                        alamat: _alamat,
-                        kota: _kota,
-                        jekel: _jekel,
-                        tempatlahir: _tempatlahir,
-                        agama: _agama,
-                        statusWarga: _statusWarga,
-                        warganegara: _warganegara,
-                        statusNikah: _statusNikah,
-                        rt: _rt,
-                        rw: _rw,
+                    SizedBox(width: 8.0),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProsedurLayananPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Petunjuk',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
-            ),
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: _onPageChanged,
+                  children: [
+                    _buildBiodataList(),
+                    StatusPage(Biodata: widget.Biodata),
+                    ProfilPage(
+                      name: _name,
+                      email: _email,
+                      nik: _nik,
+                      kecamatan: _kecamatan,
+                      desa: _desa,
+                      telepon: _telepon,
+                      tgl_lahir: _tglLahir,
+                      alamat: _alamat,
+                      kota: _kota,
+                      jekel: _jekel,
+                      tempatlahir: _tempatlahir,
+                      agama: _agama,
+                      statusWarga: _statusWarga,
+                      warganegara: _warganegara,
+                      statusNikah: _statusNikah,
+                      rt: _rt,
+                      rw: _rw,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.dashboard),
-                  label: 'Dashboard',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.insert_chart),
-                  label: 'Status',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profil',
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: Color(0xFF057438),
-              backgroundColor: Colors.white, // Mengatur warna latar belakang
-              onTap: _onBottomNavigationBarItemTapped,
-              showSelectedLabels: true, // Menampilkan label yang dipilih
-              showUnselectedLabels: true, // Menampilkan label yang tidak dipilih
-              type: BottomNavigationBarType.fixed, // Menyesuaikan jenis BottomNavigationBar
-              elevation: 0, // Menghilangkan bayangan atau garis pembatas
-            ),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard),
+                label: 'Dashboard',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.insert_chart),
+                label: 'Status',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profil',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Color(0xFF057438),
+            backgroundColor: Colors.white, // Mengatur warna latar belakang
+            onTap: _onBottomNavigationBarItemTapped,
+            showSelectedLabels: true, // Menampilkan label yang dipilih
+            showUnselectedLabels: true, // Menampilkan label yang tidak dipilih
+            type: BottomNavigationBarType.fixed, // Menyesuaikan jenis BottomNavigationBar
+            elevation: 0, // Menghilangkan bayangan atau garis pembatas
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildBiodataList() {
     return CustomScrollView(
