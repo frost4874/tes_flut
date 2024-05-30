@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tes_flut/halamantes.dart';
 import 'package:tes_flut/views/Splash.dart';
-import 'package:tes_flut/views/profilpage/EditakunPage.dart';
 
 void main() {
   runApp(const MyApp());

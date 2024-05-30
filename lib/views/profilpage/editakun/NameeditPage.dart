@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class NameEditPage extends StatefulWidget {
   final String? name;
@@ -16,12 +19,13 @@ class _NameEditPageState extends State<NameEditPage> {
   TextEditingController _namecontroller = TextEditingController();
   bool _isAnyFieldNotEmpty = false;
   String? _initialName;
+   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _initialName = widget.name;
-    _namecontroller = TextEditingController(text: widget.name);
+    _namecontroller.text = widget.name!;
     _namecontroller.addListener(_checkTextField);
   }
 
@@ -37,8 +41,34 @@ class _NameEditPageState extends State<NameEditPage> {
     });
   }
 
-  void _save() {
-    Navigator.pop(context, _namecontroller.text);
+  void _save() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final response = await http.post(
+      Uri.parse('https://suratdesajember.framework-tif.com/api/update_biodata'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'name': _namecontroller.text,
+      }),
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (response.statusCode == 200) {
+      Navigator.pop(context, _namecontroller.text);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to update name. Please try again.'),
+        ),
+      );
+    }
   }
 
   @override

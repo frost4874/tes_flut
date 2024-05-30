@@ -81,7 +81,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
 //nyoba nyoba doang ini
   Future<List<String>> fetchKecamatanFromDatabase() async {
     final response =
-        await http.get(Uri.parse('http://localhost:8000/api/kecamatan'));
+        await http.get(Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
     if (response.statusCode == 200) {
       List<String> kecamatanList = [];
       final data = json.decode(response.body);
@@ -97,7 +97,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
   void _fetchDesaByKecamatanId(String kecamatanId) async {
     try {
       final response = await http
-          .get(Uri.parse('http://localhost:8000/api/desa/$kecamatanId'));
+          .get(Uri.parse('https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
       if (response.statusCode == 200) {
         List<String> desaList = (json.decode(response.body) as List)
             .map((item) => item['nama'] as String)
@@ -119,7 +119,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
 
   Future<List<String>> fetchDesaFromDatabase(String kecamatanId) async {
     final response = await http
-        .get(Uri.parse('http://localhost:8000/api/desa/$kecamatanId'));
+        .get(Uri.parse('https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
     if (response.statusCode == 200) {
       List<String> desaList = [];
       final data = json.decode(response.body);
@@ -134,7 +134,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
 
   Future<String> fetchKecamatanId(String kecamatanName) async {
     final response =
-        await http.get(Uri.parse('http://localhost:8000/api/kecamatan'));
+        await http.get(Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
     if (response.statusCode == 200) {
       final List<dynamic> kecamatans = json.decode(response.body);
       final kecamatan = kecamatans
@@ -296,7 +296,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
       print('Data yang akan dikirim: $userData');
 
       final response = await http.put(
-        Uri.parse('http://localhost:8000/api/update_biodata'),
+        Uri.parse('https://suratdesajember.framework-tif.com/api/update_biodata'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
