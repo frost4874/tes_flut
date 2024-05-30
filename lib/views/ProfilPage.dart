@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tes_flut/auth/LoginPage.dart';
 import 'package:tes_flut/views/profilpage/EditakunPage.dart';
-import 'package:tes_flut/views/profilpage/EditbiodataPage.dart';
 import 'package:tes_flut/views/profilpage/RiwayatPage.dart';
 
 class ProfilPage extends StatefulWidget {
