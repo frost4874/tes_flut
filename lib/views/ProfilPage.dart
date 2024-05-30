@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tes_flut/auth/LoginPage.dart';
 import 'package:tes_flut/views/profilpage/EditakunPage.dart';
+import 'package:tes_flut/views/profilpage/EditbiodataPage.dart';
 import 'package:tes_flut/views/profilpage/RiwayatPage.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -168,7 +169,7 @@ class _ProfilPageState extends State<ProfilPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EditakunPage(
+                                builder: (context) => EditbiodataPage(
                                       nik: widget.nik,
                                       name: widget.name,
                                       email: widget.email,
@@ -285,7 +286,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius:2,
+                                        spreadRadius: 2,
                                         blurRadius: 5,
                                         offset: Offset(0, 3),
                                       ),
@@ -302,8 +303,8 @@ class _ProfilPageState extends State<ProfilPage> {
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                       maxLines: 1,
-                                       softWrap: false,
+                                      maxLines: 1,
+                                      softWrap: false,
                                     ),
                                   ),
                                 ),
@@ -315,14 +316,14 @@ class _ProfilPageState extends State<ProfilPage> {
                     );
                   },
                   child: Align(
-                    alignment: Alignment.center, 
+                    alignment: Alignment.center,
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.red, width: 2.0),
                         borderRadius: BorderRadius.circular(20.0),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.5), 
+                            color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 2,
                             blurRadius: 5,
                             offset: Offset(0, 3),
@@ -331,7 +332,8 @@ class _ProfilPageState extends State<ProfilPage> {
                         color: Colors.red,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 80),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 80),
                         child: Text(
                           'LOGOUT',
                           style: TextStyle(
@@ -342,7 +344,6 @@ class _ProfilPageState extends State<ProfilPage> {
                       ),
                     ),
                   ),
-
                 ),
               ),
             ),

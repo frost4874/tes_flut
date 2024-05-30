@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class AlamatEditPage extends StatefulWidget {
+  final String? nik;
   final String? kecamatan;
   final String? desa;
   final String? rt;
@@ -11,6 +12,7 @@ class AlamatEditPage extends StatefulWidget {
 
   AlamatEditPage({
     Key? key,
+    required this.nik,
     required this.kecamatan,
     required this.desa,
     required this.rt,
@@ -84,8 +86,8 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
 
   void _checkTextField() {
     setState(() {
-      _isAnyFieldNotEmpty = 
-          _alamatcontroller.text != alamat && _alamatcontroller.text.isNotEmpty ||
+      _isAnyFieldNotEmpty = _alamatcontroller.text != alamat &&
+              _alamatcontroller.text.isNotEmpty ||
           _rtcontroller.text != rt && _rtcontroller.text.isNotEmpty ||
           _rwcontroller.text != rw && _rwcontroller.text.isNotEmpty ||
           selectedKecamatan != widget.kecamatan ||
@@ -94,7 +96,8 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
   }
 
   Future<List<String>> fetchKecamatanFromDatabase() async {
-    final response = await http.get(Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
+    final response = await http.get(
+        Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
     if (response.statusCode == 200) {
       List<String> kecamatanList = [];
       final data = json.decode(response.body);
@@ -109,7 +112,8 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
 
   void _fetchDesaByKecamatanId(String kecamatanId) async {
     try {
-      final response = await http.get(Uri.parse('https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
+      final response = await http.get(Uri.parse(
+          'https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
       if (response.statusCode == 200) {
         List<String> desaList = (json.decode(response.body) as List)
             .map((item) => item['nama'] as String)
@@ -130,7 +134,8 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
   }
 
   Future<List<String>> fetchDesaFromDatabase(String kecamatanId) async {
-    final response = await http.get(Uri.parse('https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
+    final response = await http.get(Uri.parse(
+        'https://suratdesajember.framework-tif.com/api/desa/$kecamatanId'));
     if (response.statusCode == 200) {
       List<String> desaList = [];
       final data = json.decode(response.body);
@@ -144,7 +149,8 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
   }
 
   Future<String> fetchKecamatanId(String kecamatanName) async {
-    final response = await http.get(Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
+    final response = await http.get(
+        Uri.parse('https://suratdesajember.framework-tif.com/api/kecamatan'));
     if (response.statusCode == 200) {
       final List<dynamic> kecamatans = json.decode(response.body);
       final kecamatan = kecamatans
@@ -155,14 +161,86 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
     }
   }
 
-  void _saveAddress() {
-    Navigator.pop(context, {
-      'kecamatan': selectedKecamatan,
+  void _saveAddress() async {
+    // Data yang akan dikirim ke backend
+    Map<String, String?> data = {
+      'kecamatan': selectedKecamatanId,
       'desa': selectedDesa,
       'rt': _rtcontroller.text,
       'rw': _rwcontroller.text,
       'alamat': _alamatcontroller.text,
-    });
+    };
+
+    // Konversi data menjadi format JSON
+    String jsonData = jsonEncode(data);
+
+    // URL endpoint API backend Laravel
+    String apiUrl =
+        'https://suratdesajember.framework-tif.com/api/update-address/${widget.nik}';
+
+    try {
+      // Kirim request HTTP PUT ke endpoint API
+      final response = await http.put(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonData,
+      );
+
+      // Cek status kode response
+      if (response.statusCode == 200) {
+        // Jika request sukses, kembali ke halaman sebelumnya
+        Navigator.pop(context, {
+          'kecamatan': selectedKecamatan,
+          'desa': selectedDesa,
+          'rt': _rtcontroller.text,
+          'rw': _rwcontroller.text,
+          'alamat': _alamatcontroller.text,
+        });
+      } else {
+        // Jika request gagal, tampilkan pesan kesalahan
+        print('Error: ${response.body}');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content:
+                  Text('Failed to update address. Please try again later.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (error) {
+      // Tangani kesalahan jika terjadi
+      print('Error: $error');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('An error occurred. Please try again later.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -185,7 +263,9 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
             child: Text(
               'Simpan',
               style: TextStyle(
-                color: _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey.withOpacity(0.5),
+                color: _isAnyFieldNotEmpty
+                    ? Color(0xFF057438)
+                    : Colors.grey.withOpacity(0.5),
                 fontSize: 16,
               ),
             ),
@@ -206,14 +286,14 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-
                   // Dropdown Kecamatan
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                     child: FutureBuilder<List<String>>(
                       future: kecamatanListFuture,
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
@@ -223,16 +303,19 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                             onChanged: (String? newValue) {
                               setState(() {
                                 selectedKecamatan = newValue!;
-                                fetchKecamatanId(selectedKecamatan!).then((kecamatanId) {
+                                fetchKecamatanId(selectedKecamatan!)
+                                    .then((kecamatanId) {
                                   setState(() {
                                     selectedKecamatanId = kecamatanId;
-                                    desaListFuture = fetchDesaFromDatabase(selectedKecamatanId!);
+                                    desaListFuture = fetchDesaFromDatabase(
+                                        selectedKecamatanId!);
                                     selectedDesa = null;
                                   });
                                 });
                               });
                             },
-                            items: snapshot.data!.map<DropdownMenuItem<String>>((String value) {
+                            items: snapshot.data!
+                                .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(
@@ -242,10 +325,11 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                               );
                             }).toList(),
                             decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 15),
                               hintText: 'Pilih Kecamatan',
-                              hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                              hintStyle: TextStyle(
+                                  color: Color(0xFF057438), fontSize: 14),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: BorderSide.none,
@@ -263,7 +347,8 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                     child: FutureBuilder<List<String>>(
                       future: desaListFuture,
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
@@ -275,7 +360,8 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                                 selectedDesa = newValue;
                               });
                             },
-                            items: snapshot.data!.map<DropdownMenuItem<String>>((String value) {
+                            items: snapshot.data!
+                                .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(
@@ -285,10 +371,11 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                               );
                             }).toList(),
                             decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 15),
                               hintText: 'Pilih Desa',
-                              hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                              hintStyle: TextStyle(
+                                  color: Color(0xFF057438), fontSize: 14),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: BorderSide.none,
@@ -299,61 +386,65 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                       },
                     ),
                   ),
- 
+
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                     child: TextFormField(
                       controller: _rtcontroller,
                       style: TextStyle(color: Color(0xFF057438), fontSize: 14),
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                         hintText: 'Masukkan RT',
-                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                        hintStyle:
+                            TextStyle(color: Color(0xFF057438), fontSize: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
                         ),
                         suffixIcon: _rtcontroller.text.isEmpty
                             ? GestureDetector(
-                              onTap: () {
-                                _rtcontroller.clear();
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                color: Color(0xFF057438),
-                                size: 20,
-                              ),
-                            )
-                          : null,
+                                onTap: () {
+                                  _rtcontroller.clear();
+                                },
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Color(0xFF057438),
+                                  size: 20,
+                                ),
+                              )
+                            : null,
                       ),
                     ),
                   ),
- 
+
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                     child: TextFormField(
                       controller: _rwcontroller,
                       style: TextStyle(color: Color(0xFF057438), fontSize: 14),
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                         hintText: 'Masukkan RW',
-                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                        hintStyle:
+                            TextStyle(color: Color(0xFF057438), fontSize: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
                         ),
                         suffixIcon: _rwcontroller.text.isEmpty
                             ? GestureDetector(
-                              onTap: () {
-                                _rwcontroller.clear();
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                color: Color(0xFF057438),
-                                size: 20,
-                              ),
-                            )
-                          : null,
+                                onTap: () {
+                                  _rwcontroller.clear();
+                                },
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Color(0xFF057438),
+                                  size: 20,
+                                ),
+                              )
+                            : null,
                       ),
                     ),
                   ),
@@ -363,25 +454,27 @@ class _AlamatEditPageState extends State<AlamatEditPage> {
                       controller: _alamatcontroller,
                       style: TextStyle(color: Color(0xFF057438), fontSize: 14),
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                         hintText: 'Masukkan Alamat',
-                        hintStyle: TextStyle(color: Color(0xFF057438), fontSize: 14),
+                        hintStyle:
+                            TextStyle(color: Color(0xFF057438), fontSize: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
                         ),
                         suffixIcon: _isAnyFieldNotEmpty
                             ? GestureDetector(
-                              onTap: () {
-                                _alamatcontroller.clear();
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                color: Color(0xFF057438),
-                                size: 20,
-                              ),
-                            )
-                          : null,
+                                onTap: () {
+                                  _alamatcontroller.clear();
+                                },
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Color(0xFF057438),
+                                  size: 20,
+                                ),
+                              )
+                            : null,
                       ),
                     ),
                   ),
