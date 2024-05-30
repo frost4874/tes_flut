@@ -735,48 +735,6 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                         Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                          child: TextFormField(
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                            controller: pekerjaanController,
-                            decoration: InputDecoration(
-                              labelText: "Pekerjaan",
-                              labelStyle: TextStyle(color: Colors.white),
-                              hintText: "Masukkan Pekerjaan Anda",
-                              hintStyle: TextStyle(color: Colors.white),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.badge,
-                                color: Colors.white,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8)),
-                              ),
-                              errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                           child: DropdownButtonFormField<String>(
                             value: agamavalue.isEmpty ? null : agamavalue,
                             hint: Text("Pilih Agama Anda",
