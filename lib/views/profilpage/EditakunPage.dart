@@ -1,6 +1,5 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:tes_flut/views/profilpage/editakun/AlamateditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/EmaileditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/NameeditPage.dart';
@@ -9,33 +8,94 @@ import 'package:tes_flut/views/profilpage/editakun/PasswordeditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/StatusdirieditPage.dart';
 import 'package:tes_flut/views/profilpage/editakun/Tempattledit.dart';
 
-
 class EditakunPage extends StatefulWidget {
-  EditakunPage({super.key}); 
+  final String nik;
+  final String name;
+  final String email;
+  final String kecamatan;
+  final String desa;
+  final String kota;
+  final String alamat;
+  final String tgl_lahir;
+  final String telepon;
+  final String jekel;
+  final String tempatlahir;
+  final String agama;
+  final String statusWarga;
+  final String warganegara;
+  final String statusNikah;
+  final String rt;
+  final String rw;
+
+  EditakunPage({
+    Key? key,
+    required this.nik,
+    required this.name,
+    required this.email,
+    required this.kecamatan,
+    required this.desa,
+    required this.kota,
+    required this.alamat,
+    required this.tgl_lahir,
+    required this.telepon,
+    required this.jekel,
+    required this.tempatlahir,
+    required this.agama,
+    required this.statusWarga,
+    required this.warganegara,
+    required this.statusNikah,
+    required this.rt,
+    required this.rw,
+  }) : super(key: key);
 
   @override
   _EditPageState createState() => _EditPageState();
 }
 
 class _EditPageState extends State<EditakunPage> {
-  String? _selectedpilihjenis;
   bool _isAnyFieldNotEmpty = false;
   Color _checkIconColor = Colors.grey[200]!;
   String? name;
   String? email;
-  String? nohp;
-  String? tempatLahir= '';
-  String? tanggalLahir= '';
+  String? telepon;
+  String? kota = '';
+  String? tempatlahir = '';
+  String? tgl_lahir = '';
   String formattedNohp = '';
   String? displayedNohp = '';
   String? desa = '';
   String? _tempatLahirSementara;
   String? _tanggalLahirSementara;
+  String? _selectedpilihjenis;
+
+  @override
+  void initState() {
+    super.initState();
+    email = widget.email;
+    name = widget.name;
+    telepon = widget.telepon;
+    tgl_lahir = widget.tgl_lahir;
+    kota = widget.kota;
+    tempatlahir = widget.tempatlahir;
+    formattedNohp = formatPhoneNumber(telepon) ?? '';
+    displayedNohp = formattedNohp.isNotEmpty ? formattedNohp : telepon;
+
+    if (widget.jekel == 'Laki-Laki') {
+      _selectedpilihjenis = 'Laki-Laki';
+    } else if (widget.jekel == 'Perempuan') {
+      _selectedpilihjenis = 'Perempuan';
+    } else if (widget.jekel == 'Lainnya') {
+      _selectedpilihjenis = 'Lainnya';
+    }
+
+    _checkIconColor =
+        _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
+  }
 
   void _navigateToNameEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NameEditPage(name: name)),
+      MaterialPageRoute(builder: (context) => NameEditPage(name: widget.name)),
     );
     if (result != null) {
       setState(() {
@@ -44,37 +104,41 @@ class _EditPageState extends State<EditakunPage> {
     }
   }
 
-    void _navigateToTtlEditPage() async {
+  void _navigateToTtlEditPage() async {
     // Simpan nilai tempat lahir dan tanggal lahir saat ini ke variabel sementara
-    _tempatLahirSementara = tempatLahir;
-    _tanggalLahirSementara = tanggalLahir;
+    _tempatLahirSementara = widget.tempatlahir;
+    _tanggalLahirSementara = widget.tgl_lahir;
 
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TtlEditPage(tempatLahir: tempatLahir!, tanggalLahir: tanggalLahir!)),
+      MaterialPageRoute(
+          builder: (context) =>
+              TtlEditPage(tempatlahir: tempatlahir!, tgl_lahir: tgl_lahir!)),
     );
 
     if (result != null) {
       setState(() {
         // Perbarui nilai tempat lahir dan tanggal lahir dengan nilai yang disimpan
-        tempatLahir = result['tempatLahir'];
-        tanggalLahir = result['tanggalLahir'] != null ? result['tanggalLahir']!.toString() : '';
+        _tempatLahirSementara = result['tempatLahir'];
+        _tanggalLahirSementara = result['tanggalLahir'] != null
+            ? result['tanggalLahir']!.toString()
+            : '';
       });
     } else {
-      // Jika pengguna membatalkan, kembalikan nilai tempat lahir dan tanggal lahir dari variabel sementara
       setState(() {
-        tempatLahir = _tempatLahirSementara;
-        tanggalLahir = _tanggalLahirSementara;
+        tempatlahir = _tempatLahirSementara;
+        tgl_lahir = _tanggalLahirSementara;
       });
     }
   }
 
-
-
   void _navigateToEmailEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EmailEditPage()),
+      MaterialPageRoute(
+          builder: (context) => EmailEditPage(
+                email: widget.email,
+              )),
     );
     if (result != null) {
       setState(() {
@@ -83,11 +147,18 @@ class _EditPageState extends State<EditakunPage> {
     }
   }
 
-
-  void _navigateToDesaEditPage() async {
+  void _navigateToAlamatEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AlamatEditPage()),
+      MaterialPageRoute(
+          builder: (context) => AlamatEditPage(
+                nik: widget.nik,
+                kecamatan: widget.kecamatan,
+                desa: widget.desa,
+                alamat: widget.alamat,
+                rt: widget.rt,
+                rw: widget.rw,
+              )),
     );
     if (result != null) {
       setState(() {
@@ -96,115 +167,130 @@ class _EditPageState extends State<EditakunPage> {
     }
   }
 
-
   void _navigateToNohpEditPage() async {
     var result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NohpEditPage()),
+      MaterialPageRoute(
+          builder: (context) => NohpEditPage(telepon: widget.telepon)),
     );
     if (result != null) {
       setState(() {
-        nohp = result;
-        formattedNohp = formatPhoneNumber(nohp) ?? '';
-        displayedNohp = formattedNohp.isNotEmpty ? formattedNohp : nohp;
+        telepon = result;
+        formattedNohp = formatPhoneNumber(telepon) ?? '';
+        displayedNohp = formattedNohp.isNotEmpty ? formattedNohp : telepon;
       });
     }
     @override
     void initState() {
       super.initState();
-      displayedNohp = formattedNohp.isEmpty ? nohp : formattedNohp;
+      displayedNohp = formattedNohp.isEmpty ? telepon : formattedNohp;
     }
   }
 
-  String? formatPhoneNumber(String? phoneNumber) {
-    if (phoneNumber == null || phoneNumber.length < 3) {
-      return phoneNumber;
+  String? formatPhoneNumber(String? telepon) {
+    if (telepon == null || telepon.length < 3) {
+      return telepon;
     }
 
-    String firstChar = phoneNumber.substring(0, 1);
-    String lastChar = phoneNumber.substring(phoneNumber.length - 1);
-    String middlePart = phoneNumber.substring(1, phoneNumber.length - 1);
+    String firstChar = telepon.substring(0, 3);
+    String lastChar = telepon.substring(telepon.length - 1);
+    String middlePart = telepon.substring(1, telepon.length - 1);
 
     String maskedMiddlePart = middlePart.replaceAll(RegExp(r'\d'), '*');
 
     return '$firstChar$maskedMiddlePart$lastChar';
   }
 
-
   void _showGenderDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(
-          'Pilih Jenis Kelamin',
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFF057438),
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF057438),
+          title: Text(
+            'Pilih Jenis Kelamin',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              title: Text(
-                'Laki-laki',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF057438),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'Laki-Laki',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
                 ),
+                onTap: _selectedpilihjenis == 'Laki-Laki'
+                    ? null
+                    : () {
+                        setState(() {
+                          _selectedpilihjenis = 'Laki-Laki';
+                          _isAnyFieldNotEmpty =
+                              _selectedpilihjenis != widget.jekel;
+                          _checkIconColor = _isAnyFieldNotEmpty
+                              ? Color(0xFF057438)
+                              : Colors.grey[200]!;
+                          Navigator.of(context).pop();
+                        });
+                      },
               ),
-              onTap: () {
-                setState(() {
-                  _selectedpilihjenis = 'Laki-laki';
-                  _isAnyFieldNotEmpty = _selectedpilihjenis == 'Laki-laki';
-                  _checkIconColor = _isAnyFieldNotEmpty ? Color(0xFF057438) : Colors.grey[200]!;
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Perempuan',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF057438),
+              ListTile(
+                title: Text(
+                  'Perempuan',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
                 ),
+                onTap: _selectedpilihjenis == 'Perempuan'
+                    ? null
+                    : () {
+                        setState(() {
+                          _selectedpilihjenis = 'Perempuan';
+                          _isAnyFieldNotEmpty =
+                              _selectedpilihjenis != widget.jekel;
+                          _checkIconColor = _isAnyFieldNotEmpty
+                              ? Color(0xFF057438)
+                              : Colors.grey[200]!;
+                          Navigator.of(context).pop();
+                        });
+                      },
               ),
-              onTap: () {
-                setState(() {
-                  _selectedpilihjenis = 'Perempuan';
-                  _isAnyFieldNotEmpty = true;
-                  _checkIconColor = Color(0xFF057438);
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Lainnya',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF057438),
+              ListTile(
+                title: Text(
+                  'Lainnya',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
                 ),
+                onTap: _selectedpilihjenis == 'Lainnya'
+                    ? null
+                    : () {
+                        setState(() {
+                          _selectedpilihjenis = 'Lainnya';
+                          _isAnyFieldNotEmpty =
+                              _selectedpilihjenis != widget.jekel;
+                          _checkIconColor = _isAnyFieldNotEmpty
+                              ? Color(0xFF057438)
+                              : Colors.grey[200]!;
+                          Navigator.of(context).pop();
+                        });
+                      },
               ),
-              onTap: () {
-                setState(() {
-                  _selectedpilihjenis = 'Lainnya';
-                  _isAnyFieldNotEmpty = true;
-                  _checkIconColor = Color(0xFF057438);
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
-  
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   String? formatEmail(String? email) {
     if (email == null || email.isEmpty) {
       return email;
@@ -235,7 +321,8 @@ class _EditPageState extends State<EditakunPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('Edit Akun',
+        title: Text(
+          'Edit Akun',
           style: TextStyle(
             color: Color(0xFF057438),
             fontSize: 18,
@@ -250,7 +337,7 @@ class _EditPageState extends State<EditakunPage> {
               icon: Icon(
                 Icons.check,
                 size: 25.0,
-                color: _checkIconColor, 
+                color: _checkIconColor,
               ),
             ),
           ),
@@ -259,7 +346,9 @@ class _EditPageState extends State<EditakunPage> {
       body: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Card(
             margin: EdgeInsets.zero,
             child: Container(
@@ -270,20 +359,24 @@ class _EditPageState extends State<EditakunPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
+
                   //name
                   TextButton(
                     onPressed: () {
                       _navigateToNameEditPage();
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.transparent.withOpacity(0); 
+                            return Colors.transparent.withOpacity(0);
                           }
-                          return Colors.transparent; 
+                          return Colors.transparent;
                         },
                       ),
                     ),
@@ -303,13 +396,15 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                name ?? '',
+                                name ?? widget.name, //manggil name
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Icon(
                                 Icons.keyboard_arrow_right,
                                 color: Color(0xFF057438),
@@ -327,13 +422,16 @@ class _EditPageState extends State<EditakunPage> {
                       _navigateToEmailEditPage();
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.transparent.withOpacity(0); // Atur warna klikannya di sini
+                            return Colors.transparent
+                                .withOpacity(0); // Atur warna klikannya di sini
                           }
-                          return Colors.transparent; // Kembali ke transparan jika tidak ditekan
+                          return Colors
+                              .transparent; // Kembali ke transparan jika tidak ditekan
                         },
                       ),
                     ),
@@ -353,13 +451,16 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                formatEmail(email) ?? '',
+                                formatEmail(email) ??
+                                    formatEmail(widget.email)!,
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Icon(
                                 Icons.keyboard_arrow_right,
                                 color: Color(0xFF057438),
@@ -377,13 +478,16 @@ class _EditPageState extends State<EditakunPage> {
                       _showGenderDialog(context);
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.transparent.withOpacity(0); // Atur warna klikannya di sini
+                            return Colors.transparent
+                                .withOpacity(0); // Atur warna klikannya di sini
                           }
-                          return Colors.transparent; // Kembali ke transparan jika tidak ditekan
+                          return Colors
+                              .transparent; // Kembali ke transparan jika tidak ditekan
                         },
                       ),
                     ),
@@ -409,7 +513,9 @@ class _EditPageState extends State<EditakunPage> {
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Icon(
                                 Icons.keyboard_arrow_right,
                                 color: Color(0xFF057438),
@@ -427,13 +533,14 @@ class _EditPageState extends State<EditakunPage> {
                       _navigateToTtlEditPage();
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.transparent.withOpacity(0); 
+                            return Colors.transparent.withOpacity(0);
                           }
-                          return Colors.transparent; 
+                          return Colors.transparent;
                         },
                       ),
                     ),
@@ -453,13 +560,15 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                '$tempatLahir, $tanggalLahir',
+                                '$tempatlahir, $tgl_lahir',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Icon(
                                 Icons.keyboard_arrow_right,
                                 color: Color(0xFF057438),
@@ -477,13 +586,14 @@ class _EditPageState extends State<EditakunPage> {
                       _navigateToNohpEditPage();
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.transparent.withOpacity(0); 
+                            return Colors.transparent.withOpacity(0);
                           }
-                          return Colors.transparent; 
+                          return Colors.transparent;
                         },
                       ),
                     ),
@@ -503,13 +613,16 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                displayedNohp ?? '',
+                                formatPhoneNumber(telepon) ??
+                                    formatPhoneNumber(widget.telepon)!,
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Icon(
                                 Icons.keyboard_arrow_right,
                                 color: Color(0xFF057438),
@@ -526,17 +639,24 @@ class _EditPageState extends State<EditakunPage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DatadiriEditPage()),
+                        MaterialPageRoute(
+                            builder: (context) => DatadiriEditPage(
+                                  agama: widget.agama,
+                                  statusWarga: widget.statusWarga,
+                                  warganegara: widget.warganegara,
+                                  statusNikah: widget.statusNikah,
+                                )),
                       );
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.transparent.withOpacity(0); 
+                            return Colors.transparent.withOpacity(0);
                           }
-                          return Colors.transparent; 
+                          return Colors.transparent;
                         },
                       ),
                     ),
@@ -555,7 +675,9 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Icon(
                                 Icons.keyboard_arrow_right,
                                 color: Color(0xFF057438),
@@ -570,16 +692,17 @@ class _EditPageState extends State<EditakunPage> {
                   //alamat
                   TextButton(
                     onPressed: () {
-                      _navigateToDesaEditPage();
+                      _navigateToAlamatEditPage();
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.transparent.withOpacity(0); 
+                            return Colors.transparent.withOpacity(0);
                           }
-                          return Colors.transparent; 
+                          return Colors.transparent;
                         },
                       ),
                     ),
@@ -599,13 +722,15 @@ class _EditPageState extends State<EditakunPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Text(
-                                 desa ?? '',
+                                desa ?? '',
                                 style: TextStyle(
                                   color: Color(0xFF057438),
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Icon(
                                 Icons.keyboard_arrow_right,
                                 color: Color(0xFF057438),
@@ -622,17 +747,19 @@ class _EditPageState extends State<EditakunPage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PasswordEditPage()),
+                        MaterialPageRoute(
+                            builder: (context) => PasswordEditPage()),
                       );
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.transparent.withOpacity(0); 
+                            return Colors.transparent.withOpacity(0);
                           }
-                          return Colors.transparent; 
+                          return Colors.transparent;
                         },
                       ),
                     ),
@@ -661,7 +788,9 @@ class _EditPageState extends State<EditakunPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
             ),

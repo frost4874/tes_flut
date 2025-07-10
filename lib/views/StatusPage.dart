@@ -56,14 +56,12 @@ class _StatusPageState extends State<StatusPage> {
         url,
         body: json.encode({
           'form_tambahan': content,
-          'keterangan': keterangan, // Menyertakan keterangan dalam request
+          'keterangan': keterangan,
         }),
         headers: {'Content-Type': 'application/json'},
       );
 
-      // Check response status
       if (response.statusCode == 200) {
-        // Data updated successfully, perform any necessary actions
         fetchData();
       } else {
         throw Exception('Failed to update data');
@@ -257,13 +255,7 @@ class _StatusPageState extends State<StatusPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  judulBerkas
-                                      .toString()
-                                      .split(' ')
-                                      .map((String word) {
-                                    return word[0].toUpperCase() +
-                                        word.substring(1);
-                                  }).join(' '),
+                                  (judulBerkas.length > 22 ? judulBerkas.substring(0, 22) + '...' : judulBerkas),
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: "jomolhari",
@@ -338,7 +330,7 @@ class _StatusPageState extends State<StatusPage> {
                                 );
                               },
                               child: Image.asset(
-                                'images/notes.png',
+                                'assets/images/notes.png',
                                 width: 25,
                                 height: 25,
                                 color: Color(0xFF057438),
@@ -390,7 +382,7 @@ class _StatusPageState extends State<StatusPage> {
                                 }
                               },
                               child: Image.asset(
-                                'images/edit.png',
+                                'assets/images/edit.png',
                                 width: 25,
                                 height: 25,
                                 color: status == 0

@@ -15,7 +15,7 @@ class EditbiodataPage extends StatefulWidget {
   final String tgl_lahir;
   final String telepon;
   final String jekel;
-  final String tempatLahir;
+  final String tempatlahir;
   final String agama;
   final String statusWarga;
   final String warganegara;
@@ -35,7 +35,7 @@ class EditbiodataPage extends StatefulWidget {
     required this.tgl_lahir,
     required this.telepon,
     required this.jekel,
-    required this.tempatLahir,
+    required this.tempatlahir,
     required this.agama,
     required this.statusWarga,
     required this.warganegara,
@@ -159,7 +159,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
     statuspernikahanvalue = widget.statusNikah;
     statuswargavalue = widget.statusWarga;
     warganegaraanvalue = widget.warganegara;
-    tempatlahirController.text = widget.tempatLahir;
+    tempatlahirController.text = widget.tempatlahir;
     rtController.text = widget.rt;
     rwController.text = widget.rw;
 
@@ -331,6 +331,18 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Halaman Edit',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Color(0xFF057438),
+        iconTheme: IconThemeData(
+          color: Colors.white, 
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20.0),
@@ -718,54 +730,6 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                               ),
                               errorMaxLines: 3,
                             ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-                          child: TextFormField(
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                            controller: pekerjaanController,
-                            decoration: InputDecoration(
-                              labelText: "Pekerjaan",
-                              labelStyle: TextStyle(color: Colors.white),
-                              hintText: "Masukkan Pekerjaan Anda",
-                              hintStyle: TextStyle(color: Colors.white),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.badge,
-                                color: Colors.white,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.8)),
-                              ),
-                              errorStyle: TextStyle(color: Colors.orange),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.orange),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Harap isi bidang ini';
-                              }
-                              return null;
-                            },
                           ),
                         ),
                         Container(
@@ -1494,7 +1458,7 @@ class _EditbiodataPageState extends State<EditbiodataPage> {
                                 EdgeInsets.symmetric(
                                   vertical: 20.0,
                                   horizontal:
-                                      MediaQuery.of(context).size.width * 0.3,
+                                      MediaQuery.of(context).size.width * 0.2,
                                 ),
                               ),
                             ),
